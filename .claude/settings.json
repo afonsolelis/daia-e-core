@@ -1,39 +1,3 @@
 {
-  "hooks": {
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node .aiox-core/infrastructure/templates/grok-hooks/synapse-wrapper.cjs",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "PreCompact": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node .aiox-core/infrastructure/templates/grok-hooks/precompact-wrapper.cjs",
-            "timeout": 10
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Bash|run_terminal_command",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node .aiox-core/infrastructure/templates/grok-hooks/enforce-git-push-authority.cjs",
-            "timeout": 10
-          }
-        ]
-      }
-    ]
-  },
   "language": "portuguese"
 }
