@@ -1,0 +1,16 @@
+{
+  "id": "CON-visibilidade",
+  "kind": "Concern",
+  "statement": "Como o professor obtem visibilidade do processo real de trabalho da equipe, e nao apenas do artefato final entregue?",
+  "stakeholders": [
+    "STK-professor"
+  ],
+  "category": "pedagogical",
+  "sprint": "SP1",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

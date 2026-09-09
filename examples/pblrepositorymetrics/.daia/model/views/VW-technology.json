@@ -1,0 +1,26 @@
+{
+  "id": "VW-technology",
+  "kind": "View",
+  "viewpoint": "technology",
+  "title": "Node.js, MongoDB e API REST do GitLab",
+  "addresses_concerns": [
+    "CON-conformidade"
+  ],
+  "stakeholders": [
+    "STK-professor"
+  ],
+  "models": [
+    {
+      "kind": "static",
+      "notation": "tech-selection",
+      "path": "docs/tech-stack.md"
+    }
+  ],
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

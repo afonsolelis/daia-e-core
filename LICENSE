@@ -1,12 +1,15 @@
 MIT License
 
-Copyright (c) 2025 BMad Code, LLC (BMad Method - original work)
-Copyright (c) 2025 SynkraAI Inc. (AIOX Framework - derivative work)
+Copyright (c) 2025 BMad Code, LLC (BMad Method — original work)
+Copyright (c) 2025 SynkraAI Inc. (AIOX Framework — derivative work)
+Copyright (c) 2026 Afonso Cesar Lelis Brandão (DAIA-E — derivative work)
 
-This project was originally derived from the BMad Method
+This project is derived from Synkra AIOX (https://github.com/SynkraAI/aiox-core),
+which was itself originally derived from the BMad Method
 (https://github.com/bmad-code-org/BMAD-METHOD), created by Brian Madison.
-Synkra AIOX is NOT affiliated with, endorsed by, or sanctioned by the
-BMad Method or BMad Code, LLC.
+
+DAIA-E is NOT affiliated with, endorsed by, or sanctioned by SynkraAI Inc.,
+the BMad Method, or BMad Code, LLC.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +31,4 @@ SOFTWARE.
 
 TRADEMARK NOTICE:
 BMad, BMad Method, and BMad Core are trademarks of BMad Code, LLC.
-These trademarks are NOT licensed under the MIT License. See the BMad Method
-TRADEMARK.md (https://github.com/bmad-code-org/BMAD-METHOD/blob/main/TRADEMARK.md)
-for detailed guidelines on trademark usage.
+AIOX and Synkra are trademarks of SynkraAI Inc.

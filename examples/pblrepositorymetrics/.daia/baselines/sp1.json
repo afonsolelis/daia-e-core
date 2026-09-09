@@ -1,0 +1,19 @@
+{
+  "kind": "Baseline",
+  "sprint": "SP1",
+  "title": "Modelo de negocio: decomposicao IDEF0, direcionadores, mapa de stakeholders e hipotese",
+  "state_hash": "sha256:e6c249b323aff237f5bfa2e449ac13b26dd302d9a55ca4316b7e49c75e677664",
+  "artifact_count": 10,
+  "signature": {
+    "signed_by": "Afonso Cesar Lelis Brandao",
+    "signed_at": "2026-09-09T22:14:45.336Z",
+    "decision": "accepted",
+    "rationale": "Baseline SP1 revisada e assumida pelo autor conforme o metodo DAIA-E."
+  },
+  "gate_report": {
+    "passed": true,
+    "blocking": 0,
+    "warnings": 0,
+    "evaluated_at": "2026-09-09T22:14:45.336Z"
+  }
+}

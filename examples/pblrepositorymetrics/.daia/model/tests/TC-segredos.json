@@ -1,0 +1,18 @@
+{
+  "id": "TC-segredos",
+  "kind": "TestContract",
+  "title": "Nenhum segredo codificado diretamente no codigo",
+  "verifies": [
+    "QS-segredos"
+  ],
+  "test_path": "tests/security/secrets.test.js",
+  "test_name": "varredura nao encontra credencial literal",
+  "phase": "green",
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

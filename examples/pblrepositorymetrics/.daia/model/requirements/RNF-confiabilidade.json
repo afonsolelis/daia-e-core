@@ -1,0 +1,20 @@
+{
+  "id": "RNF-confiabilidade",
+  "kind": "Requirement",
+  "type": "non-functional",
+  "statement": "O pipeline de avaliacao deve concluir sem falha para uma turma completa",
+  "traces_to": [
+    "CON-carga-docente"
+  ],
+  "scenarios": [
+    "QS-testes"
+  ],
+  "priority": "must",
+  "sprint": "SP2",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

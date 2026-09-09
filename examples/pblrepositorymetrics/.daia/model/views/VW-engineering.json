@@ -1,0 +1,27 @@
+{
+  "id": "VW-engineering",
+  "kind": "View",
+  "viewpoint": "engineering",
+  "title": "Conectores, persistencia e distribuicao",
+  "addresses_concerns": [
+    "CON-privacidade"
+  ],
+  "stakeholders": [
+    "STK-aluno",
+    "STK-coordenacao"
+  ],
+  "models": [
+    {
+      "kind": "deployment",
+      "notation": "topology",
+      "path": "docs/es10-tech-spec.md"
+    }
+  ],
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

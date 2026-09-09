@@ -1,0 +1,14 @@
+{
+  "catalog": "4plus1",
+  "name": "4+1 Architectural View Model (Kruchten)",
+  "standard": "IEEE Software, 1995",
+  "default": false,
+  "rationale": "Catálogo alternativo. A ISO 42010 admite qualquer conjunto de viewpoints desde que cada view responda a preocupações de partes interessadas identificadas.",
+  "viewpoints": [
+    { "id": "logical", "kind": "Viewpoint", "name": "Logical", "catalog": "4plus1", "frames_concerns": ["functional"], "model_kinds": ["static"], "opens_at": "SP2", "completes_at": "SP3" },
+    { "id": "process", "kind": "Viewpoint", "name": "Process", "catalog": "4plus1", "frames_concerns": ["quality", "operational"], "model_kinds": ["dynamic"], "opens_at": "SP3", "completes_at": "SP3" },
+    { "id": "development", "kind": "Viewpoint", "name": "Development", "catalog": "4plus1", "frames_concerns": ["quality"], "model_kinds": ["static"], "opens_at": "SP3", "completes_at": "SP4" },
+    { "id": "physical", "kind": "Viewpoint", "name": "Physical", "catalog": "4plus1", "frames_concerns": ["operational"], "model_kinds": ["deployment"], "opens_at": "SP3", "completes_at": "SP4" },
+    { "id": "scenarios", "kind": "Viewpoint", "name": "Scenarios (+1)", "catalog": "4plus1", "frames_concerns": ["functional", "quality"], "model_kinds": ["dynamic"], "opens_at": "SP2", "completes_at": "SP5" }
+  ]
+}

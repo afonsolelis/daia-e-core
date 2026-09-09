@@ -1,0 +1,59 @@
+{
+  "catalog": "rm-odp",
+  "name": "RM-ODP — Reference Model of Open Distributed Processing",
+  "standard": "ISO/IEC 10746",
+  "default": true,
+  "rationale": "Conjunto adotado pelo DAIA-E. A adequação a sistemas distribuídos é consolidada. A ISO 42010 não prescreve views — este é o catálogo default, não uma exigência da norma.",
+  "viewpoints": [
+    {
+      "id": "enterprise",
+      "kind": "Viewpoint",
+      "name": "Enterprise",
+      "catalog": "rm-odp",
+      "frames_concerns": ["business", "regulatory", "pedagogical"],
+      "model_kinds": ["idef0", "stakeholder-map", "policy"],
+      "opens_at": "SP1",
+      "completes_at": "SP1"
+    },
+    {
+      "id": "information",
+      "kind": "Viewpoint",
+      "name": "Information",
+      "catalog": "rm-odp",
+      "frames_concerns": ["functional", "quality"],
+      "model_kinds": ["static", "data-schema", "entity-relationship"],
+      "opens_at": "SP2",
+      "completes_at": "SP3"
+    },
+    {
+      "id": "computational",
+      "kind": "Viewpoint",
+      "name": "Computational",
+      "catalog": "rm-odp",
+      "frames_concerns": ["functional", "quality"],
+      "model_kinds": ["dynamic", "sequence", "state-machine", "interface-contract"],
+      "opens_at": "SP3",
+      "completes_at": "SP3"
+    },
+    {
+      "id": "engineering",
+      "kind": "Viewpoint",
+      "name": "Engineering",
+      "catalog": "rm-odp",
+      "frames_concerns": ["operational", "quality"],
+      "model_kinds": ["deployment", "topology", "persistence-policy"],
+      "opens_at": "SP3",
+      "completes_at": "SP3"
+    },
+    {
+      "id": "technology",
+      "kind": "Viewpoint",
+      "name": "Technology",
+      "catalog": "rm-odp",
+      "frames_concerns": ["operational"],
+      "model_kinds": ["tech-selection"],
+      "opens_at": "SP3",
+      "completes_at": "SP4"
+    }
+  ]
+}

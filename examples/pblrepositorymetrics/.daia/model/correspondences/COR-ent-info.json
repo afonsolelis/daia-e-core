@@ -1,0 +1,15 @@
+{
+  "id": "COR-ent-info",
+  "kind": "Correspondence",
+  "rule": "refines",
+  "from": "VW-information",
+  "to": "VW-enterprise",
+  "rationale": "As entidades de dados refinam os papeis e politicas estabelecidos na modelagem de negocio.",
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

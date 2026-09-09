@@ -1,0 +1,21 @@
+{
+  "id": "RNF-manutenibilidade",
+  "kind": "Requirement",
+  "type": "non-functional",
+  "statement": "A base de codigo deve permanecer modular o suficiente para que um novo padrao CEP seja acrescentado sem alterar o motor de correlacao",
+  "traces_to": [
+    "CON-conformidade"
+  ],
+  "scenarios": [
+    "QS-complexidade",
+    "QS-modularidade"
+  ],
+  "priority": "must",
+  "sprint": "SP2",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

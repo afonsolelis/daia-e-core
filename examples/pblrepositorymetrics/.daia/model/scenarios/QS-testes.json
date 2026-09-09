@@ -1,0 +1,31 @@
+{
+  "id": "QS-testes",
+  "kind": "QualityScenario",
+  "characteristic": "reliability",
+  "sub_characteristic": "maturity",
+  "source": "Suite de testes automatizada",
+  "stimulus": "Executa a suite completa apos alteracao",
+  "artifact": "Pipeline de avaliacao em quatro fases",
+  "environment": "Integracao continua",
+  "response": "Todos os contratos comportamentais permanecem satisfeitos",
+  "response_measure": {
+    "metric": "testes unitarios aprovados",
+    "operator": ">=",
+    "threshold": 61,
+    "unit": "testes"
+  },
+  "traces_to": [
+    "RNF-confiabilidade"
+  ],
+  "utility_tree": {
+    "importance": "H",
+    "difficulty": "M"
+  },
+  "sprint": "SP2",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

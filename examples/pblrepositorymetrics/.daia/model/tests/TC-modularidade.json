@@ -1,0 +1,18 @@
+{
+  "id": "TC-modularidade",
+  "kind": "TestContract",
+  "title": "Acrescentar padrao CEP altera no maximo 2 modulos",
+  "verifies": [
+    "QS-modularidade"
+  ],
+  "test_path": "tests/quality/modularity.test.js",
+  "test_name": "novo padrao nao toca o motor",
+  "phase": "green",
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

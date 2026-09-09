@@ -1,0 +1,18 @@
+{
+  "id": "RF-aquisicao",
+  "kind": "Requirement",
+  "type": "functional",
+  "statement": "O sistema deve adquirir eventos de commit, merge request, issue e documento a partir da API REST do GitLab",
+  "traces_to": [
+    "BD-supervisao",
+    "CON-visibilidade"
+  ],
+  "priority": "must",
+  "sprint": "SP2",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

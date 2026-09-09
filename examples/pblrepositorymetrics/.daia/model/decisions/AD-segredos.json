@@ -1,0 +1,31 @@
+{
+  "id": "AD-segredos",
+  "kind": "ArchitectureDecision",
+  "title": "Credenciais fora do codigo-fonte, por variavel de ambiente",
+  "context": "O sistema acessa a API REST do GitLab com token de acesso.",
+  "decision": "Ler credenciais exclusivamente de variavel de ambiente, com falha explicita na ausencia.",
+  "consequences": "Satisfaz QS-segredos; exige documentacao de configuracao para reproducao.",
+  "alternatives": [
+    {
+      "option": "Arquivo de configuracao versionado com token de leitura restrita",
+      "rejected_because": "Qualquer token no repositorio viola o cenario QS-segredos, que exige zero ocorrencias"
+    }
+  ],
+  "traces_to": [
+    "RNF-seguranca",
+    "CON-privacidade"
+  ],
+  "affects_views": [
+    "VW-engineering"
+  ],
+  "sensitivity_points": [
+    "security: superficie de exposicao de credencial"
+  ],
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

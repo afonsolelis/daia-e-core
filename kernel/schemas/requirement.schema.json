@@ -1,0 +1,27 @@
+{
+  "$id": "daia-e/requirement",
+  "title": "Requirement (SWEBOK — SP2)",
+  "description": "Requisito funcional ou não funcional. RNF DEVE ter cenário de qualidade associado (Art. V).",
+  "type": "object",
+  "required": ["id", "kind", "type", "statement", "traces_to", "sprint", "provenance"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "$ref": "daia-e/common#/definitions/id", "idPrefix": "RF|RNF|CON" },
+    "kind": { "const": "Requirement" },
+    "type": { "type": "string", "enum": ["functional", "non-functional", "constraint"] },
+    "statement": { "type": "string", "minLength": 10 },
+    "traces_to": {
+      "$ref": "daia-e/common#/definitions/idRefList",
+      "minItems": 1,
+      "description": "Art. IV — todo requisito deriva de um driver ou preocupação (BD-*, CON-*)"
+    },
+    "scenarios": {
+      "$ref": "daia-e/common#/definitions/idRefList",
+      "description": "Cenários de qualidade (QS-*). Obrigatório quando type=non-functional"
+    },
+    "priority": { "type": "string", "enum": ["must", "should", "could", "wont"] },
+    "sprint": { "const": "SP2" },
+    "status": { "$ref": "daia-e/common#/definitions/status" },
+    "provenance": { "$ref": "daia-e/common#/definitions/provenance" }
+  }
+}

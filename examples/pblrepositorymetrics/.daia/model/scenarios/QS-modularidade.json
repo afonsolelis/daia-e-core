@@ -1,0 +1,31 @@
+{
+  "id": "QS-modularidade",
+  "kind": "QualityScenario",
+  "characteristic": "maintainability",
+  "sub_characteristic": "modularity",
+  "source": "Desenvolvedor de manutencao",
+  "stimulus": "Acrescenta um novo padrao CEP derivado de analise de diff",
+  "artifact": "Catalogo de padroes CEP",
+  "environment": "Desenvolvimento, sistema em operacao",
+  "response": "O padrao e acrescentado sem alterar o motor de correlacao",
+  "response_measure": {
+    "metric": "modulos alterados para acrescentar um padrao",
+    "operator": "<=",
+    "threshold": 2,
+    "unit": "modulos"
+  },
+  "traces_to": [
+    "RNF-manutenibilidade"
+  ],
+  "utility_tree": {
+    "importance": "H",
+    "difficulty": "H"
+  },
+  "sprint": "SP2",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

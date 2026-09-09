@@ -1,0 +1,19 @@
+{
+  "kind": "Baseline",
+  "sprint": "SP2",
+  "title": "Requisitos: RF, RNF como cenarios de seis partes e matriz de rastreabilidade",
+  "state_hash": "sha256:57a012c77f5b5f403387c6da4bc8ffb8771f94747c1543d60d74999805dd9f45",
+  "artifact_count": 21,
+  "signature": {
+    "signed_by": "Afonso Cesar Lelis Brandao",
+    "signed_at": "2026-09-09T22:14:45.383Z",
+    "decision": "accepted",
+    "rationale": "Baseline SP2 revisada e assumida pelo autor conforme o metodo DAIA-E."
+  },
+  "gate_report": {
+    "passed": true,
+    "blocking": 0,
+    "warnings": 0,
+    "evaluated_at": "2026-09-09T22:14:45.383Z"
+  }
+}

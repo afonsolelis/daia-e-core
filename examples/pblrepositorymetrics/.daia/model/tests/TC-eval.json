@@ -1,0 +1,18 @@
+{
+  "id": "TC-eval",
+  "kind": "TestContract",
+  "title": "Nenhum uso de eval()",
+  "verifies": [
+    "QS-eval"
+  ],
+  "test_path": "tests/security/eval.test.js",
+  "test_name": "varredura nao encontra eval",
+  "phase": "green",
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

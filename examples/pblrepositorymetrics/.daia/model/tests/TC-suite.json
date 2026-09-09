@@ -1,0 +1,21 @@
+{
+  "id": "TC-suite",
+  "kind": "TestContract",
+  "title": "Suite de 61 testes unitarios aprovada",
+  "verifies": [
+    "QS-testes",
+    "RF-aquisicao",
+    "RF-correlacao",
+    "RF-relatorio"
+  ],
+  "test_path": "tests/unit/",
+  "test_name": "suite completa",
+  "phase": "green",
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

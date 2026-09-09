@@ -1,0 +1,17 @@
+{
+  "id": "CON-conformidade",
+  "kind": "Concern",
+  "statement": "Como avaliar a conformidade do processo das equipes contra um baseline de gestao de configuracao?",
+  "stakeholders": [
+    "STK-coordenacao",
+    "STK-professor"
+  ],
+  "category": "quality",
+  "sprint": "SP1",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

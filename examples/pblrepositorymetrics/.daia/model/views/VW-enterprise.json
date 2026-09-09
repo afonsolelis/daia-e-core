@@ -1,0 +1,28 @@
+{
+  "id": "VW-enterprise",
+  "kind": "View",
+  "viewpoint": "enterprise",
+  "title": "Papeis e politicas de supervisao em ABPj",
+  "addresses_concerns": [
+    "CON-visibilidade",
+    "CON-carga-docente"
+  ],
+  "stakeholders": [
+    "STK-professor",
+    "STK-coordenacao"
+  ],
+  "models": [
+    {
+      "kind": "static",
+      "notation": "IDEF0",
+      "path": "docs/idef0-a0.md"
+    }
+  ],
+  "sprint": "SP1",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

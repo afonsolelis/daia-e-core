@@ -1,0 +1,28 @@
+{
+  "id": "VW-information",
+  "kind": "View",
+  "viewpoint": "information",
+  "title": "Modelo de dados de eventos de ABPj",
+  "addresses_concerns": [
+    "CON-conformidade",
+    "CON-privacidade"
+  ],
+  "stakeholders": [
+    "STK-professor",
+    "STK-aluno"
+  ],
+  "models": [
+    {
+      "kind": "static",
+      "notation": "entity-relationship",
+      "path": "docs/es11-baseline-spec.md"
+    }
+  ],
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

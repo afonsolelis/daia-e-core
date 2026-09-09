@@ -1,0 +1,44 @@
+{
+  "id": "AD-cep",
+  "kind": "ArchitectureDecision",
+  "title": "Correlacao de eventos por Processamento de Eventos Complexos",
+  "context": "Eventos de repositorio chegam isolados; a avaliacao de conformidade exige reconhecer padroes ao longo do tempo.",
+  "decision": "Adotar CEP com catalogo de padroes declarativos, avaliados contra um baseline de SCM.",
+  "consequences": "Novos padroes entram no catalogo sem alterar o motor; em contrapartida o motor precisa de janela temporal configuravel.",
+  "alternatives": [
+    {
+      "option": "Consultas SQL agregadas sobre a base de eventos",
+      "rejected_because": "Nao expressa relacao temporal entre eventos sem materializacao custosa, e acopla a regra ao schema"
+    },
+    {
+      "option": "Regras imperativas codificadas por padrao",
+      "rejected_because": "Acrescentar um padrao exigiria alterar o motor, violando o cenario QS-modularidade"
+    }
+  ],
+  "traces_to": [
+    "RF-correlacao",
+    "RNF-manutenibilidade",
+    "CON-conformidade"
+  ],
+  "affects_views": [
+    "VW-computational",
+    "VW-information"
+  ],
+  "sensitivity_points": [
+    "maintainability: acrescimo de padrao sem alterar o motor",
+    "performance_efficiency: janela temporal de correlacao"
+  ],
+  "tradeoff_points": [
+    "performance_efficiency degrada quando a janela cresce para ganhar cobertura de padrao"
+  ],
+  "risks": [
+    "Janela mal dimensionada produz falso negativo de conformidade"
+  ],
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

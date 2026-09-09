@@ -1,0 +1,15 @@
+{
+  "id": "COR-info-comp",
+  "kind": "Correspondence",
+  "rule": "consistent-with",
+  "from": "VW-information",
+  "to": "VW-computational",
+  "rationale": "As entidades do modelo estatico sao exatamente as consumidas pelo pipeline de quatro fases.",
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "COR-tech-eng",
+  "kind": "Correspondence",
+  "rule": "realizes",
+  "from": "VW-technology",
+  "to": "VW-engineering",
+  "rationale": "Node.js, MongoDB e a API do GitLab instanciam o mecanismo decidido na view de engenharia.",
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

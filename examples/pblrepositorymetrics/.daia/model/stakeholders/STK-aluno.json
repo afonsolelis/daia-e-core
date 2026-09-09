@@ -1,0 +1,16 @@
+{
+  "id": "STK-aluno",
+  "kind": "Stakeholder",
+  "name": "Aluno em equipe de projeto",
+  "role": "Produz eventos de repositorio ao longo do modulo",
+  "concerns": [
+    "CON-privacidade"
+  ],
+  "sprint": "SP1",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

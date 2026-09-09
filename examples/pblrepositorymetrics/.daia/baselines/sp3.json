@@ -1,0 +1,19 @@
+{
+  "kind": "Baseline",
+  "sprint": "SP3",
+  "title": "Arquitetural: especificacao tecnica, esqueleto, documentos de especificacao e testes em fase vermelha",
+  "state_hash": "sha256:8a48929207c70455078015e0791cb71b2cf0524a62fa93e8c9afffec870d357a",
+  "artifact_count": 37,
+  "signature": {
+    "signed_by": "Afonso Cesar Lelis Brandao",
+    "signed_at": "2026-09-09T22:14:45.428Z",
+    "decision": "accepted",
+    "rationale": "Baseline SP3 revisada e assumida pelo autor conforme o metodo DAIA-E."
+  },
+  "gate_report": {
+    "passed": true,
+    "blocking": 0,
+    "warnings": 0,
+    "evaluated_at": "2026-09-09T22:14:45.428Z"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "id": "RF-relatorio",
+  "kind": "Requirement",
+  "type": "functional",
+  "statement": "O sistema deve emitir relatorios diagnosticos especificos por papel de stakeholder",
+  "traces_to": [
+    "BD-supervisao",
+    "CON-carga-docente"
+  ],
+  "priority": "must",
+  "sprint": "SP2",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

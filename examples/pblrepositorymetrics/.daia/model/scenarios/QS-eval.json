@@ -1,0 +1,31 @@
+{
+  "id": "QS-eval",
+  "kind": "QualityScenario",
+  "characteristic": "security",
+  "sub_characteristic": "integrity",
+  "source": "Analise estatica de seguranca",
+  "stimulus": "Varre a base em busca de execucao dinamica de codigo",
+  "artifact": "Toda a base de codigo",
+  "environment": "Integracao continua, a cada commit",
+  "response": "Nenhuma chamada a eval() e encontrada",
+  "response_measure": {
+    "metric": "uso de eval()",
+    "operator": "==",
+    "threshold": 0,
+    "unit": "ocorrencias"
+  },
+  "traces_to": [
+    "RNF-seguranca"
+  ],
+  "utility_tree": {
+    "importance": "H",
+    "difficulty": "L"
+  },
+  "sprint": "SP2",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

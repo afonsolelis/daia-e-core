@@ -1,0 +1,16 @@
+{
+  "id": "CON-privacidade",
+  "kind": "Concern",
+  "statement": "Como coletar eventos de repositorio sem expor dados pessoais dos alunos alem do necessario?",
+  "stakeholders": [
+    "STK-aluno"
+  ],
+  "category": "regulatory",
+  "sprint": "SP1",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

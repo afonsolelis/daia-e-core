@@ -1,0 +1,23 @@
+{
+  "kind": "Baseline",
+  "sprint": "SP5",
+  "title": "Release demonstravel: roteiro, evidencias, metricas e limitacoes declaradas",
+  "state_hash": "sha256:8a48929207c70455078015e0791cb71b2cf0524a62fa93e8c9afffec870d357a",
+  "artifact_count": 37,
+  "signature": {
+    "signed_by": "Afonso Cesar Lelis Brandao",
+    "signed_at": "2026-09-09T22:14:45.541Z",
+    "decision": "accepted-with-debt",
+    "rationale": "Hipotese confirmada em instanciacao parcial, sem inferencia de superioridade sobre outras abordagens.",
+    "declared_debt": [
+      "5 das 8 caracteristicas da ISO 25010 sem cenario exercido",
+      "ausencia deliberada e declarada"
+    ]
+  },
+  "gate_report": {
+    "passed": true,
+    "blocking": 0,
+    "warnings": 0,
+    "evaluated_at": "2026-09-09T22:14:45.540Z"
+  }
+}

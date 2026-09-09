@@ -1,0 +1,16 @@
+{
+  "id": "CON-carga-docente",
+  "kind": "Concern",
+  "statement": "Como reduzir o esforco manual de inspecionar repositorios de multiplas equipes a cada sprint?",
+  "stakeholders": [
+    "STK-professor"
+  ],
+  "category": "operational",
+  "sprint": "SP1",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

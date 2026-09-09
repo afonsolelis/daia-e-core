@@ -1,0 +1,18 @@
+{
+  "id": "TC-complexidade",
+  "kind": "TestContract",
+  "title": "Complexidade ciclomatica media por modulo permanece <= 10",
+  "verifies": [
+    "QS-complexidade"
+  ],
+  "test_path": "tests/quality/complexity.test.js",
+  "test_name": "media por modulo dentro do limiar",
+  "phase": "green",
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

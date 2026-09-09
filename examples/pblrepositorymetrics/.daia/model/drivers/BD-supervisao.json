@@ -1,0 +1,19 @@
+{
+  "id": "BD-supervisao",
+  "kind": "BusinessDriver",
+  "statement": "Apoiar a supervisao docente em ambientes de Aprendizagem Baseada em Projetos por meio de evidencia de processo extraida do repositorio",
+  "rationale": "A avaliacao em ABPj tende a recair sobre o artefato final, perdendo o processo que o produziu",
+  "stakeholders": [
+    "STK-professor",
+    "STK-coordenacao"
+  ],
+  "idef0_node": "A-0",
+  "hypothesis": "Correlacao de eventos de repositorio por CEP produz relatorios diagnosticos que o professor considera acionaveis para decisao pedagogica",
+  "sprint": "SP1",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

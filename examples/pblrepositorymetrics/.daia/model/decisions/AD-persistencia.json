@@ -1,0 +1,35 @@
+{
+  "id": "AD-persistencia",
+  "kind": "ArchitectureDecision",
+  "title": "MongoDB como armazenamento de eventos e baselines",
+  "context": "Eventos de repositorio tem forma heterogenea entre commits, merge requests, issues e documentos.",
+  "decision": "Persistir em MongoDB com 12 esquemas de colecao declarados.",
+  "consequences": "Acomoda heterogeneidade sem migracao de schema; perde garantia relacional de integridade referencial.",
+  "alternatives": [
+    {
+      "option": "PostgreSQL com JSONB",
+      "rejected_because": "Garantia relacional nao e exercida pelo dominio, e o custo de modelagem previa atrasaria a SP3 sem beneficio verificavel"
+    }
+  ],
+  "traces_to": [
+    "RF-aquisicao",
+    "CON-privacidade"
+  ],
+  "affects_views": [
+    "VW-engineering",
+    "VW-technology"
+  ],
+  "sensitivity_points": [
+    "flexibility: acomodacao de novos tipos de evento"
+  ],
+  "risks": [
+    "Ausencia de integridade referencial exige validacao na aplicacao"
+  ],
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

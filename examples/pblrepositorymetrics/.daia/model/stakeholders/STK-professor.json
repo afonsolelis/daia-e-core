@@ -1,0 +1,17 @@
+{
+  "id": "STK-professor",
+  "kind": "Stakeholder",
+  "name": "Professor orientador",
+  "role": "Supervisiona equipes de ABPj e toma decisoes pedagogicas",
+  "concerns": [
+    "CON-visibilidade",
+    "CON-carga-docente"
+  ],
+  "sprint": "SP1",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

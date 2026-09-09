@@ -1,0 +1,31 @@
+{
+  "id": "QS-complexidade",
+  "kind": "QualityScenario",
+  "characteristic": "maintainability",
+  "sub_characteristic": "analysability",
+  "source": "Desenvolvedor de manutencao",
+  "stimulus": "Precisa compreender um modulo para acrescentar um padrao CEP",
+  "artifact": "Modulo do motor de correlacao",
+  "environment": "Codigo em repouso, revisao estatica",
+  "response": "O modulo e compreensivel sem leitura de todo o sistema",
+  "response_measure": {
+    "metric": "complexidade ciclomatica media por modulo",
+    "operator": "<=",
+    "threshold": 10,
+    "unit": "pontos"
+  },
+  "traces_to": [
+    "RNF-manutenibilidade"
+  ],
+  "utility_tree": {
+    "importance": "H",
+    "difficulty": "M"
+  },
+  "sprint": "SP2",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "COR-comp-eng",
+  "kind": "Correspondence",
+  "rule": "realizes",
+  "from": "VW-engineering",
+  "to": "VW-computational",
+  "rationale": "A topologia de conectores realiza os contratos de interface declarados na view computacional.",
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

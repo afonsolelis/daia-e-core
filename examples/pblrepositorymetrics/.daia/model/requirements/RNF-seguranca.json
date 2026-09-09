@@ -1,0 +1,21 @@
+{
+  "id": "RNF-seguranca",
+  "kind": "Requirement",
+  "type": "non-functional",
+  "statement": "Credenciais de acesso a API do GitLab nao devem residir no codigo-fonte",
+  "traces_to": [
+    "CON-privacidade"
+  ],
+  "scenarios": [
+    "QS-segredos",
+    "QS-eval"
+  ],
+  "priority": "must",
+  "sprint": "SP2",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id": "BD-malha-fechada",
+  "kind": "BusinessDriver",
+  "statement": "Realimentar o baseline de avaliacao com as decisoes pedagogicas do professor, fechando a malha de supervisao",
+  "rationale": "Derivado da arquitetura de referencia de Gemeo Digital (Arakaki et al., ACDSA 2026)",
+  "stakeholders": [
+    "STK-professor"
+  ],
+  "idef0_node": "A3",
+  "sprint": "SP1",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

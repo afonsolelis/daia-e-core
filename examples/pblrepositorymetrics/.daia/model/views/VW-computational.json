@@ -1,0 +1,32 @@
+{
+  "id": "VW-computational",
+  "kind": "View",
+  "viewpoint": "computational",
+  "title": "Pipeline de avaliacao em quatro fases e correlacao CEP",
+  "addresses_concerns": [
+    "CON-conformidade",
+    "CON-carga-docente"
+  ],
+  "stakeholders": [
+    "STK-professor"
+  ],
+  "models": [
+    {
+      "kind": "dynamic",
+      "notation": "sequence",
+      "path": "docs/ciclo-entrega-funcionalidade.md"
+    },
+    {
+      "kind": "dynamic",
+      "notation": "state-machine",
+      "path": "docs/ciclo-resposta-incidentes.md"
+    }
+  ],
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}
