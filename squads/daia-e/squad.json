@@ -1,0 +1,31 @@
+{
+  "name": "daia-e",
+  "version": "0.1.0",
+  "description": "Squad do metodo DAIA-E: cinco sprints ancoradas em BABOK, SWEBOK e SEBoK, com descricao arquitetural ISO/IEC/IEEE 42010 e baselines encerradas por decisao humana.",
+  "author": "Afonso Cesar Lelis Brandao",
+  "license": "MIT",
+  "slashPrefix": "daia",
+  "method": {
+    "name": "DAIA-E",
+    "reference": "Brandao, Arakaki & Silva (2026), RBIE",
+    "constitution": ".daia-core/constitution.md"
+  },
+  "portability": {
+    "source_of_truth": "squads/daia-e/agents/",
+    "format": "markdown + YAML frontmatter, sem caminho de IDE e sem chamada a script",
+    "note": "Art. XI — as projecoes de runtime sao derivadas, nunca canonicas. Um humano le. Qualquer LLM le."
+  },
+  "agents": [
+    { "id": "analyst", "sprint": "SP1", "views": ["enterprise"], "bok": "BABOK" },
+    { "id": "po", "sprint": "SP2", "views": ["information"], "bok": "SWEBOK + ISO/IEC 25010:2023" },
+    { "id": "qaw", "sprint": "SP2-SP3", "views": [], "bok": "Quality Attribute Workshop" },
+    { "id": "arch", "sprint": "SP3", "views": ["information", "computational", "engineering", "technology"], "bok": "SEBoK + ISO 42010 + RM-ODP" },
+    { "id": "atam", "sprint": "SP3-SP4", "views": [], "bok": "ATAM" },
+    { "id": "spec", "sprint": "SP3", "views": ["computational"], "bok": "SWEBOK" },
+    { "id": "test", "sprint": "SP3", "views": [], "bok": "SWEBOK - Testes" },
+    { "id": "dev", "sprint": "SP4", "views": ["technology"], "bok": "SWEBOK - Construcao" },
+    { "id": "audit", "sprint": "SP4", "views": [], "bok": "SWEBOK - Qualidade" },
+    { "id": "val", "sprint": "SP5", "views": [], "bok": "SEBoK - V&V" },
+    { "id": "rec", "sprint": "*", "views": [], "bok": "-" }
+  ]
+}

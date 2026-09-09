@@ -354,13 +354,60 @@ function cmdViewpoints(root, flags) {
   return EXIT.OK;
 }
 
+function cmdSquad(root, positional, flags) {
+  const { loadSquad } = require('../kernel/squad/squad-loader');
+  const squadDir = flags.squad ? path.resolve(String(flags.squad)) : path.join(__dirname, '..', 'squads', 'daia-e');
+  const squad = loadSquad(squadDir);
+  const [action] = positional;
+
+  if (action === 'adapt') {
+    const target = flags.to || 'claude';
+    const outDir = path.join(root, `.${target}`, 'agents');
+    fs.mkdirSync(outDir, { recursive: true });
+    for (const agent of squad.agents) {
+      // A projecao carrega o conteudo integral: o agente ja e portatil por
+      // construcao, entao adaptar e copiar, nao traduzir (Art. XI).
+      fs.copyFileSync(agent.file, path.join(outDir, `${agent.id}.md`));
+    }
+    console.log(term.green(`${squad.agents.length} agentes projetados em .${target}/agents/`));
+    console.log(term.gray('Projecoes sao derivadas. Edite sempre squads/daia-e/agents/.'));
+    return EXIT.OK;
+  }
+
+  header(`Squad ${squad.manifest.name} v${squad.manifest.version}`);
+  console.log(term.gray(squad.manifest.description));
+  console.log('');
+  console.log(term.gray('agente      sprint     bok'));
+  for (const agent of squad.agents) {
+    const fm = agent.frontmatter;
+    const mark = agent.problems.length === 0 ? term.green('v') : term.red('x');
+    console.log(`${mark} ${String(fm.id).padEnd(10)} ${String(fm.sprint).padEnd(10)} ${fm.bok}`);
+    for (const problem of agent.problems) console.log(term.red(`    ${problem}`));
+  }
+  for (const problem of squad.problems) console.log(term.red(`! ${problem}`));
+
+  const conform = squad.agents.every((a) => a.problems.length === 0) && squad.problems.length === 0;
+  console.log('');
+  console.log(conform
+    ? term.green('Todos os agentes conformes ao contrato de portabilidade (Art. XI).')
+    : term.red('Ha violacoes do contrato de agente.'));
+  console.log(term.gray('Cole qualquer um destes arquivos num chat e ele funciona. Esse e o teste.'));
+  console.log('');
+  return conform ? EXIT.OK : EXIT.BLOCKED;
+}
+
 function cmdDoctor(root) {
   header('daia doctor');
   const checks = [];
   const nodeOk = Number(process.versions.node.split('.')[0]) >= 18;
   checks.push({ ok: nodeOk, label: `Node.js ${process.versions.node}`, hint: 'Requer >= 18' });
+  // A ausencia de .daia nao e defeito: este mesmo repositorio e a ferramenta,
+  // nao um projeto que a usa. Reportar como informativo, nao como falha.
   const hasDaia = fs.existsSync(path.join(root, '.daia'));
-  checks.push({ ok: hasDaia, label: '.daia/ presente', hint: 'Rode: daia init' });
+  if (!hasDaia) {
+    console.log(`${term.blue('i')} nenhum projeto DAIA-E neste diretorio`);
+    console.log(term.gray('  Rode `daia init` para criar um, ou passe --root <projeto>'));
+  }
 
   let project = null;
   if (hasDaia) {
@@ -420,6 +467,7 @@ ${term.bold('COMANDOS')}
   trace --matrix            Matriz requisito -> cenario -> teste
   impact <id>               O que e afetado por mudanca neste artefato
   viewpoints [--catalogs]   Catalogo ativo, ou catalogos disponiveis
+  squad [adapt --to <alvo>] Lista a squad, ou projeta os agentes para um runtime
   rules                     Regras de correspondencia e artigos que as sustentam
   doctor                    Diagnostico do ambiente e do modelo
 
@@ -459,6 +507,7 @@ function main() {
     case 'trace': return cmdTrace(root, rest, flags);
     case 'impact': return cmdImpact(root, rest);
     case 'viewpoints': return cmdViewpoints(root, flags);
+    case 'squad': return cmdSquad(root, rest, flags);
     case 'rules': return cmdRules();
     case 'doctor': return cmdDoctor(root);
     default:
