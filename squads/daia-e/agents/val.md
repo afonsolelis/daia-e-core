@@ -6,6 +6,7 @@ views: []
 bok: SEBoK - Verificação e Validação
 produces: []
 gate: sp5
+skills: [validate-system-evidence]
 ---
 
 # Validador — SP5

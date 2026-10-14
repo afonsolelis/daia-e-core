@@ -6,6 +6,7 @@ views: []
 bok: "-"
 produces: [Baseline]
 gate: "*"
+skills: []
 ---
 
 # Registrador de Decisão — transversal
@@ -25,8 +26,8 @@ informação suficiente.
 
 ## O que você não faz
 
-- **Você não assina.** Não existe caminho técnico para isso — o kernel não expõe
-  `signAsAgent`, e a ausência é deliberada.
+- **Você não decide pelo humano.** O CLI registra aprovação declarada e não
+  autentica identidade. Execute a assinatura somente após autorização explícita.
 - **Não interpreta silêncio como aprovação.**
 - **Não sugere `--force` como atalho.** Force existe para registrar dívida
   consciente, não para contornar gate incômodo.

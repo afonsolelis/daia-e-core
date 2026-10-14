@@ -3,6 +3,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
+const { digestFile, referencedFiles } = require('../util/project-files');
 
 const { walk, readJson } = require('../util/fs-walk');
 const { SchemaValidator } = require('../validator/schema-validator');
@@ -190,9 +191,26 @@ class ModelStore {
         const rank = ORDER[doc.sprint] || 0;
         return rank <= ceiling;
       })
-      .map((id) => `${id}:${JSON.stringify(sortKeys(stripVolatile(this.documents.get(id))))}`)
+      .map((id) => {
+        const doc = this.documents.get(id);
+        const files = referencedFiles(doc).map(file => {
+          try { return [file, digestFile(this.root, file)]; }
+          catch { return [file, 'missing-or-unsafe']; }
+        });
+        return `${id}:${JSON.stringify(sortKeys(stripVolatile(doc)))}:${JSON.stringify(files)}`;
+      })
       .join('\n');
-    return `sha256:${crypto.createHash('sha256').update(canonical).digest('hex')}`;
+    let execution = '';
+    if (upToSprint && ceiling >= 4) {
+      const inputs = Object.values(this.config.verification || {}).flatMap(check => check.inputs || []);
+      inputs.push(`${this.config.evidenceDir}/quality-report.md`);
+      if (ceiling >= 5) inputs.push(`${this.config.evidenceDir}/validation.md`);
+      execution = JSON.stringify({ checks: this.config.verification || {}, phases: this.all('TestContract').map(tc => [tc.id, tc.phase]),
+        files: [...new Set(inputs)].sort().map(file => {
+          try { return [file, digestFile(this.root, file)]; } catch { return [file, 'missing-or-unsafe']; }
+        }) });
+    }
+    return `sha256:${crypto.createHash('sha256').update(JSON.stringify([...this.viewpoints.index]) + canonical + execution).digest('hex')}`;
   }
 }
 

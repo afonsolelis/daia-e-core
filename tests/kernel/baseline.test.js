@@ -47,10 +47,10 @@ test('Art. II: justificativa vazia ou trivial e recusada', () => {
   assert.throws(() => project.baselines.sign('SP1', { signedBy: 'A', rationale: 'ok' }), /identificacao|justificativa/);
 });
 
-test('Art. II: nao existe caminho de assinatura por agente', () => {
+test('registro declaratorio guarda assinante sem alegar autenticacao', () => {
   const project = kernel.openProject(scaffold());
   assert.strictEqual(typeof project.baselines.signAsAgent, 'undefined',
-    'a ausencia de assinatura por agente e deliberada, nao um esquecimento');
+    'a API publica usa sign para registrar uma decisao declarada');
   const baseline = project.baselines.sign('SP1', VALID);
   assert.ok(baseline.signature.signed_by);
   assert.strictEqual(baseline.signature.agent, undefined);

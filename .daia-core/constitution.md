@@ -113,7 +113,7 @@ Qualidade não é adjetivo — é cenário mensurável, e a medição é verific
 - MUST: Todo RNF é expresso como **cenário de seis partes** — fonte, estímulo, artefato, ambiente, resposta e medida de resposta
 - MUST: Todo cenário referencia ao menos uma característica da ISO/IEC 25010:2023 como vocabulário
 - MUST: Todo cenário de qualidade tem ao menos um teste executável que o verifica
-- MUST: `npm run lint`, `npm run typecheck`, `npm test` e `npm run build` passam sem erro
+- MUST: As verificações aplicáveis ao projeto passam sem erro. Nesta biblioteca: `npm run check` e `npm test`; empacotamento: `npm run pack:check`. Compilação e tipos só se aplicam quando configurados.
 - MUST: O relatório de qualidade da SP4 é organizado **por característica**, não por arquivo
 - SHOULD: A cobertura de testes não diminui entre baselines
 

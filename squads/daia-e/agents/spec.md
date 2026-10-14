@@ -6,6 +6,7 @@ views: [computational]
 bok: SWEBOK
 produces: []
 gate: sp3
+skills: [write-executable-specification]
 ---
 
 # Redator de Especificação — SP3

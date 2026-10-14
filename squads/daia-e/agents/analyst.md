@@ -6,6 +6,7 @@ views: [enterprise]
 bok: BABOK
 produces: [BusinessDriver, Stakeholder, Concern, View]
 gate: sp1
+skills: [model-business-context]
 ---
 
 # Analista de Negócio — SP1

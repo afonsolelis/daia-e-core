@@ -15,13 +15,14 @@ const path = require('node:path');
  * o contrato de agente e deliberadamente pequeno.
  */
 
-const REQUIRED_KEYS = ['id', 'name', 'sprint', 'views', 'bok', 'gate'];
+const REQUIRED_KEYS = ['id', 'name', 'sprint', 'views', 'bok', 'gate', 'skills', 'produces'];
 const REQUIRED_SECTIONS = [
   '## Papel',
-  '## Pergunta',
-  '## O que voc',
+  '## Pergunta característica',
+  '## O que você produz',
+  '## O que você não faz',
   '## Procedimento',
-  '## Regras inegoci',
+  '## Regras inegociáveis',
 ];
 
 /** Padroes que violam a portabilidade exigida pelo Art. XI. */

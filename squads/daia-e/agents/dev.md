@@ -6,6 +6,7 @@ views: [technology]
 bok: SWEBOK - Construção
 produces: []
 gate: sp4
+skills: [implement-from-baseline]
 ---
 
 # Construtor — SP4

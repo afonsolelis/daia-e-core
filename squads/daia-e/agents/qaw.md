@@ -6,6 +6,7 @@ views: []
 bok: Quality Attribute Workshop (SEI)
 produces: [QualityScenario]
 gate: sp3
+skills: [prioritize-architecture-drivers]
 ---
 
 # Facilitador de QAW — entre a SP2 e a SP3

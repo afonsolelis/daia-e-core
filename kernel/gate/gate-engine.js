@@ -1,7 +1,9 @@
 'use strict';
 
 const { RULES, SEVERITY } = require('../rules/correspondence-rules');
-const { getSprint, previousSprint } = require('./sprints');
+const { getSprint } = require('./sprints');
+const { SchemaValidator } = require('../validator/schema-validator');
+const { architectureFindings } = require('../rules/architecture');
 
 /**
  * Motor de gates.
@@ -68,9 +70,13 @@ class GateEngine {
       findings.push(...produced);
     }
 
+    if (!this.store.parseErrors.length && !this.store.schemaErrors.length) {
+      findings.push(...architectureFindings(this.store, sprint.id));
+    }
     // Art. III: nenhuma sprint fecha antes da anterior estar assinada.
-    const previous = previousSprint(sprint.id);
-    if (previous && options.baselines) {
+    const preceding = ['SP1', 'SP2', 'SP3', 'SP4', 'SP5'].slice(0, ['SP1', 'SP2', 'SP3', 'SP4', 'SP5'].indexOf(sprint.id));
+    for (const id of options.baselines ? preceding : []) {
+      const previous = getSprint(id);
       const signed = options.baselines.get(previous.id);
       if (!signed) {
         findings.push({
@@ -81,10 +87,11 @@ class GateEngine {
           message: `baseline ${previous.id} nao foi encerrada`,
           hint: `Rode: daia baseline sign ${previous.id} --by "<nome>" --rationale "<razao>"`,
         });
-      } else if (signed.state_hash && signed.state_hash !== this.store.stateHash(previous.id)) {
+      } else if (new SchemaValidator(this.store.schemas).validate(signed, this.store.schemas.get('baseline')).length ||
+          signed.state_hash !== this.store.stateHash(previous.id) || !['accepted', 'accepted-with-debt'].includes(signed.signature?.decision)) {
         findings.push({
           rule: 'BASELINE-DRIFT',
-          severity: SEVERITY.WARN,
+          severity: SEVERITY.BLOCK,
           article: 'II',
           id: previous.id,
           message: `o modelo mudou desde a assinatura de ${previous.id}`,

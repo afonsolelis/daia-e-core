@@ -1,234 +1,173 @@
 # DAIA-E
 
-> **D**esenvolvimento **A**ssistido por **I**nteligência **A**rtificial Orientado por **E**specificação
+Validador de descrição arquitetural e processo guiado para construir software,
+com onboarding, skills, rastreabilidade, testes executados e baselines aprovadas.
 
-Orquestração de agentes para criação e manutenção de software, com descrição
-arquitetural segundo a **ISO/IEC/IEEE 42010:2022** e **gates executáveis** por
-baseline.
+O projeto deriva do AIOX Core. Adapta a experiência de instalação e condução por
+etapas ao método DAIA-E: negócio → requisitos → arquitetura → implementação →
+validação. As etapas delimitam escopo, não duração.
 
-[![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)](https://nodejs.org)
-[![Licença](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
-[![Dependências](https://img.shields.io/badge/depend%C3%AAncias-0-blue.svg)](package.json)
+## Começar
 
----
-
-## A ideia em uma frase
-
-Frameworks de agente entregam sugestões; o DAIA-E entrega um **gate que recusa**.
-
-```console
-$ daia gate SP3
-
-x AD-ALTERNATIVE (Art. IX)
-   AD-persistencia decisao sem alternativa considerada
-   O LLM converge para solucoes convencionais sem explicitar que outras existiam.
-
-BLOQUEADO — 1 violacao(oes) inegociavel(is)
-$ echo $?
-1
-```
-
-Isso não é um aviso. É `exit 1`, e ele para o pipeline.
-
-## Por que existe
-
-O código gerado por LLM costuma ser sintaticamente correto e desalinhado dos
-requisitos não funcionais. A causa não é o modelo — é a ausência de
-especificação à qual confrontá-lo. O DAIA-E organiza o desenvolvimento em cinco
-sprints, entendidas como **unidades de delimitação de escopo e não de tempo**,
-cada uma encerrada por uma baseline que **só o humano assina**.
-
-| Sprint | Pergunta característica | Corpo de conhecimento |
-|--------|------------------------|----------------------|
-| **SP1 — NEG** | Por que o sistema deve existir e para quem? | BABOK |
-| **SP2 — REQ** | O que precisa fazer e com que qualidade? | SWEBOK + ISO/IEC 25010:2023 |
-| **SP3 — ST** | Como será estruturado e por quê? | SEBoK + ISO 42010 + RM-ODP |
-| **SP4 — IMPL** | A estrutura se sustenta na prática? | SWEBOK (Construção, Testes, Qualidade) |
-| **SP5 — DEMO** | A hipótese inicial se confirma? | SEBoK (V&V) |
-
-Atravessando a progressão, o confronto arquitetural opera **em ciclo**:
-QAW entre SP2 e SP3 → ATAM na SP3 → laço de reavaliação na SP4.
-
-## Instalação
-
-```bash
-npx @daia-e/core init meu-projeto
-```
-
-Ou direto do repositório — **não há `npm install`**, porque não há dependências:
+Requer Node.js >= 18. Não há dependências externas.
 
 ```bash
 git clone https://github.com/afonsolelis/daia-e-core.git
-node daia-e-core/bin/daia.js --help
+cd daia-e-core
+node bin/daia.js init ../meu-projeto
 ```
 
-## Uso
+Em terminal interativo, o onboarding pergunta nome, projeto novo ou existente,
+objetivo, stack, restrições e runtime. Para automação:
 
 ```bash
-daia init                      # inicializa .daia/ com o metamodelo
-daia status                    # onde você está nas cinco sprints
-daia gate SP3                  # avalia; exit != 0 quando bloqueia
-daia baseline sign SP3 --by "Nome" --rationale "por que aceito"
-daia trace TC-suite --up       # do teste até a razão de negócio
-daia trace --matrix            # requisito → cenário → teste
-daia impact AD-cep             # o que muda se esta decisão mudar
-daia squad                     # os 11 agentes e suas views
-daia rules                     # as 19 regras e os artigos que as sustentam
+node bin/daia.js init ../meu-projeto --yes --mode new --runtime codex \
+  --name "Meu projeto" --objective "Objetivo do sistema"
+node bin/daia.js next --root ../meu-projeto
 ```
 
-## O metamodelo
+O comando cria configuração, guia, schemas, histórico e instala skills. O nome
+`daia` fica disponível ao instalar o pacote, por exemplo com `npm link` no
+repositório. A publicação npm não é realizada por esses comandos.
 
-A ISO 42010 define um **metamodelo** — e um metamodelo é, literalmente, um
-schema. O kernel o implementa como JSON Schema validado:
-
-```
-Stakeholder ──sustenta──> Concern <──endereça── View ──segue──> Viewpoint
-                              ▲                   │
-                              │                   ├── modelo estático  (obrigatório na SP3)
-                        ArchitectureDecision      └── modelo dinâmico  (obrigatório na SP3)
-                              │
-                        ≥1 alternativa preterida + critério
-```
-
-O ponto decisivo: **a norma exige correspondência entre views, e correspondência
-verificável é lint.** As 19 regras não são convenções de projeto — são a norma
-tornada executável.
-
-| Regra | Artigo | Severidade |
-|-------|--------|-----------|
-| Toda `Concern` é endereçada por ≥1 `View` | VII | BLOCK |
-| Toda `View` declara stakeholders identificados | VII | BLOCK |
-| Todo `AD` registra ≥1 alternativa preterida e o critério | IX | BLOCK |
-| Todo RNF tem cenário de seis partes com medida efetiva | V | BLOCK |
-| Todo cenário é verificado por teste executável | V | BLOCK |
-| SP3 exige modelagem estática **e** dinâmica | VIII | BLOCK |
-| Testes em vermelho antes da geração; verdes na SP4 | VIII | BLOCK |
-| Nenhuma baseline fecha sem assinatura humana | II | BLOCK |
-
-`daia rules` lista as 19.
-
-## Viewpoints plugáveis
-
-A 42010 **não prescreve quais views devem existir** — isso é decisão de projeto.
-O kernel implementa o metamodelo; o catálogo é carregável:
+## Fluxo guiado
 
 ```bash
-daia viewpoints --catalogs
+daia next --json              # etapa atual, entradas, entregas, skills e bloqueios
+daia skills                  # catálogo de capacidades
+daia gate SP1                # inspeção sem executar comandos do projeto
+daia verify SP1              # verifica a etapa e registra progresso
+daia baseline sign SP1 --by "Nome" --rationale "Justificativa da decisão"
+daia status                  # baselines atuais e desatualizadas
+daia validate architecture   # gate SP3, incluindo evidências e pré-requisitos
 ```
 
-| Catálogo | Origem | Views |
-|----------|--------|-------|
-| `rm-odp` *(default)* | ISO/IEC 10746 | enterprise, information, computational, engineering, technology |
-| `4plus1` | Kruchten, 1995 | logical, process, development, physical, scenarios |
-| `c4` | c4model.com | context, container, component, code |
+| Etapa | Entregas | Skills |
+|---|---|---|
+| SP1 | stakeholders, drivers, preocupações, fronteira | model-business-context |
+| SP2 | requisitos e cenários mensuráveis | specify-quality-scenarios, prioritize-architecture-drivers |
+| SP3 | views, modelos, decisões, contratos e testes | describe-software-architecture, evaluate-architecture-tradeoffs, write-executable-specification |
+| SP4 | implementação, testes verdes, relatório de qualidade | implement-from-baseline, validate-system-evidence |
+| SP5 | demonstração, confronto da hipótese e limitações | validate-system-evidence |
 
-## A squad
+Leia `.daia/guide.md` e use `.daia/schemas/` para produzir os artefatos em
+`.daia/model/`. `daia next` recalcula a etapa com o estado atual;
+`daia verify` registra verificações em `.daia/workflow.json`.
 
-11 agentes, cada um ligado a uma *view* e a um corpo de conhecimento:
+Para software existente, use `--mode existing`. Comece pelo inventário de
+código e testes em `.daia/evidence/recovery.md`, com origem e limitações.
+Views recuperadas exigem confirmação declarada após revisão humana. Testes já
+existentes podem permanecer verdes na SP3.
 
-| Agente | Sprint | View | BoK |
-|--------|--------|------|-----|
-| `analyst` | SP1 | Enterprise | BABOK · IDEF0 |
-| `po` | SP2 | Information | SWEBOK · ISO 25010 |
-| `qaw` | SP2↔SP3 | *utility tree* | QAW |
-| `arch` | SP3 | Computational · Engineering | SEBoK · 42010 · RM-ODP |
-| `atam` | SP3, SP4 | sensibilidade e tradeoff | ATAM |
-| `spec` · `test` | SP3 | contratos · testes em vermelho | SWEBOK |
-| `dev` | SP4 | Technology | SWEBOK — Construção |
-| `audit` | SP4 | relatório por característica | SWEBOK — Qualidade |
-| `val` | SP5 | evidências e limitações | SEBoK — V&V |
-| `rec` | ⊥ | baselines e assinatura humana | — |
+## O que é validado
 
-**Os agentes são markdown + YAML puro.** Sem caminho de IDE, sem chamada a
-script, sem diretiva de runtime. O teste de portabilidade é literal: *cole o
-arquivo num chat qualquer e ele funciona.* O `daia squad` verifica essa
-propriedade em vez de confiar nela.
+- Schemas e referências entre tipos de artefato.
+- Cobertura de concerns por views, modelos estáticos/dinâmicos e alternativas.
+- Existência de documentos e testes referenciados; referências fora do projeto são recusadas.
+- Correspondências declaradas com origem, destino e justificativa.
+- Execuções registradas dos testes e fingerprints dos arquivos declarados.
+- Ordem das baselines e mudanças em documentos, testes e implementação declarada.
 
-O gate mora no CLI, não no agente. Consequência: **mesmo conduzindo o método por
-copiar-e-colar num chat web sem ferramenta alguma, `daia gate` continua sendo a
-autoridade.** O enforcement não depende do LLM.
+O resultado é validação estrutural e de evidências, **não certificação ISO**.
+Coerência semântica dos diagramas, adequação das decisões, tradeoffs e significado
+das medidas exigem revisão. Restrições de código podem ser verificadas por testes
+de arquitetura registrados como contratos.
 
-## Manutenção de software existente
+## Evidências executáveis
 
-Para software que já existe, o fluxo inverte — a descrição arquitetural precisa
-ser recuperada antes de ser alterada:
+Em `.daia/config.json`, configure por contrato:
+
+```json
+{
+  "verification": {
+    "TC-exemplo": {
+      "command": "node",
+      "args": ["--test", "tests/exemplo.test.js"],
+      "inputs": ["src/exemplo.js", "package.json"]
+    }
+  }
+}
+```
+
+`daia verify SP3` executa os comandos configurados (sem shell), com timeout de
+60 segundos por contrato, e registra saída, exit code e fingerprint. O teste e
+o modelo entram automaticamente no fingerprint; declare todos os demais arquivos
+relevantes em `inputs`. Serviços externos, ambiente e arquivos omitidos não são
+cobertos. Execute apenas comandos de projetos em que confia.
+
+O gate não aceita apenas `phase: green`: exige evidência compatível e atual.
+Uma falha vermelha precisa ser inspecionada para distinguir comportamento ainda
+não implementado de defeito no teste. O sistema não altera `phase` sozinho.
+
+SP4 exige `quality-report.md`; SP5 exige também `validation.md` em
+`.daia/evidence/`, com resultados e limitações. A presença do relatório é
+verificável; a qualidade de suas conclusões depende da revisão.
+
+## Aprovações e mudanças
+
+A baseline registra nome, justificativa, data e hash. É uma **aprovação local
+declarada**, não autenticação de identidade ou assinatura criptográfica.
+Agentes só podem registrá-la após autorização explícita da pessoa.
+
+Mudanças nos artefatos referenciados invalidam a baseline correspondente.
+Na SP4/SP5, os arquivos de implementação declarados em `inputs` e os relatórios
+também são cobertos. Baselines antigas devem ser revistas após esta atualização,
+pois o algoritmo passou a incluir conteúdo de arquivos.
+
+`--force` registra aceitação excepcional com dívida; não transforma evidência
+ausente em comprovação. O fluxo continua mostrando bloqueios não resolvidos.
 
 ```bash
-daia impact AD-persistencia    # o que esta mudança alcança
+daia trace TC-exemplo --up
+daia trace --matrix
+daia impact AD-exemplo
+daia baseline list
 ```
 
-O ATAM reabre **apenas sobre os cenários que o comando listou**. Reavaliar tudo
-a cada mudança torna o laço inútil por custo.
-
-## Exemplo completo
-
-`examples/pblrepositorymetrics/` traz o estudo de caso do artigo modelado no
-metamodelo e levado de SP1 a SP5, com as cinco baselines assinadas:
+## Instalação de skills
 
 ```bash
-daia status --root examples/pblrepositorymetrics
-daia trace --matrix --root examples/pblrepositorymetrics
+daia setup --to codex
+daia setup --to claude
+daia skills sync describe-software-architecture --to codex
+daia setup --to portable
 ```
 
-## Arquitetura do projeto
+Claude recebe skills em `.claude/skills/`, conforme sua
+[documentação](https://code.claude.com/docs/en/skills). Codex recebe skills em `.agents/skills/`, conforme a
+[documentação oficial](https://learn.chatgpt.com/docs/build-skills).
+Os 11 papéis são material de referência em `.daia/agents/`; não são registrados
+como subagentes nativos. A exportação `portable` grava skills em
+`.daia/export/skills/` para integração manual em outros hosts. Não há promessa
+de ativação automática em hosts não testados.
 
+A instalação valida a biblioteca antes de gravar, é idempotente e recusa
+conflitos com conteúdo diferente. Preserve ou mova customizações antes de
+reinstalar. Projeções antigas em `.codex/skills/` não são apagadas
+automaticamente; revise-as para evitar duplicação.
+
+## Estrutura e desenvolvimento
+
+```text
+kernel/            schemas, regras, baselines, verificação e workflow
+bin/daia.js        CLI e onboarding
+squads/daia-e/     agentes, skills e guia canônicos
+tests/kernel/     testes unitários e percurso completo SP1–SP5
+docs/legacy/      regras AIOX arquivadas, sem ativação automática
 ```
-kernel/           zero dependências, roda sem npm install
-├── schemas/      11 JSON Schemas do metamodelo
-├── validator/    validador de JSON Schema próprio
-├── store/        carga do grafo; hash canônico escopado por sprint
-├── rules/        19 regras de correspondência
-├── gate/         motor de gates SP1..SP5
-├── baseline/     assinatura humana — não existe signAsAgent
-├── trace/        rastreabilidade, matriz e impacto
-├── squad/        carregador e validador de portabilidade
-└── viewpoints/   catálogos plugáveis
-bin/daia.js       CLI
-squads/daia-e/    11 agentes portáteis
-```
-
-O kernel **não chama modelo de linguagem**. Ele carrega, valida, avalia e
-registra. Os agentes propõem; o kernel aceita ou recusa. Essa separação é o que
-torna o método auditável — e o kernel, citável.
-
-## Testes
 
 ```bash
-npm test          # 39 casos, node:test nativo
+npm run check       # sintaxe de todos os arquivos JavaScript do produto e testes
+npm test            # testes, incluindo onboarding, evidências e retomada
+npm run pack:check  # conteúdo do pacote npm
 ```
 
-Incluindo verificação executável do Artigo II: assinatura sem identificação
-humana é recusada, sem justificativa é recusada, e **não existe caminho de
-assinatura por agente**.
-
-## Constituição
-
-Doze artigos em [`.daia-core/constitution.md`](.daia-core/constitution.md).
-Os inegociáveis:
-
-| | |
-|---|---|
-| **I** | CLI First |
-| **II** | Human Decision Authority |
-| **III** | Baseline-Driven Development |
-| **VII** | Architectural Description (ISO 42010) |
-| **VIII** | Specification Before Generation |
-| **XI** | Squad-First Portability |
-
-> Gate é código, não checklist. Um princípio sem gate executável é aspiração,
-> não constituição.
-
-## Fundamentação
-
-> Brandão, A. C. L., Arakaki, R. & Silva, L. A. (2026). *Especificação antes da
-> Geração: um Método para Desenvolvimento de Software Assistido por IA com
-> Avaliação Arquitetural em Ciclo.* Revista Brasileira de Informática na Educação.
+Não há compilação nem checagem estática de tipos nesta biblioteca JavaScript.
+Os catálogos RM-ODP, C4 e 4+1 são selecionados com `--catalog` no onboarding.
+O kernel não chama modelos de linguagem; as skills orientam o assistente do host.
 
 ## Licença e linhagem
 
-MIT. Trabalho derivado do [Synkra AIOX](https://github.com/SynkraAI/aiox-core),
-que deriva do [BMad Method](https://github.com/bmad-code-org/BMAD-METHOD).
-A cadeia completa, o que foi preservado e o que foi substituído estão em
-[ATTRIBUTION.md](ATTRIBUTION.md).
-
-Não afiliado a SynkraAI Inc., ao BMad Method ou à BMad Code, LLC.
+MIT. Derivado do [Synkra AIOX](https://github.com/SynkraAI/aiox-core), por sua vez
+derivado do BMad Method. Consulte [ATTRIBUTION.md](ATTRIBUTION.md) e a
+[constituição](.daia-core/constitution.md). Sem afiliação aos projetos de origem.

@@ -1,6 +1,6 @@
 {
   "name": "@daia-e/core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "DAIA-E — Desenvolvimento Assistido por Inteligência Artificial Orientado por Especificação. Orquestração de agentes com descrição arquitetural ISO/IEC/IEEE 42010 e gates executáveis por baseline.",
   "main": "kernel/index.js",
   "bin": {
@@ -10,13 +10,17 @@
     "bin/",
     "kernel/",
     "squads/",
+    "scripts/check.js",
+    ".daia-core/constitution.md",
     "LICENSE",
     "ATTRIBUTION.md",
     "README.md"
   ],
   "scripts": {
     "test": "node --test \"tests/**/*.test.js\"",
-    "lint": "node --check bin/daia.js && node -e \"require('./kernel')\"",
+    "lint": "node scripts/check.js",
+    "check": "node scripts/check.js",
+    "pack:check": "npm pack --dry-run",
     "gate": "node bin/daia.js gate"
   },
   "keywords": [

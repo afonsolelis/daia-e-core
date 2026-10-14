@@ -26,7 +26,15 @@ views: [computational]    # views do catalogo que este agente preenche
 bok: SEBoK + ISO 42010    # corpo de conhecimento que o fundamenta
 produces: [View, ArchitectureDecision]
 gate: sp3                 # gate que valida o trabalho deste agente
+skills: [describe-software-architecture] # capacidades canonicas que compoe
 ```
+
+As skills vivem em `squads/daia-e/skills/<nome>/SKILL.md`. O agente define
+papel e fronteira; a skill define uma capacidade invocável e reutilizável.
+Ao executar trabalho, carregue as skills declaradas antes do procedimento.
+O guia instalado em `.daia/guide.md` define a sequencia e as evidencias atuais.
+Procedimentos do papel resumem responsabilidades; comandos e verificacoes
+operacionais devem seguir as skills e o CLI.
 
 ## Estrutura do corpo
 

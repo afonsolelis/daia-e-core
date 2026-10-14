@@ -6,6 +6,7 @@ views: []
 bok: ATAM (SEI)
 produces: [ArchitectureDecision]
 gate: sp3
+skills: [evaluate-architecture-tradeoffs]
 ---
 
 # Avaliador ATAM — SP3, reabrindo na SP4

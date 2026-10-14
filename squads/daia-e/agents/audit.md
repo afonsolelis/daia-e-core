@@ -6,6 +6,7 @@ views: []
 bok: SWEBOK - Gerência da Qualidade
 produces: []
 gate: sp4
+skills: [validate-system-evidence]
 ---
 
 # Auditor de Qualidade — SP4

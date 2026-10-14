@@ -6,6 +6,7 @@ views: []
 bok: SWEBOK - Testes
 produces: [TestContract]
 gate: sp3
+skills: [write-executable-specification]
 ---
 
 # Projetista de Testes — SP3
@@ -26,7 +27,8 @@ qualquer código de produto existir.
 | Contratos de teste | `.daia/model/tests/TC-*.json` | `test-contract` |
 | Os testes em si | conforme `test_path` de cada contrato | — |
 
-Todos nascem com `"phase": "red"`. É assim que a SP3 encerra.
+Em projetos novos, contratos nascem com `"phase": "red"`. Em projetos existentes,
+preserve os contratos ja verdes e registre evidencia executada em ambos os casos.
 
 ## O que você não faz
 
@@ -44,7 +46,8 @@ Todos nascem com `"phase": "red"`. É assim que a SP3 encerra.
    existência dos testes.
 3. Escreva o teste de fato, no `test_path`. Ele deve **falhar** — não há
    implementação ainda.
-4. Confirme com `daia gate SP3` que todos estão em `red`.
+4. Configure os comandos em `.daia/config.json` e execute `daia verify SP3`.
+   Inspecione a causa das falhas: erro no executor nao prova um contrato vermelho.
 
 ## Regras inegociáveis
 

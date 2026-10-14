@@ -1,6 +1,6 @@
 {
   "name": "daia-e",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Squad do metodo DAIA-E: cinco sprints ancoradas em BABOK, SWEBOK e SEBoK, com descricao arquitetural ISO/IEC/IEEE 42010 e baselines encerradas por decisao humana.",
   "author": "Afonso Cesar Lelis Brandao",
   "license": "MIT",
@@ -15,6 +15,16 @@
     "format": "markdown + YAML frontmatter, sem caminho de IDE e sem chamada a script",
     "note": "Art. XI — as projecoes de runtime sao derivadas, nunca canonicas. Um humano le. Qualquer LLM le."
   },
+  "skills": [
+    { "id": "model-business-context", "sprint": "SP1", "agent": "analyst", "gate": "SP1" },
+    { "id": "specify-quality-scenarios", "sprint": "SP2", "agent": "po", "gate": "SP2" },
+    { "id": "prioritize-architecture-drivers", "sprint": "SP2-SP3", "agent": "qaw", "gate": "SP3" },
+    { "id": "describe-software-architecture", "sprint": "SP3", "agent": "arch", "gate": "SP3" },
+    { "id": "evaluate-architecture-tradeoffs", "sprint": "SP3-SP4", "agent": "atam", "gate": "SP3" },
+    { "id": "write-executable-specification", "sprint": "SP3", "agent": "spec", "gate": "SP3" },
+    { "id": "implement-from-baseline", "sprint": "SP4", "agent": "dev", "gate": "SP4" },
+    { "id": "validate-system-evidence", "sprint": "SP4-SP5", "agent": "val", "gate": "SP5" }
+  ],
   "agents": [
     { "id": "analyst", "sprint": "SP1", "views": ["enterprise"], "bok": "BABOK" },
     { "id": "po", "sprint": "SP2", "views": ["information"], "bok": "SWEBOK + ISO/IEC 25010:2023" },

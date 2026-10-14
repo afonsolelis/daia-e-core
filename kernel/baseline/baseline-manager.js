@@ -15,7 +15,7 @@ const { getSprint } = require('../gate/sprints');
  * sprints — inclusive na captacao dos direcionadores de negocio — mas a
  * assinatura e humana.
  *
- * Nota de projeto: nao existe metodo `signAsAgent`. A ausencia e deliberada.
+ * Registro declaratorio local: nao autentica a identidade de quem invoca a API.
  */
 class BaselineManager {
   constructor(store) {
@@ -98,6 +98,10 @@ class BaselineManager {
   verify(sprintId) {
     const baseline = this.get(sprintId);
     if (!baseline) return { exists: false, valid: false, reason: 'baseline nao encerrada' };
+    if (this.validator.validate(baseline, this.store.schemas.get('baseline')).length ||
+        !['accepted', 'accepted-with-debt'].includes(baseline.signature?.decision)) {
+      return { exists: true, valid: false, reason: 'baseline invalida ou rejeitada' };
+    }
     const current = this.store.stateHash(baseline.sprint);
     if (baseline.state_hash !== current) {
       return {

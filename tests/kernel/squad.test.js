@@ -61,7 +61,7 @@ test('agente com caminho de IDE e recusado', () => {
   const os = require('node:os');
   const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'daia-squad-')), 'mau.md');
   fs.writeFileSync(file,
-    '---\nid: mau\nname: Mau\nsprint: SP1\nviews: []\nbok: x\ngate: sp1\n---\n' +
+    '---\nid: mau\nname: Mau\nsprint: SP1\nviews: []\nbok: x\ngate: sp1\nskills: []\n---\n' +
     '## Papel\nx\n## Pergunta característica\nx\n## O que você produz\n' +
     'Leia .claude/agents/outro.md\n## O que você não faz\nx\n## Procedimento\nx\n## Regras inegociáveis\nx\n');
   const agent = loadAgent(file);

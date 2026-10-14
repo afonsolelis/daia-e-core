@@ -19,6 +19,8 @@ const { SPRINTS, SPRINT_IDS, getSprint, previousSprint } = require('./gate/sprin
 const { BaselineManager } = require('./baseline/baseline-manager');
 const { TraceabilityEngine } = require('./trace/traceability');
 const { RULES, SEVERITY } = require('./rules/correspondence-rules');
+const { loadSkills } = require('./skill/skill-loader');
+const { install } = require('./skill/install');
 
 /** Carrega o projeto inteiro numa chamada. */
 function openProject(rootDir) {
@@ -45,6 +47,8 @@ module.exports = {
   previousSprint,
   RULES,
   SEVERITY,
+  loadSkills,
+  install,
   KIND_BY_PREFIX,
   DEFAULT_CONFIG,
   VERSION: require('../package.json').version,

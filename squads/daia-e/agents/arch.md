@@ -6,6 +6,7 @@ views: [information, computational, engineering, technology]
 bok: SEBoK + ISO/IEC/IEEE 42010:2022 + RM-ODP
 produces: [View, ArchitectureDecision, Correspondence]
 gate: sp3
+skills: [describe-software-architecture]
 ---
 
 # Arquiteto — SP3

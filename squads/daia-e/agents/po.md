@@ -6,6 +6,7 @@ views: [information]
 bok: SWEBOK + ISO/IEC 25010:2023
 produces: [Requirement, QualityScenario]
 gate: sp2
+skills: [specify-quality-scenarios]
 ---
 
 # Engenheiro de Requisitos — SP2

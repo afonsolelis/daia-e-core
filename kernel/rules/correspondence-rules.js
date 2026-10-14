@@ -280,7 +280,7 @@ const RULES = [
       // assinada, o verde e o estado esperado — reavaliar a fase retroativamente
       // impediria qualquer reassinatura da SP3 apos a geracao.
       const sp3Closed = context.baselines && context.baselines.has('SP3');
-      if (sp3Closed) return [];
+      if (sp3Closed || store.config.mode === 'existing') return [];
 
       return contracts
         .filter((tc) => tc.phase !== 'red')
@@ -337,7 +337,7 @@ const RULES = [
         .filter((d) => d.status === 'recovered' && d.confirmed !== true)
         .map((d) =>
           finding(this, d.id, 'artefato recuperado de codigo ainda nao confirmado por humano',
-            'Rode `daia recover --confirm ' + d.id + '` apos revisar.')
+            'Revise a origem com o humano e registre confirmed: true na view recuperada.')
         );
     },
   },
