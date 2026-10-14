@@ -44,11 +44,17 @@ daia validate architecture   # gate SP3, incluindo evidências e pré-requisitos
 
 | Etapa | Entregas | Skills |
 |---|---|---|
-| SP1 | stakeholders, drivers, preocupações, fronteira | model-business-context |
-| SP2 | requisitos e cenários mensuráveis | specify-quality-scenarios, prioritize-architecture-drivers |
-| SP3 | views, modelos, decisões, contratos e testes | describe-software-architecture, evaluate-architecture-tradeoffs, write-executable-specification |
+| SP1 | stakeholders, drivers, preocupações, personas, processos BPMN, IDEF0, fronteira | model-business-context, model-business-processes, validate-business-layer |
+| SP2 | requisitos elicitados do negócio e cenários mensuráveis | elicit-requirements-from-business, specify-quality-scenarios, prioritize-architecture-drivers, validate-requirements-layer |
+| SP3 | views (lógica → engenharia → tecnologia), decisões, contratos e testes | describe-software-architecture, validate-engineering-layer, validate-technology-layer, evaluate-architecture-tradeoffs, write-executable-specification |
 | SP4 | implementação, testes verdes, relatório de qualidade | implement-from-baseline, validate-system-evidence |
 | SP5 | demonstração, confronto da hipótese e limitações | validate-system-evidence |
+
+Cada camada tem um agente validador que emite parecer antes da camada
+seguinte: `@val-neg` (negócio, BABOK), `@val-req` (elicitação, SWEBOK + SEBoK),
+`@val-eng` (engenharia, SEBoK + RM-ODP) e `@val-tec` (tecnologia). As regras
+mecânicas correspondentes aparecem no gate com os prefixos `BIZ-`, `ELI-`,
+`ENG-` e `TEC-`. As referências estão em `docs/references/`.
 
 Leia `.daia/guide.md` e use `.daia/schemas/` para produzir os artefatos em
 `.daia/model/`. `daia next` recalcula a etapa com o estado atual;

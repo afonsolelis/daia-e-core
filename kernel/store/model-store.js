@@ -24,6 +24,9 @@ const KIND_BY_PREFIX = {
   RNF: 'requirement',
   QS: 'quality-scenario',
   TC: 'test-contract',
+  PER: 'persona',
+  BP: 'process',
+  IDF: 'idef0',
 };
 
 const DEFAULT_CONFIG = {

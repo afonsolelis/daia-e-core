@@ -13,7 +13,7 @@ const SQUAD_DIR = path.join(__dirname, '..', '..', 'squads', 'daia-e');
 
 test('biblioteca de skills coincide com o manifesto e e valida', () => {
   const library = loadSkills(SQUAD_DIR);
-  assert.strictEqual(library.skills.length, 8);
+  assert.strictEqual(library.skills.length, 14);
   assert.deepStrictEqual(library.problems, []);
   for (const skill of library.skills) assert.deepStrictEqual(skill.problems, [], skill.problems.join('; '));
 });

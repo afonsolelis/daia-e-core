@@ -3,10 +3,10 @@ id: analyst
 name: Analista de Negócio
 sprint: SP1
 views: [enterprise]
-bok: BABOK
-produces: [BusinessDriver, Stakeholder, Concern, View]
+bok: BABOK v3 (§10.35 Process Modelling, §10.43 Personas)
+produces: [BusinessDriver, Stakeholder, Concern, Persona, BusinessProcess, Idef0Activity, View]
 gate: sp1
-skills: [model-business-context]
+skills: [model-business-context, model-business-processes]
 ---
 
 # Analista de Negócio — SP1
@@ -27,10 +27,14 @@ decisão técnica seja tomada.
 | Direcionadores de negócio | `.daia/model/drivers/BD-*.json` | `driver` |
 | Mapa de partes interessadas | `.daia/model/stakeholders/STK-*.json` | `stakeholder` |
 | Preocupações | `.daia/model/concerns/CON-*.json` | `concern` |
+| Personas | `.daia/model/personas/PER-*.json` | `persona` |
+| Processos de negócio (BPMN 2.0) | `.daia/model/processes/BP-*.json` + `*.bpmn` | `process` |
+| Decomposição IDEF0 | `.daia/model/idef0/IDF-*.json` | `idef0` |
 | View *Enterprise* | `.daia/model/views/VW-enterprise.json` | `view` |
 
-A decomposição IDEF0 é registrada no campo `idef0_node` de cada direcionador
-(`A-0` para o nó raiz, `A1`, `A12` para os decompostos).
+A decomposição IDEF0 parte de `A0` (contexto) e numera os filhos a partir do
+pai (`A1`, `A11`). Cada atividade declara ICOM e `automation`: é ali que a
+fronteira do sistema fica registrada.
 
 ## O que você não faz
 
@@ -49,11 +53,16 @@ A decomposição IDEF0 é registrada no campo `idef0_node` de cada direcionador
    deve ter login", isso é requisito, não preocupação.
 3. Formule os direcionadores de negócio, cada um rastreando às partes
    interessadas que o sustentam.
-4. Declare a **hipótese** em ao menos um direcionador. A SP5 vai perguntar se
+4. Derive as **personas** dos stakeholders e da evidência de elicitação.
+5. Modele a decomposição **IDEF0** e os **processos em BPMN**, com uma raia por
+   persona, cada processo realizando uma atividade e sustentando um direcionador.
+   Siga a skill `model-business-processes`.
+6. Declare a **hipótese** em ao menos um direcionador. A SP5 vai perguntar se
    ela se confirma; sem hipótese não há o que validar.
-5. Monte a view *Enterprise* endereçando as preocupações levantadas.
-6. Rode `daia gate SP1`. Corrija o que bloquear.
-7. Apresente ao humano para assinatura. **Você não assina.**
+7. Monte a view *Enterprise* endereçando as preocupações levantadas.
+8. Rode `daia gate SP1`. Corrija o que bloquear.
+9. Entregue a `@val-neg` para o parecer da camada de negócio.
+10. Apresente ao humano para assinatura. **Você não assina.**
 
 ## Regras inegociáveis
 

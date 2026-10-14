@@ -7,9 +7,10 @@ const os = require('node:os');
 const path = require('node:path');
 
 const kernel = require('../../kernel');
+const business = require('../fixtures/business');
 
 /** Cria um projeto DAIA-E temporario com os documentos dados. */
-function scaffold(docs, config = {}) {
+function scaffold(docs, config = {}, files = business.FILES) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'daia-test-'));
   const model = path.join(root, '.daia', 'model');
   fs.mkdirSync(model, { recursive: true });
@@ -20,6 +21,10 @@ function scaffold(docs, config = {}) {
   );
   for (const doc of docs) {
     fs.writeFileSync(path.join(model, `${doc.id}.json`), JSON.stringify(doc, null, 2));
+  }
+  for (const [file, content] of Object.entries(files)) {
+    fs.mkdirSync(path.dirname(path.join(root, file)), { recursive: true });
+    fs.writeFileSync(path.join(root, file), content);
   }
   return root;
 }
@@ -39,7 +44,7 @@ test('SP1 bloqueia sem direcionador nem parte interessada', () => {
 });
 
 test('SP1 passa com fundacao minima', () => {
-  const root = scaffold([STK, BD]);
+  const root = scaffold(business.DOCS);
   const report = kernel.openProject(root).gate.evaluate('SP1');
   assert.strictEqual(report.passed, true, JSON.stringify(report.blocking));
 });

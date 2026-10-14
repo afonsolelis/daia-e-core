@@ -70,8 +70,8 @@ O desenvolvimento organiza-se em cinco sprints, entendidas como **unidades de de
 
 | Sprint | Pergunta característica | Baseline de encerramento |
 |--------|------------------------|--------------------------|
-| **SP1 — NEG** | Por que o sistema deve existir e para quem? | Modelo de negócio: decomposição IDEF0, direcionadores, mapa de stakeholders, hipótese |
-| **SP2 — REQ** | O que o sistema precisa fazer e com que qualidade? | Requisitos: RF, RNF como cenários de seis partes, matriz de rastreabilidade |
+| **SP1 — NEG** | Por que o sistema deve existir e para quem? | Modelo de negócio: personas, processos em BPMN, decomposição IDEF0, direcionadores, mapa de stakeholders, hipótese |
+| **SP2 — REQ** | O que o sistema precisa fazer e com que qualidade? | Requisitos elicitados do negócio: RF, RNF como cenários de seis partes, matriz de rastreabilidade |
 | **SP3 — ST** | Como o sistema será estruturado e por quê? | Arquitetural: especificação técnica, esqueleto, documentos de especificação, testes em fase vermelha |
 | **SP4 — IMPL** | A estrutura decidida se sustenta na prática? | Executável: código, testes em fase verde, relatório de qualidade por característica |
 | **SP5 — DEMO** | A hipótese inicial se confirma? | Release demonstrável: roteiro, evidências, métricas e limitações declaradas |
@@ -201,8 +201,8 @@ Cada sprint ancora-se no corpo de conhecimento adequado à pergunta que responde
 
 | Sprint | Corpo de conhecimento |
 |--------|----------------------|
-| SP1 | **BABOK** — análise de negócio, IDEF0 |
-| SP2 | **SWEBOK**, com a ISO/IEC 25010:2023 como vocabulário |
+| SP1 | **BABOK** — análise de negócio: personas (§10.43), BPMN e IDEF0 (§10.35) |
+| SP2 | **SWEBOK** (elicitação) e **SEBoK** (necessidades → requisitos de sistema), com a ISO/IEC 25010:2023 como vocabulário |
 | SP3 | **SEBoK** e SWEBOK, com RM-ODP como arcabouço de *viewpoints* |
 | SP4 | **SWEBOK** — Construção, Testes e Gerência da Qualidade |
 | SP5 | **SEBoK** — verificação e validação |

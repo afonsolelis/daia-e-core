@@ -12,7 +12,7 @@ test('a squad carrega e o manifesto bate com os arquivos', () => {
   const squad = loadSquad(SQUAD_DIR);
   assert.strictEqual(squad.manifest.name, 'daia-e');
   assert.deepStrictEqual(squad.problems, [], squad.problems.join('; '));
-  assert.strictEqual(squad.agents.length, 11);
+  assert.strictEqual(squad.agents.length, 15);
 });
 
 test('Art. XI: nenhum agente viola a portabilidade', () => {

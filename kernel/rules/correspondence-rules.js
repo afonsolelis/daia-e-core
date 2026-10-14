@@ -24,6 +24,8 @@ const REF_FIELDS = [
   'verified_by',
   'affects_views',
   'verifies',
+  'performed_by',
+  'supports',
 ];
 
 function refsOf(doc) {
@@ -37,6 +39,10 @@ function refsOf(doc) {
   if (doc.kind === 'Correspondence') {
     refs.push({ field: 'from', ref: doc.from }, { field: 'to', ref: doc.to });
   }
+  for (const field of ['activity', 'parent']) {
+    if (typeof doc[field] === 'string') refs.push({ field, ref: doc[field] });
+  }
+  for (const ref of doc.elicitation?.sources || []) refs.push({ field: 'elicitation.sources', ref });
   return refs;
 }
 
@@ -439,5 +445,7 @@ const RULES = [
     },
   },
 ];
+
+RULES.push(...require('./layer-rules').LAYER_RULES);
 
 module.exports = { RULES, SEVERITY, refsOf };

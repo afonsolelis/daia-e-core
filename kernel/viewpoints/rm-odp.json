@@ -11,7 +11,7 @@
       "name": "Enterprise",
       "catalog": "rm-odp",
       "frames_concerns": ["business", "regulatory", "pedagogical"],
-      "model_kinds": ["idef0", "stakeholder-map", "policy"],
+      "model_kinds": ["idef0", "bpmn", "persona", "stakeholder-map", "policy"],
       "opens_at": "SP1",
       "completes_at": "SP1"
     },

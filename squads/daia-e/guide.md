@@ -16,10 +16,17 @@ implementacao da mudanca. Configure `mode: existing` no onboarding.
 
 ## Percurso
 
-1. SP1: stakeholders, necessidades, fronteira e hipotese; `daia gate SP1`.
-2. SP2: requisitos rastreaveis, cenarios de seis partes e prioridades; `daia gate SP2`.
-3. SP3: modelos estatico/dinamico, decisoes com alternativas, correspondencias,
-   especificacao e contratos de teste; `daia verify SP3`.
+1. SP1: stakeholders, personas, processos em BPMN (arquivo `.bpmn` com uma
+   raia por persona), decomposicao IDEF0 a partir de A0, fronteira
+   (`automation`) e hipotese; `daia gate SP1`, parecer de `@val-neg`.
+2. SP2: requisitos elicitados de processos e atividades IDEF0, com
+   `elicitation` (tecnica e fontes), cenarios de seis partes e prioridades;
+   `daia gate SP2`, parecer de `@val-req`.
+3. SP3: modelos estatico/dinamico, depois a view engineering (modelo
+   `deployment`, correspondencia com a view logica) e a view technology
+   (correspondencia com a engenharia, escolhas como decisoes com alternativas);
+   especificacao e contratos de teste; pareceres de `@val-eng` e `@val-tec`;
+   `daia verify SP3`.
 4. SP4: implemente apos aprovacao de SP3, execute testes e escreva
    `.daia/evidence/quality-report.md` com medidas, limiares e limitacoes.
 5. SP5: escreva `.daia/evidence/validation.md` com roteiro, hipotese, resultados

@@ -7,3 +7,6 @@ node_modules/
 coverage/
 *.bak
 .claude/settings.json.aiox-legacy
+
+# Corpos de conhecimento: copias locais, licenca nao permite redistribuicao
+docs/references/bok/*.pdf

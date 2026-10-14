@@ -8,7 +8,7 @@ function architectureFindings(store, sprint) {
   const expected = { stakeholders: ['Stakeholder'], concerns: ['Concern'], addresses_concerns: ['Concern'],
     affects_views: ['View'], scenarios: ['QualityScenario'], verifies: ['Requirement', 'QualityScenario'] };
   for (const doc of store.all()) {
-    const traceKinds = doc.kind === 'Requirement' ? ['BusinessDriver', 'Concern'] :
+    const traceKinds = doc.kind === 'Requirement' ? ['BusinessDriver', 'Concern', 'BusinessProcess', 'Idef0Activity', 'Requirement'] :
       doc.kind === 'ArchitectureDecision' ? ['Requirement', 'Concern', 'QualityScenario', 'BusinessDriver'] : null;
     if (traceKinds) for (const ref of doc.traces_to || []) {
       if (store.has(ref) && !traceKinds.includes(store.get(ref).kind)) add('TRACE-TYPE', doc.id, `Origem invalida: ${ref}`);

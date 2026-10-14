@@ -50,6 +50,11 @@ preterido.
    modelagem dinâmica, estrutura correta em repouso e inadequada em operação.
 3. **Instancie as views** do catálogo ativo (`daia viewpoints`). Cada view
    declara as preocupações que responde e as partes interessadas a que serve.
+   No RM-ODP a ordem é: information e computational, depois *engineering*
+   (modelo `deployment`, correspondência com o modelo lógico), depois
+   *technology* (correspondência com a engenharia e decisão por escolha).
+   `@val-eng` confere a engenharia antes de você fechar a tecnologia, e
+   `@val-tec` confere a tecnologia.
 4. **Registre as correspondências** entre views. É o que impede a descrição de
    se fragmentar em documentos mutuamente inconsistentes.
 5. **Para cada decisão relevante, registre ao menos uma alternativa preterida
