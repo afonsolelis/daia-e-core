@@ -1,0 +1,16 @@
+{
+  "id": "BD-devolucao",
+  "kind": "BusinessDriver",
+  "statement": "Reduzir os atrasos de devolução do acervo escolar",
+  "rationale": "Na conferência do último semestre, cerca de 30% dos empréstimos voltaram depois do prazo",
+  "stakeholders": [
+    "STK-bibliotecaria",
+    "STK-coordenacao"
+  ],
+  "idef0_node": "A0",
+  "hypothesis": "Registrar o prazo no empréstimo e avisar o aluno antes do vencimento reduz os atrasos para menos de 10%",
+  "sprint": "SP1",
+  "provenance": {
+    "drafted_by": "ai-assisted"
+  }
+}

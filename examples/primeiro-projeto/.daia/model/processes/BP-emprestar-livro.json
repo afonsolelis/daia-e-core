@@ -1,0 +1,26 @@
+{
+  "id": "BP-emprestar-livro",
+  "kind": "BusinessProcess",
+  "name": "Emprestar livro",
+  "state": "to-be",
+  "trigger": "Aluno pede um livro no balcão",
+  "outcome": "Empréstimo registrado com data de devolução",
+  "performed_by": [
+    "PER-bibliotecaria"
+  ],
+  "supports": [
+    "BD-devolucao"
+  ],
+  "activity": "IDF-A0",
+  "models": [
+    {
+      "kind": "dynamic",
+      "notation": "BPMN 2.0",
+      "path": "docs/emprestar-livro.bpmn"
+    }
+  ],
+  "sprint": "SP1",
+  "provenance": {
+    "drafted_by": "ai-assisted"
+  }
+}

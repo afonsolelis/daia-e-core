@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" id="defs-emprestimo" targetNamespace="https://example.org/biblioteca">
+  <bpmn:process id="emprestar-livro" isExecutable="false">
+    <bpmn:laneSet id="raias">
+      <bpmn:lane id="raia-bibliotecaria" name="Bibliotecária">
+        <bpmn:flowNodeRef>inicio</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>conferir-pendencias</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>registrar-emprestimo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>fim</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="inicio" name="Aluno pede livro"/>
+    <bpmn:userTask id="conferir-pendencias" name="Conferir pendências do aluno"/>
+    <bpmn:userTask id="registrar-emprestimo" name="Registrar empréstimo com data de devolução"/>
+    <bpmn:endEvent id="fim" name="Livro emprestado"/>
+    <bpmn:sequenceFlow id="f1" sourceRef="inicio" targetRef="conferir-pendencias"/>
+    <bpmn:sequenceFlow id="f2" sourceRef="conferir-pendencias" targetRef="registrar-emprestimo"/>
+    <bpmn:sequenceFlow id="f3" sourceRef="registrar-emprestimo" targetRef="fim"/>
+  </bpmn:process>
+</bpmn:definitions>

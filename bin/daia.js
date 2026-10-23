@@ -71,7 +71,7 @@ async function cmdInit(root, flags) {
   if (process.stdin.isTTY && !flags.yes) {
     const rl = require('node:readline/promises').createInterface({ input: process.stdin, output: process.stdout });
     try {
-      for (const [key, label, fallback] of [['name','Nome',path.basename(root)], ['mode','Projeto (new/existing)','new'], ['objective','Objetivo',''], ['stack','Stack','a definir'], ['constraints','Restricoes','a definir'], ['runtime','Runtime (codex/portable)','codex']]) {
+      for (const [key, label, fallback] of [['name','Nome',path.basename(root)], ['mode','Projeto (new/existing)','new'], ['objective','Objetivo',''], ['stack','Stack','a definir'], ['constraints','Restricoes','a definir'], ['runtime','Runtime (codex/claude/portable)','codex']]) {
         if (!flags[key]) flags[key] = (await rl.question(`${label} [${fallback}]: `)).trim() || fallback;
       }
     } finally { rl.close(); }
@@ -534,9 +534,10 @@ function usage() {
 ${term.bold('daia')} — DAIA-E: Desenvolvimento Assistido por IA Orientado por Especificacao
 
 ${term.bold('COMANDOS')}
-  init [--catalog rm-odp|4plus1|c4] [--name <nome>]
+  init [dir] [--yes] [--mode new|existing] [--runtime codex|claude|portable]
+       [--catalog rm-odp|4plus1|c4] [--name <nome>] [--objective <texto>]
                             Inicializa o modelo arquitetural em .daia/
-  setup [--to codex|portable]
+  setup [--to codex|claude|portable]
                             Instala agentes e skills no runtime do projeto
   next [--json]             Proxima etapa, skills, entregas e bloqueios
   verify [SP1..SP5]          Executa testes configurados e registra progresso
@@ -553,9 +554,12 @@ ${term.bold('COMANDOS')}
   viewpoints [--catalogs]   Catalogo ativo, ou catalogos disponiveis
   squad [adapt --to <alvo>] Lista a squad, ou projeta os agentes para um runtime
   skills [sync [id] --to <runtime>]
-                            Lista skills ou exporta para Codex/portable
+                            Lista skills ou exporta para Codex/Claude/portable
   rules                     Regras de correspondencia e artigos que as sustentam
   doctor                    Diagnostico do ambiente e do modelo
+
+${term.bold('OPCOES GLOBAIS')}
+  --root <dir>              Projeto alvo (padrao: diretorio atual)
 
 ${term.bold('ARTIGOS INEGOCIAVEIS')}
   I    CLI First                       VII   Architectural Description (ISO 42010)

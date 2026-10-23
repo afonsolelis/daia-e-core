@@ -1,0 +1,14 @@
+{
+  "id": "CON-atrasos",
+  "kind": "Concern",
+  "statement": "Como reduzir os livros devolvidos com atraso sem impedir o acesso dos alunos?",
+  "stakeholders": [
+    "STK-bibliotecaria",
+    "STK-coordenacao"
+  ],
+  "category": "business",
+  "sprint": "SP1",
+  "provenance": {
+    "drafted_by": "ai-assisted"
+  }
+}

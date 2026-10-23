@@ -1,0 +1,24 @@
+{
+  "id": "VW-enterprise",
+  "kind": "View",
+  "viewpoint": "enterprise",
+  "title": "Empréstimos da biblioteca escolar",
+  "addresses_concerns": [
+    "CON-atrasos"
+  ],
+  "stakeholders": [
+    "STK-bibliotecaria",
+    "STK-coordenacao"
+  ],
+  "models": [
+    {
+      "kind": "dynamic",
+      "notation": "BPMN 2.0",
+      "path": "docs/emprestar-livro.bpmn"
+    }
+  ],
+  "sprint": "SP1",
+  "provenance": {
+    "drafted_by": "ai-assisted"
+  }
+}

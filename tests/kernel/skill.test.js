@@ -46,3 +46,10 @@ test('catalogos das skills de taticas produzem ids aceitos pelo schema de decisa
     for (const id of ids) assert.match(`${attribute}/${id}`, pattern);
   }
 });
+
+test('toda skill declarada no manifesto para SP1-SP5 aparece no workflow guiado', () => {
+  const source = fs.readFileSync(path.join(__dirname, '..', '..', 'kernel', 'workflow', 'workflow.js'), 'utf8');
+  for (const skill of loadSkills(SQUAD_DIR).skills) {
+    assert.ok(source.includes(`'${skill.id}'`), `${skill.id} ausente do workflow`);
+  }
+});

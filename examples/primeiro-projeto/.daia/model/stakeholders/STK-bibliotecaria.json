@@ -1,0 +1,13 @@
+{
+  "id": "STK-bibliotecaria",
+  "kind": "Stakeholder",
+  "name": "Bibliotecária",
+  "role": "Opera os empréstimos e cobra devoluções",
+  "concerns": [
+    "CON-atrasos"
+  ],
+  "sprint": "SP1",
+  "provenance": {
+    "drafted_by": "ai-assisted"
+  }
+}

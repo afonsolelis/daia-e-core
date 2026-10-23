@@ -1,0 +1,14 @@
+{
+  "project": "Biblioteca escolar",
+  "mode": "new",
+  "objective": "Reduzir os atrasos de devolução dos livros da biblioteca escolar",
+  "stack": "a definir",
+  "constraints": "a definir",
+  "verification": {},
+  "method": "DAIA-E",
+  "viewpointCatalog": "rm-odp",
+  "modelDir": ".daia/model",
+  "baselineDir": ".daia/baselines",
+  "evidenceDir": ".daia/evidence",
+  "source": "Tutorial do README — SP1 completa, sem baseline assinada"
+}

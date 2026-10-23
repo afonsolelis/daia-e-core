@@ -1,0 +1,13 @@
+{
+  "id": "STK-coordenacao",
+  "kind": "Stakeholder",
+  "name": "Coordenação pedagógica",
+  "role": "Responde pelo acervo e pelo acesso dos alunos aos livros",
+  "concerns": [
+    "CON-atrasos"
+  ],
+  "sprint": "SP1",
+  "provenance": {
+    "drafted_by": "ai-assisted"
+  }
+}

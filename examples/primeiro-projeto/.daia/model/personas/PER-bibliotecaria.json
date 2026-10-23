@@ -1,0 +1,21 @@
+{
+  "id": "PER-bibliotecaria",
+  "kind": "Persona",
+  "name": "Bibliotecária",
+  "stakeholders": [
+    "STK-bibliotecaria"
+  ],
+  "context": "Atende sozinha cerca de 40 alunos por dia, com controle em caderno",
+  "goals": [
+    "Registrar um empréstimo em menos de um minuto",
+    "Saber quais livros estão atrasados"
+  ],
+  "pains": [
+    "Descobre o atraso só quando procura o livro"
+  ],
+  "evidence": "Entrevista com a bibliotecária e observação de um dia de atendimento",
+  "sprint": "SP1",
+  "provenance": {
+    "drafted_by": "ai-assisted"
+  }
+}

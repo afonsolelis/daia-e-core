@@ -115,3 +115,11 @@ test('a ordem das baselines e verificada (Art. III)', () => {
   const report = project.gate.evaluate('SP2', { baselines: new Map() });
   assert.ok(report.blocking.some((f) => f.rule === 'BASELINE-ORDER'));
 });
+
+test('o exemplo do tutorial do README passa no gate SP1 sem bloqueio nem alerta', () => {
+  const root = path.join(__dirname, '..', '..', 'examples', 'primeiro-projeto');
+  const report = kernel.openProject(root).gate.evaluate('SP1');
+  const findings = report.findings.filter((f) => f.severity === 'BLOCK' || f.severity === 'WARN');
+  assert.deepStrictEqual(findings, []);
+  assert.ok(!fs.existsSync(path.join(root, '.daia', 'baselines')), 'o exemplo nao traz baseline assinada');
+});

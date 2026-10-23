@@ -1,0 +1,26 @@
+{
+  "id": "IDF-A0",
+  "kind": "Idef0Activity",
+  "node": "A0",
+  "title": "Gerir empréstimos do acervo",
+  "inputs": [
+    "pedido de empréstimo",
+    "livro devolvido"
+  ],
+  "controls": [
+    "regimento da biblioteca"
+  ],
+  "outputs": [
+    "empréstimo registrado",
+    "aviso de vencimento"
+  ],
+  "mechanisms": [
+    "Bibliotecária",
+    "sistema de empréstimos"
+  ],
+  "automation": "system",
+  "sprint": "SP1",
+  "provenance": {
+    "drafted_by": "ai-assisted"
+  }
+}
