@@ -3,7 +3,7 @@
 **Desenvolvimento Assistido por Inteligência Artificial Orientado por Especificação.**
 
 Validador de descrição arquitetural e processo guiado para construir software com
-assistentes de IA. O DAIA-E conduz o projeto do negócio à demonstração, verifica
+assistentes de IA. O DAIA-E conduz o projeto do negócio à validação, verifica
 pelo CLI cada artefato, referência, teste e evidência, e só encerra cada etapa com
 uma decisão humana registrada.
 
@@ -12,16 +12,39 @@ assistente do host (Claude, Codex ou outro); o CLI verifica o resultado.
 
 ## O método
 
-O desenvolvimento passa por cinco sprints. Cada sprint delimita **escopo, não
-duração**, e termina numa baseline aprovada pelo humano.
+![Fluxo do método DAIA-E](docs/img/daia-e-fluxo.png)
 
-| Sprint | Pergunta | Baseline |
-|---|---|---|
-| SP1 — Negócio | Por que o sistema deve existir e para quem? | stakeholders, direcionadores, preocupações, personas, processos BPMN, IDEF0, fronteira, hipótese |
-| SP2 — Requisitos | O que o sistema precisa fazer e com que qualidade? | requisitos elicitados do negócio e cenários de qualidade de seis partes |
-| SP3 — Arquitetura | Como o sistema será estruturado e por quê? | views, decisões com alternativa, correspondências, contratos de teste em vermelho |
-| SP4 — Implementação | A estrutura decidida se sustenta na prática? | código, testes verdes e relatório de qualidade por característica |
-| SP5 — Demonstração | A hipótese inicial se confirma? | release demonstrável, evidências e limitações declaradas |
+*Fluxo do método DAIA-E. Fonte: Brandão, Arakaki e Silva (2026). As setas
+tracejadas indicam sustentação metodológica.*
+
+O desenvolvimento passa por cinco sprints. Cada sprint delimita **escopo, não
+duração**, se apoia num corpo de conhecimento e termina numa **linha de base**
+(baseline): o estado aprovado do projeto naquele ponto. Uma linha de base só se
+fecha por decisão humana registrada, e a sprint seguinte só começa depois dela.
+
+| Sprint | Fundamento | O que produz | Linha de base |
+|---|---|---|---|
+| SP1 — Negócio | BABOK | problema, partes interessadas, direcionadores de negócio e hipótese de valor, com personas, processos BPMN e IDEF0 | 1 — negócio aprovado |
+| SP2 — Requisitos | SWEBOK e ISO/IEC 25010:2023 | RF, RNF e cenários mensuráveis de qualidade | 2 — requisitos aprovados |
+| SP3 — Especificação técnica | SEBoK, SWEBOK, ISO/IEC/IEEE 42010:2022 e RM-ODP | arquitetura, decisões (ADR), contratos, infraestrutura e testes vermelhos | 3 — especificação aprovada |
+| SP4 — Implementação | SWEBOK | geração guiada, verificação e refinamento até os testes ficarem verdes | 4 — produto verificado |
+| SP5 — Validação | SEBoK | demonstração, métricas, evidências e limitações | 5 — resultado validado |
+
+A avaliação arquitetural atravessa as sprints em ciclo. Depois da linha de base
+2, o **QAW** prioriza os cenários de qualidade numa árvore de utilidade; o
+**ATAM** examina riscos, sensibilidades e compromissos antes da linha de base 3;
+e, durante a implementação, a **reavaliação** confronta o planejado com a
+evidência medida antes da linha de base 4, devolvendo ao ATAM os riscos e as
+decisões revistos.
+
+A IA generativa assiste **todas** as sprints: estrutura artefatos, deriva e
+verifica rastreabilidade, propõe alternativas, gera código e sintetiza
+evidências. O que preserva o caráter deliberado das decisões não é restringir a
+IA a uma etapa, e sim a decisão humana no fechamento de cada linha de base.
+
+No CLI, a linha de base é a `baseline`: `daia baseline sign` registra quem
+decidiu, quando, com que justificativa e sobre qual estado do modelo (um hash
+do conteúdo de todos os artefatos).
 
 Princípios que o CLI faz valer (detalhes na [constituição](.daia-core/constitution.md)):
 
