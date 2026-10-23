@@ -7,6 +7,7 @@
   "slashPrefix": "daia",
   "method": {
     "name": "DAIA-E",
+    "adapted_from": "Brandao, Arakaki & Silva (2026), An RM-ODP Method to Model PBL Digital Twins for Supporting Closed-Loop Supervision, MethodsX (no prelo)",
     "constitution": ".daia-core/constitution.md"
   },
   "portability": {

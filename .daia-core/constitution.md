@@ -2,6 +2,7 @@
 
 > **Version:** 1.0.0 | **Ratified:** 2026-09-09
 > **Derivada de:** Synkra AIOX Constitution v1.1.0 (MIT) — que por sua vez deriva do BMad Method
+> **Método adaptado de:** Brandão, A. C. L., Arakaki, R. & Silva, L. A. (2026). *An RM-ODP Method to Model PBL Digital Twins for Supporting Closed-Loop Supervision.* MethodsX (no prelo).
 
 Este documento define os princípios inegociáveis do **DAIA-E** — *Desenvolvimento Assistido por Inteligência Artificial Orientado por Especificação*. Todos os agentes, tasks e workflows DEVEM respeitar estes princípios. Violações são bloqueadas por gates executáveis no CLI, nunca por checklist documental.
 

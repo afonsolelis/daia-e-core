@@ -476,3 +476,7 @@ Para alterar agentes ou skills, edite apenas `squads/daia-e/` e siga
 MIT. Derivado do [Synkra AIOX](https://github.com/SynkraAI/aiox-core), por sua vez
 derivado do BMad Method. Consulte [ATTRIBUTION.md](ATTRIBUTION.md) e a
 [constituição](.daia-core/constitution.md). Sem afiliação aos projetos de origem.
+
+Método adaptado de: Brandão, A. C. L., Arakaki, R. & Silva, L. A. (2026).
+*An RM-ODP Method to Model PBL Digital Twins for Supporting Closed-Loop
+Supervision.* MethodsX (no prelo).

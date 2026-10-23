@@ -81,6 +81,14 @@ comandos com prefixo `*`, as dependências de tasks, templates e scripts, a
 integração obrigatória com CodeRabbit e os comandos do AIOX Pro. Todos dependem
 de runtime ou de scripts, o que o Artigo XI proíbe.
 
+## Fundamentação do método
+
+O método DAIA-E é adaptado de:
+
+> Brandão, A. C. L., Arakaki, R. & Silva, L. A. (2026). *An RM-ODP Method to
+> Model PBL Digital Twins for Supporting Closed-Loop Supervision.* MethodsX
+> (no prelo).
+
 ## Referências normativas
 
 | Norma | Uso |
