@@ -27,6 +27,13 @@
     { "id": "validate-engineering-layer", "sprint": "SP3", "agent": "val-eng", "gate": "SP3" },
     { "id": "validate-technology-layer", "sprint": "SP3", "agent": "val-tec", "gate": "SP3" },
     { "id": "evaluate-architecture-tradeoffs", "sprint": "SP3-SP4", "agent": "atam", "gate": "SP3" },
+    { "id": "evaluate-availability-tactics", "sprint": "SP3-SP4", "agent": "atam", "gate": "SP3" },
+    { "id": "evaluate-interoperability-tactics", "sprint": "SP3-SP4", "agent": "atam", "gate": "SP3" },
+    { "id": "evaluate-modifiability-tactics", "sprint": "SP3-SP4", "agent": "atam", "gate": "SP3" },
+    { "id": "evaluate-performance-tactics", "sprint": "SP3-SP4", "agent": "atam", "gate": "SP3" },
+    { "id": "evaluate-security-tactics", "sprint": "SP3-SP4", "agent": "atam", "gate": "SP3" },
+    { "id": "evaluate-testability-tactics", "sprint": "SP3-SP4", "agent": "atam", "gate": "SP3" },
+    { "id": "evaluate-usability-tactics", "sprint": "SP3-SP4", "agent": "atam", "gate": "SP3" },
     { "id": "write-executable-specification", "sprint": "SP3", "agent": "spec", "gate": "SP3" },
     { "id": "implement-from-baseline", "sprint": "SP4", "agent": "dev", "gate": "SP4" },
     { "id": "validate-system-evidence", "sprint": "SP4-SP5", "agent": "val", "gate": "SP5" }

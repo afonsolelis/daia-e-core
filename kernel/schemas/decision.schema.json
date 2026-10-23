@@ -41,6 +41,11 @@
       "items": { "type": "string" },
       "description": "ATAM — atributos que se degradam quando outro melhora"
     },
+    "tactics": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^(availability|interoperability|modifiability|performance|security|testability|usability)/[a-z-]+$" },
+      "description": "Bass, Clements & Kazman — táticas aplicadas, como <atributo>/<tática> (ex.: availability/active-redundancy)"
+    },
     "risks": { "type": "array", "items": { "type": "string" } },
     "sprint": { "$ref": "daia-e/common#/definitions/sprint" },
     "status": { "$ref": "daia-e/common#/definitions/status" },

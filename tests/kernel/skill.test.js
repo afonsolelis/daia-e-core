@@ -13,7 +13,7 @@ const SQUAD_DIR = path.join(__dirname, '..', '..', 'squads', 'daia-e');
 
 test('biblioteca de skills coincide com o manifesto e e valida', () => {
   const library = loadSkills(SQUAD_DIR);
-  assert.strictEqual(library.skills.length, 14);
+  assert.strictEqual(library.skills.length, 21);
   assert.deepStrictEqual(library.problems, []);
   for (const skill of library.skills) assert.deepStrictEqual(skill.problems, [], skill.problems.join('; '));
 });
@@ -31,4 +31,18 @@ test('skills sao projetadas no layout documentado do Claude', (t) => {
   t.after(() => fs.rmSync(target, { recursive: true, force: true }));
   install(target, SQUAD_DIR, 'claude', true, skills[0].id);
   assert.ok(fs.existsSync(path.join(target, '.claude/skills', skills[0].id, 'SKILL.md')));
+});
+
+test('catalogos das skills de taticas produzem ids aceitos pelo schema de decisao', () => {
+  const schema = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'kernel', 'schemas', 'decision.schema.json'), 'utf8'));
+  const pattern = new RegExp(schema.properties.tactics.items.pattern);
+  const tacticSkills = loadSkills(SQUAD_DIR).skills.filter((skill) => /^evaluate-[a-z]+-tactics$/.test(skill.id));
+  assert.strictEqual(tacticSkills.length, 7);
+  for (const skill of tacticSkills) {
+    const attribute = skill.id.replace(/^evaluate-/, '').replace(/-tactics$/, '');
+    const ids = [...skill.body.matchAll(/^\| `([a-z-]+)` \|/gm)].map((match) => match[1]);
+    assert.ok(ids.length > 0, `${skill.id} sem catalogo`);
+    assert.strictEqual(new Set(ids).size, ids.length, `${skill.id} com tatica duplicada`);
+    for (const id of ids) assert.match(`${attribute}/${id}`, pattern);
+  }
 });

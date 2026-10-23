@@ -91,3 +91,17 @@ test('todos os schemas do kernel sao JSON valido com $id', () => {
     assert.ok(schema.title, `${path.basename(file)} sem title`);
   }
 });
+
+test('decisao aceita taticas no formato atributo/tatica e rejeita formato livre', () => {
+  const P = { drafted_by: 'ai' };
+  const base = {
+    id: 'AD-a', kind: 'ArchitectureDecision', title: 'replicar o servico de pedidos',
+    decision: 'replicamos o servico em modo ativo', traces_to: ['QS-a'],
+    alternatives: [{ option: 'cold spare', rejected_because: 'failover lento demais para o cenario' }],
+    sprint: 'SP3', provenance: P,
+  };
+  const ok = { ...base, tactics: ['availability/active-redundancy', 'performance/introduce-concurrency'] };
+  assert.deepStrictEqual(validator.validate(ok, registry.get('decision')), []);
+  const bad = { ...base, tactics: ['active redundancy'] };
+  assert.ok(validator.validate(bad, registry.get('decision')).length > 0);
+});

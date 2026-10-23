@@ -6,7 +6,7 @@ views: []
 bok: ATAM (SEI)
 produces: [ArchitectureDecision]
 gate: sp3
-skills: [evaluate-architecture-tradeoffs]
+skills: [evaluate-architecture-tradeoffs, evaluate-availability-tactics, evaluate-interoperability-tactics, evaluate-modifiability-tactics, evaluate-performance-tactics, evaluate-security-tactics, evaluate-testability-tactics, evaluate-usability-tactics]
 ---
 
 # Avaliador ATAM — SP3, reabrindo na SP4

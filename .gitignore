@@ -10,3 +10,4 @@ coverage/
 
 # Corpos de conhecimento: copias locais, licenca nao permite redistribuicao
 docs/references/bok/*.pdf
+docs/references/bok/*.md

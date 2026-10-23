@@ -46,7 +46,7 @@ daia validate architecture   # gate SP3, incluindo evidências e pré-requisitos
 |---|---|---|
 | SP1 | stakeholders, drivers, preocupações, personas, processos BPMN, IDEF0, fronteira | model-business-context, model-business-processes, validate-business-layer |
 | SP2 | requisitos elicitados do negócio e cenários mensuráveis | elicit-requirements-from-business, specify-quality-scenarios, prioritize-architecture-drivers, validate-requirements-layer |
-| SP3 | views (lógica → engenharia → tecnologia), decisões, contratos e testes | describe-software-architecture, validate-engineering-layer, validate-technology-layer, evaluate-architecture-tradeoffs, write-executable-specification |
+| SP3 | views (lógica → engenharia → tecnologia), decisões, contratos e testes | describe-software-architecture, validate-engineering-layer, validate-technology-layer, evaluate-architecture-tradeoffs, evaluate-{availability,interoperability,modifiability,performance,security,testability,usability}-tactics, write-executable-specification |
 | SP4 | implementação, testes verdes, relatório de qualidade | implement-from-baseline, validate-system-evidence |
 | SP5 | demonstração, confronto da hipótese e limitações | validate-system-evidence |
 
