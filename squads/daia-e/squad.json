@@ -15,6 +15,23 @@
     "format": "markdown + YAML frontmatter, sem caminho de IDE e sem chamada a script",
     "note": "Art. XI — as projecoes de runtime sao derivadas, nunca canonicas. Um humano le. Qualquer LLM le."
   },
+  "lineage": {
+    "source": "SynkraAI/aiox-core@4ef6530f",
+    "agents": {
+      "aiox-master": "daia-master",
+      "analyst": "analyst",
+      "architect": "arch",
+      "data-engineer": "data-engineer",
+      "dev": "dev",
+      "devops": "devops",
+      "pm": "pm",
+      "po": "po",
+      "qa": "qa",
+      "sm": "sm",
+      "squad-creator": "squad-creator",
+      "ux-design-expert": "ux-design-expert"
+    }
+  },
   "skills": [
     { "id": "model-business-context", "sprint": "SP1", "agent": "analyst", "gate": "SP1" },
     { "id": "model-business-processes", "sprint": "SP1", "agent": "analyst", "gate": "SP1" },
@@ -53,6 +70,14 @@
     { "id": "dev", "sprint": "SP4", "views": ["technology"], "bok": "SWEBOK - Construcao" },
     { "id": "audit", "sprint": "SP4", "views": [], "bok": "SWEBOK - Qualidade" },
     { "id": "val", "sprint": "SP5", "views": [], "bok": "SEBoK - V&V" },
-    { "id": "rec", "sprint": "*", "views": [], "bok": "-" }
+    { "id": "rec", "sprint": "*", "views": [], "bok": "-" },
+    { "id": "pm", "sprint": "SP1-SP2", "views": ["enterprise"], "bok": "BABOK - Strategy Analysis + MoSCoW/RICE" },
+    { "id": "ux-design-expert", "sprint": "SP1-SP4", "views": [], "bok": "ISO 9241-210 + WCAG 2.2 + Atomic Design" },
+    { "id": "data-engineer", "sprint": "SP3-SP4", "views": ["information"], "bok": "SWEBOK - Design e Construcao + SEBoK" },
+    { "id": "qa", "sprint": "SP3-SP5", "views": [], "bok": "SWEBOK - Testes e Qualidade + ISO/IEC 25010:2023" },
+    { "id": "devops", "sprint": "SP4-SP5", "views": [], "bok": "SWEBOK - Configuration Management e Operations" },
+    { "id": "sm", "sprint": "*", "views": [], "bok": "Scrum Guide 2020 (adaptado ao Art. III)" },
+    { "id": "daia-master", "sprint": "*", "views": [], "bok": "Constituicao DAIA-E" },
+    { "id": "squad-creator", "sprint": "*", "views": [], "bok": "Art. XI + contratos de agente e skill" }
   ]
 }

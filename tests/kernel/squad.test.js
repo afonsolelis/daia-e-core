@@ -12,7 +12,7 @@ test('a squad carrega e o manifesto bate com os arquivos', () => {
   const squad = loadSquad(SQUAD_DIR);
   assert.strictEqual(squad.manifest.name, 'daia-e');
   assert.deepStrictEqual(squad.problems, [], squad.problems.join('; '));
-  assert.strictEqual(squad.agents.length, 15);
+  assert.strictEqual(squad.agents.length, 23);
 });
 
 test('Art. XI: nenhum agente viola a portabilidade', () => {
@@ -66,4 +66,14 @@ test('agente com caminho de IDE e recusado', () => {
     'Leia .claude/agents/outro.md\n## O que você não faz\nx\n## Procedimento\nx\n## Regras inegociáveis\nx\n');
   const agent = loadAgent(file);
   assert.ok(agent.problems.some((p) => /Art. XI/.test(p)));
+});
+
+test('todo agente do aiox-core tem correspondente na squad', () => {
+  const squad = loadSquad(SQUAD_DIR);
+  const present = new Set(squad.agents.map((a) => a.id));
+  const lineage = squad.manifest.lineage.agents;
+  assert.strictEqual(Object.keys(lineage).length, 12);
+  for (const [aiox, daia] of Object.entries(lineage)) {
+    assert.ok(present.has(daia), `${aiox} aponta para agente inexistente: ${daia}`);
+  }
 });

@@ -36,7 +36,7 @@ Fork realizado a partir de `SynkraAI/aiox-core@4ef6530f` (v5.4.1, 2026-08-15).
 | Artigo III — Story-Driven Development | Artigo III — Baseline-Driven Development | O DAIA-E não é ágil: a sprint é unidade de escopo, não de tempo |
 | Artigo II — Agent Authority | Artigo II — Human Decision Authority | A autoridade que importa é humana, não distribuída entre agentes |
 | Gates documentais (checklists) | Gates executáveis no CLI | Um princípio sem gate executável é aspiração |
-| 35 agentes, 204 tasks | Squad DAIA-E de 11 agentes ligados a *views* | Cada agente responde a uma preocupação rastreável |
+| 35 agentes, 204 tasks | Squad DAIA-E de 23 agentes ligados a sprints e *views*, compondo skills | Cada agente responde a uma preocupação rastreável |
 | Camada Pro (licenciamento, telemetria) | Removida | Artefato de pesquisa não comporta licenciamento comercial |
 | 24 dependências npm | Zero dependências externas | Reprodutibilidade: o kernel roda sem `npm install` |
 
@@ -50,6 +50,36 @@ Fork realizado a partir de `SynkraAI/aiox-core@4ef6530f` (v5.4.1, 2026-08-15).
 Nenhum código do AIOX permanece no DAIA-E além das duas constituições preservadas
 em `.daia-core/`, mantidas para efeito de rastreabilidade documental. O kernel,
 o CLI e a squad são escritos do zero.
+
+## Agentes derivados do AIOX
+
+Os 12 agentes de `.aiox-core/development/agents/` em
+`SynkraAI/aiox-core@4ef6530f` (MIT) têm correspondente na squad. Os textos foram
+reescritos no contrato de agente do DAIA-E; o que se aproveitou foi o
+conhecimento de cada papel: princípios, fronteiras, procedimentos e armadilhas
+comuns. Cada agente derivado termina com uma seção `## Derivação do AIOX` que
+registra o que foi preservado, substituído e removido. O mapa fica em
+`lineage`, no `squad.json`, e um teste verifica que todo destino existe.
+
+| aiox-core | DAIA-E |
+|-----------|--------|
+| `aiox-master` | `daia-master` |
+| `analyst` | `analyst` |
+| `architect` | `arch` |
+| `data-engineer` | `data-engineer` |
+| `dev` | `dev` |
+| `devops` | `devops` |
+| `pm` | `pm` |
+| `po` | `po` |
+| `qa` | `qa` |
+| `sm` | `sm` |
+| `squad-creator` | `squad-creator` |
+| `ux-design-expert` | `ux-design-expert` |
+
+Não foram trazidos: o bloco de ativação (saudação, badges, handoffs), os
+comandos com prefixo `*`, as dependências de tasks, templates e scripts, a
+integração obrigatória com CodeRabbit e os comandos do AIOX Pro. Todos dependem
+de runtime ou de scripts, o que o Artigo XI proíbe.
 
 ## Fundamentação do método
 
