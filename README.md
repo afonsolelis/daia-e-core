@@ -59,22 +59,33 @@ Princípios que o CLI faz valer (detalhes na [constituição](.daia-core/constit
 
 ## Começar
 
-Requer Node.js 18 ou superior. Não há dependências externas.
+Requer Node.js 18 ou superior. Não há dependências externas nem clone.
 
 ```bash
-git clone https://github.com/afonsolelis/daia-e-core.git
-cd daia-e-core
-node bin/daia.js init ../meu-projeto
+npx github:afonsolelis/daia-e-core init meu-projeto
+cd meu-projeto
+npx github:afonsolelis/daia-e-core next
 ```
+
+Para usar só `daia` nos comandos, instale uma vez:
+
+```bash
+npm install -g github:afonsolelis/daia-e-core
+daia init meu-projeto
+```
+
+A instalação é recomendada: o assistente de IA também roda `daia next`,
+`daia gate` e `daia verify` dentro do projeto. O restante deste README usa
+`daia`; sem instalar, troque por `npx github:afonsolelis/daia-e-core`.
 
 Em terminal interativo, o onboarding pergunta nome, se o projeto é novo ou
 existente, objetivo, stack, restrições e runtime. Para automação, passe tudo por flag:
 
 ```bash
-node bin/daia.js init ../meu-projeto --yes --mode new --runtime codex \
+daia init meu-projeto --yes --mode new --runtime codex \
   --name "Meu projeto" --objective "Objetivo do sistema" \
   --stack "a definir" --constraints "a definir" --catalog rm-odp
-node bin/daia.js next --root ../meu-projeto
+daia next --root meu-projeto
 ```
 
 | Flag | Valores | Padrão |
@@ -87,9 +98,6 @@ O `init` cria `.daia/` no projeto: configuração, guia, schemas, modelo, histó
 do workflow, agentes de referência e skills no runtime escolhido. Os demais
 comandos operam no diretório atual ou no indicado por `--root`.
 
-Para usar o nome `daia` em vez de `node bin/daia.js`, rode `npm link` no
-repositório. Nenhum comando publica o pacote no npm.
-
 ## Tutorial: do zero à SP1 assinada
 
 Um sistema de empréstimos para uma biblioteca escolar, do `init` à primeira
@@ -97,14 +105,12 @@ baseline. O resultado final deste tutorial está em `examples/primeiro-projeto/`
 
 ### 1. Criar o projeto
 
-No clone do `daia-e-core`:
-
 ```bash
-alias daia="node $PWD/bin/daia.js"     # ou: npm link
-daia init ../biblioteca --yes --runtime claude \
+npm install -g github:afonsolelis/daia-e-core
+daia init biblioteca --yes --runtime claude \
   --name "Biblioteca escolar" \
   --objective "Reduzir os atrasos de devolução dos livros"
-cd ../biblioteca
+cd biblioteca
 daia next
 ```
 
@@ -159,8 +165,8 @@ evidência, a atividade IDEF0 `A0`, um processo e a view enterprise, mais
 `docs/emprestar-livro.bpmn`. Para ver todos sem usar o assistente:
 
 ```bash
-cp -r /caminho/do/daia-e-core/examples/primeiro-projeto/.daia/model .daia/
-cp -r /caminho/do/daia-e-core/examples/primeiro-projeto/docs .
+npx degit afonsolelis/daia-e-core/examples/primeiro-projeto/.daia/model .daia/model --force
+npx degit afonsolelis/daia-e-core/examples/primeiro-projeto/docs docs
 ```
 
 ### 3. Passar no gate
@@ -410,15 +416,17 @@ biblioteca escolar, sem baseline assinada. Um teste garante que ele continua
 passando no `gate SP1`.
 
 ```bash
-node bin/daia.js gate SP1 --root examples/primeiro-projeto
+npx degit afonsolelis/daia-e-core/examples/primeiro-projeto primeiro-projeto
+daia gate SP1 --root primeiro-projeto
 ```
 
-`examples/pblrepositorymetrics/.daia/` traz um modelo completo, das cinco sprints,
+`examples/pblrepositorymetrics/` traz um modelo completo, das cinco sprints,
 com 37 artefatos. Inspecione-o com:
 
 ```bash
-node bin/daia.js status --root examples/pblrepositorymetrics
-node bin/daia.js trace --matrix --root examples/pblrepositorymetrics
+npx degit afonsolelis/daia-e-core/examples/pblrepositorymetrics pblrepositorymetrics
+daia status --root pblrepositorymetrics
+daia trace --matrix --root pblrepositorymetrics
 ```
 
 As baselines do exemplo foram assinadas antes de o cálculo de fingerprint incluir
@@ -433,6 +441,14 @@ SEBoK v2.14 e do resumo de táticas de Bass, Clements e Kazman ficam em
 redistribuição. Para reproduzir o ambiente, obtenha cada obra na fonte oficial.
 
 ## Estrutura e desenvolvimento
+
+Para contribuir com a biblioteca, clone o repositório:
+
+```bash
+git clone https://github.com/afonsolelis/daia-e-core.git
+cd daia-e-core
+node bin/daia.js help
+```
 
 ```text
 bin/daia.js          CLI e onboarding
