@@ -14,8 +14,7 @@ assistente do host (Claude, Codex ou outro); o CLI verifica o resultado.
 
 ![Fluxo do método DAIA-E](docs/img/daia-e-fluxo.png)
 
-*Fluxo do método DAIA-E. Fonte: Brandão, Arakaki e Silva (2026). As setas
-tracejadas indicam sustentação metodológica.*
+*Fluxo do método DAIA-E. As setas tracejadas indicam sustentação metodológica.*
 
 O desenvolvimento passa por cinco sprints. Cada sprint delimita **escopo, não
 duração**, se apoia num corpo de conhecimento e termina numa **linha de base**
@@ -477,8 +476,3 @@ Para alterar agentes ou skills, edite apenas `squads/daia-e/` e siga
 MIT. Derivado do [Synkra AIOX](https://github.com/SynkraAI/aiox-core), por sua vez
 derivado do BMad Method. Consulte [ATTRIBUTION.md](ATTRIBUTION.md) e a
 [constituição](.daia-core/constitution.md). Sem afiliação aos projetos de origem.
-
-Método de referência: Brandão, A. C. L., Arakaki, R. & Silva, L. A. (2026).
-*Especificação antes da Geração: um Método para Desenvolvimento de Software
-Assistido por IA com Avaliação Arquitetural em Ciclo.* Revista Brasileira de
-Informática na Educação.

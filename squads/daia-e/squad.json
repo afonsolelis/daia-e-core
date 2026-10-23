@@ -7,7 +7,6 @@
   "slashPrefix": "daia",
   "method": {
     "name": "DAIA-E",
-    "reference": "Brandao, Arakaki & Silva (2026), RBIE",
     "constitution": ".daia-core/constitution.md"
   },
   "portability": {

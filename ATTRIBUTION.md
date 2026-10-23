@@ -81,12 +81,6 @@ comandos com prefixo `*`, as dependências de tasks, templates e scripts, a
 integração obrigatória com CodeRabbit e os comandos do AIOX Pro. Todos dependem
 de runtime ou de scripts, o que o Artigo XI proíbe.
 
-## Fundamentação do método
-
-> Brandão, A. C. L., Arakaki, R. & Silva, L. A. (2026). *Especificação antes da
-> Geração: um Método para Desenvolvimento de Software Assistido por IA com
-> Avaliação Arquitetural em Ciclo.* Revista Brasileira de Informática na Educação.
-
 ## Referências normativas
 
 | Norma | Uso |

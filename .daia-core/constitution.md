@@ -2,7 +2,6 @@
 
 > **Version:** 1.0.0 | **Ratified:** 2026-09-09
 > **Derivada de:** Synkra AIOX Constitution v1.1.0 (MIT) — que por sua vez deriva do BMad Method
-> **Método de referência:** Brandão, A. C. L., Arakaki, R. & Silva, L. A. (2026). *Especificação antes da Geração: um Método para Desenvolvimento de Software Assistido por IA com Avaliação Arquitetural em Ciclo.* RBIE.
 
 Este documento define os princípios inegociáveis do **DAIA-E** — *Desenvolvimento Assistido por Inteligência Artificial Orientado por Especificação*. Todos os agentes, tasks e workflows DEVEM respeitar estes princípios. Violações são bloqueadas por gates executáveis no CLI, nunca por checklist documental.
 
