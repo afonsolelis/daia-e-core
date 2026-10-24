@@ -1,22 +1,29 @@
 ---
 name: validate-requirements-layer
-description: Valide a camada de elicitação da SP2: todo requisito tem técnica e fontes, todo requisito funcional deriva de processo ou atividade IDEF0 e toda atividade automatizada está coberta. Use antes de apresentar a baseline SP2.
+description: Validate the SP2 elicitation layer. Make sure that each requirement has a technique and sources. Make sure that each functional requirement comes from a process or an IDEF0 activity. Make sure that a requirement covers each automated activity. Use before you show the SP2 baseline.
 ---
 
-# Valide a camada de elicitação da SP2
+# Validate the SP2 elicitation layer
 
-Você confere; não produz. Se o artefato estiver errado, devolva o achado ao agente produtor. Não o corrija. Base: SWEBOK v4 cap. 1 §2 e SEBoK (Stakeholder Needs, System Requirements).
+You examine. You do not make artifacts. If an artifact is not correct, send the finding back to the agent that made it. Do not correct the artifact. Basis: SWEBOK v4 ch. 1 §2 and SEBoK (Stakeholder Needs, System Requirements).
 
-## Resultado
+## Result
 
-Um parecer em `.daia/evidence/review-requirements-layer.md` com: veredito (`aprovado`, `reprovado` ou `aprovado com ressalvas`), os achados `ELI-*` do gate e as perguntas que exigem decisão humana.
+A review report in `.daia/evidence/review-requirements-layer.md` with: the verdict (`accepted`, `rejected` or `accepted with reservations`), the `ELI-*` findings of the gate, and the questions that need a human decision.
 
-## Fluxo
+## Procedure
 
-1. Rode `daia gate SP2 --json` e separe os achados com prefixo `ELI-`.
-2. Confira mecanicamente: cada requisito registra `elicitation` com fontes do tipo persona, stakeholder, processo ou atividade; todo RF rastreia a BP/IDF direta ou indiretamente; toda folha IDEF0 `system` tem RF; nenhum requisito deriva de atividade fora da fronteira sem justificativa.
-3. Confira por leitura o que o gate não interpreta: os requisitos expressam necessidades das personas ou funcionalidades presumidas? Há conflito entre fontes não resolvido?
-4. Registre o parecer. Bloqueio do gate é reprovação; leitura crítica sem bloqueio vira ressalva.
-5. Encaminhe ao humano. O parecer não substitui a assinatura da baseline.
+1. Run `daia gate SP2 --json`. Separate the findings with the `ELI-` prefix.
+2. Examine the mechanical points:
+   - Each requirement records `elicitation` with sources of the type persona, stakeholder, process or activity.
+   - Each FR has a direct or indirect trace to BP or IDF.
+   - Each IDEF0 leaf activity with `system` has an FR.
+   - No requirement comes from an activity out of the boundary without a justification.
+3. Read the model for the points that the gate does not interpret:
+   - Do the requirements state the needs of the personas, or functions that somebody thinks are necessary?
+   - Is there a conflict between sources that nobody solved?
+4. Record the review report. If the gate blocks, the verdict is `rejected`.
+5. If a critical reading finds a gap and the gate does not block, record a reservation.
+6. Send the review report to the human. The review report does not replace the signature of the baseline.
 
-Pare se for preciso inventar fonte, evidência ou aprovação para fechar o parecer.
+If you must invent a source, evidence or an approval to complete the review report, stop.

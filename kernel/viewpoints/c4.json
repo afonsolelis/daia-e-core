@@ -3,7 +3,7 @@
   "name": "C4 Model (Simon Brown)",
   "standard": "c4model.com",
   "default": false,
-  "rationale": "Catálogo alternativo, orientado a níveis de zoom. Note que C4 não enquadra preocupações de negócio — combine com um viewpoint enterprise se a SP1 precisar ser representada.",
+  "rationale": "An alternative catalog, based on zoom levels. C4 does not frame business concerns. If you must show SP1, add an enterprise viewpoint.",
   "viewpoints": [
     { "id": "context", "kind": "Viewpoint", "name": "System Context", "catalog": "c4", "frames_concerns": ["business", "functional"], "model_kinds": ["context"], "opens_at": "SP1", "completes_at": "SP2" },
     { "id": "container", "kind": "Viewpoint", "name": "Container", "catalog": "c4", "frames_concerns": ["operational", "quality"], "model_kinds": ["deployment", "static"], "opens_at": "SP3", "completes_at": "SP3" },

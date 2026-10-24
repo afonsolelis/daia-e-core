@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * Saída de terminal sem dependência externa.
- * Respeita NO_COLOR e ausência de TTY (Art. I — o CLI é a fonte da verdade,
- * e precisa funcionar em CI tanto quanto no terminal interativo).
+ * Terminal output with no external dependency.
+ * Obeys NO_COLOR and the absence of a TTY (Art. I: the CLI is the source of
+ * truth. It must work in CI and in an interactive terminal).
  */
 
 const ENABLED = Boolean(process.stdout.isTTY) && !process.env.NO_COLOR;

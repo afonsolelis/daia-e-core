@@ -11,21 +11,21 @@ const { loadSquad } = require('../../kernel/squad/squad-loader');
 
 const SQUAD_DIR = path.join(__dirname, '..', '..', 'squads', 'daia-e');
 
-test('biblioteca de skills coincide com o manifesto e e valida', () => {
+test('the skill library matches the manifest and is valid', () => {
   const library = loadSkills(SQUAD_DIR);
   assert.strictEqual(library.skills.length, 21);
   assert.deepStrictEqual(library.problems, []);
   for (const skill of library.skills) assert.deepStrictEqual(skill.problems, [], skill.problems.join('; '));
 });
 
-test('todo agente referencia apenas skills existentes', () => {
+test('each agent refers only to skills that exist', () => {
   const squad = loadSquad(SQUAD_DIR);
   const library = loadSkills(SQUAD_DIR);
   const problems = validateAgentSkills(squad, new Set(library.skills.map((skill) => skill.id)));
   assert.deepStrictEqual(problems, []);
 });
 
-test('skills sao projetadas no layout documentado do Claude', (t) => {
+test('skills are installed in the documented Claude layout', (t) => {
   const target = fs.mkdtempSync(path.join(os.tmpdir(), 'daia-skills-'));
   const { skills } = loadSkills(SQUAD_DIR);
   t.after(() => fs.rmSync(target, { recursive: true, force: true }));
@@ -33,7 +33,7 @@ test('skills sao projetadas no layout documentado do Claude', (t) => {
   assert.ok(fs.existsSync(path.join(target, '.claude/skills', skills[0].id, 'SKILL.md')));
 });
 
-test('catalogos das skills de taticas produzem ids aceitos pelo schema de decisao', () => {
+test('the catalogs of the tactic skills give ids that the decision schema accepts', () => {
   const schema = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'kernel', 'schemas', 'decision.schema.json'), 'utf8'));
   const pattern = new RegExp(schema.properties.tactics.items.pattern);
   const tacticSkills = loadSkills(SQUAD_DIR).skills.filter((skill) => /^evaluate-[a-z]+-tactics$/.test(skill.id));
@@ -41,15 +41,15 @@ test('catalogos das skills de taticas produzem ids aceitos pelo schema de decisa
   for (const skill of tacticSkills) {
     const attribute = skill.id.replace(/^evaluate-/, '').replace(/-tactics$/, '');
     const ids = [...skill.body.matchAll(/^\| `([a-z-]+)` \|/gm)].map((match) => match[1]);
-    assert.ok(ids.length > 0, `${skill.id} sem catalogo`);
-    assert.strictEqual(new Set(ids).size, ids.length, `${skill.id} com tatica duplicada`);
+    assert.ok(ids.length > 0, `${skill.id} has no catalog`);
+    assert.strictEqual(new Set(ids).size, ids.length, `${skill.id} has a duplicate tactic`);
     for (const id of ids) assert.match(`${attribute}/${id}`, pattern);
   }
 });
 
-test('toda skill declarada no manifesto para SP1-SP5 aparece no workflow guiado', () => {
+test('each skill that the manifest declares for SP1-SP5 is in the guided workflow', () => {
   const source = fs.readFileSync(path.join(__dirname, '..', '..', 'kernel', 'workflow', 'workflow.js'), 'utf8');
   for (const skill of loadSkills(SQUAD_DIR).skills) {
-    assert.ok(source.includes(`'${skill.id}'`), `${skill.id} ausente do workflow`);
+    assert.ok(source.includes(`'${skill.id}'`), `${skill.id} is missing in the workflow`);
   }
 });

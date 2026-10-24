@@ -1,7 +1,7 @@
 {
   "$id": "daia-e/baseline",
-  "title": "Baseline — encerramento de sprint com decisão humana registrada",
-  "description": "Art. II (NON-NEGOTIABLE): nenhuma baseline é encerrada sem decisão humana registrada. A IA pode redigir e propor qualquer artefato — não pode assinar.",
+  "title": "Baseline — the end of a sprint with a recorded human decision",
+  "description": "Art. II (NON-NEGOTIABLE): a baseline MUST NOT close without a recorded human decision. The AI can write and propose any artifact. It cannot sign.",
   "type": "object",
   "required": ["kind", "sprint", "state_hash", "signature"],
   "additionalProperties": false,
@@ -12,22 +12,22 @@
     "state_hash": {
       "type": "string",
       "pattern": "^sha256:[0-9a-f]{64}$",
-      "description": "Hash do estado do modelo no momento do encerramento. Alterar o modelo depois invalida a baseline."
+      "description": "The hash of the model state when the baseline closed. A later change to the model makes the baseline not valid."
     },
     "artifact_count": { "type": "integer", "minimum": 0 },
     "signature": {
       "type": "object",
-      "description": "A assinatura é humana. Não há campo para agente aqui — por construção.",
+      "description": "The signature is human. By design, there is no field for an agent here.",
       "required": ["signed_by", "signed_at", "decision"],
       "properties": {
-        "signed_by": { "type": "string", "minLength": 2, "description": "Nome ou identificador da pessoa que decidiu" },
+        "signed_by": { "type": "string", "minLength": 2, "description": "The name or the identifier of the person who decided" },
         "signed_at": { "$ref": "daia-e/common#/definitions/isoDate" },
         "decision": { "type": "string", "enum": ["accepted", "accepted-with-debt", "rejected"] },
-        "rationale": { "type": "string", "minLength": 10, "description": "Por que a baseline foi aceita. Não pode ser vazio." },
+        "rationale": { "type": "string", "minLength": 10, "description": "Why the baseline was accepted. It cannot be empty." },
         "declared_debt": {
           "type": "array",
           "items": { "type": "string" },
-          "description": "Quando decision=accepted-with-debt: o que ficou pendente, registrado como dívida rastreável"
+          "description": "If decision=accepted-with-debt: the open items, recorded as debt that you can trace"
         }
       }
     },

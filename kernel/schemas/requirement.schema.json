@@ -1,28 +1,28 @@
 {
   "$id": "daia-e/requirement",
-  "title": "Requirement (SWEBOK v4 cap. 1 + SEBoK — SP2)",
-  "description": "Requisito funcional ou não funcional elicitado a partir do modelo de negócio. RNF DEVE ter cenário de qualidade associado (Art. V).",
+  "title": "Requirement (SWEBOK v4 ch. 1 + SEBoK — SP2)",
+  "description": "A functional or non-functional requirement, elicited from the business model. An NFR MUST have a related quality scenario (Art. V).",
   "type": "object",
   "required": ["id", "kind", "type", "statement", "traces_to", "sprint", "provenance"],
   "additionalProperties": false,
   "properties": {
-    "id": { "$ref": "daia-e/common#/definitions/id", "idPrefix": "RF|RNF|CON" },
+    "id": { "$ref": "daia-e/common#/definitions/id", "idPrefix": "FR|NFR|CON|RF|RNF" },
     "kind": { "const": "Requirement" },
     "type": { "type": "string", "enum": ["functional", "non-functional", "constraint"] },
     "level": {
       "type": "string",
       "enum": ["stakeholder-need", "system"],
-      "description": "SEBoK — necessidade da parte interessada ou requisito do sistema que a transforma"
+      "description": "SEBoK — a stakeholder need, or the system requirement that comes from it"
     },
     "statement": { "type": "string", "minLength": 10 },
     "traces_to": {
       "$ref": "daia-e/common#/definitions/idRefList",
       "minItems": 1,
-      "description": "Art. IV — todo requisito deriva de direcionador, preocupação, processo, atividade IDEF0 ou necessidade (BD-*, CON-*, BP-*, IDF-*, RF-*)"
+      "description": "Art. IV — each requirement comes from a driver, concern, process, IDEF0 activity or need (BD-*, CON-*, BP-*, IDF-*, FR-*)"
     },
     "elicitation": {
       "type": "object",
-      "description": "SWEBOK v4 §1.2 — técnica e fontes da elicitação",
+      "description": "SWEBOK v4 §1.2 — the technique and the sources of the elicitation",
       "required": ["technique", "sources"],
       "additionalProperties": false,
       "properties": {
@@ -34,14 +34,14 @@
         "sources": {
           "$ref": "daia-e/common#/definitions/idRefList",
           "minItems": 1,
-          "description": "Personas, partes interessadas, processos ou atividades consultados (PER-*, STK-*, BP-*, IDF-*)"
+          "description": "The personas, stakeholders, processes or activities that were consulted (PER-*, STK-*, BP-*, IDF-*)"
         },
         "notes": { "type": "string" }
       }
     },
     "scenarios": {
       "$ref": "daia-e/common#/definitions/idRefList",
-      "description": "Cenários de qualidade (QS-*). Obrigatório quando type=non-functional"
+      "description": "The quality scenarios (QS-*). Mandatory if type=non-functional"
     },
     "priority": { "type": "string", "enum": ["must", "should", "could", "wont"] },
     "sprint": { "const": "SP2" },

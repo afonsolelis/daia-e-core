@@ -1,22 +1,26 @@
 ---
 name: validate-engineering-layer
-description: Valide a camada de engenharia da SP3: view engineering com modelo de implantação, correspondência com o modelo lógico e decisões rastreadas a requisitos. Use depois das views computational/information e antes da tecnologia.
+description: Validate the SP3 engineering layer. Examine the engineering view with a deployment model, its correspondence with the logical model, and the decisions that have a trace to requirements. Use after the computational and information views and before the technology.
 ---
 
-# Valide a camada de engenharia da SP3
+# Validate the SP3 engineering layer
 
-Você confere; não produz. Se o artefato estiver errado, devolva o achado ao agente produtor. Não o corrija. Base: SEBoK (Logical e Physical Architecture) e RM-ODP Engineering.
+You examine. You do not make artifacts. If an artifact is not correct, send the finding back to the agent that made it. Do not correct the artifact. Basis: SEBoK (Logical and Physical Architecture) and RM-ODP Engineering.
 
-## Resultado
+## Result
 
-Um parecer em `.daia/evidence/review-engineering-layer.md` com: veredito (`aprovado`, `reprovado` ou `aprovado com ressalvas`), os achados `ENG-*` do gate e as perguntas que exigem decisão humana.
+A review report in `.daia/evidence/review-engineering-layer.md` with: the verdict (`accepted`, `rejected` or `accepted with reservations`), the `ENG-*` findings of the gate, and the questions that need a human decision.
 
-## Fluxo
+## Procedure
 
-1. Rode `daia gate SP3 --json` e separe os achados com prefixo `ENG-`.
-2. Confira mecanicamente: existe view `engineering` com modelo `deployment`; ela corresponde (COR-*) a uma view computational ou information; ao menos uma AD que a afeta rastreia a RF, RNF ou QS.
-3. Confira por leitura o que o gate não interpreta: a distribuição em nós, canais e políticas responde aos cenários de qualidade, ou só repete uma topologia convencional?
-4. Registre o parecer. Bloqueio do gate é reprovação; leitura crítica sem bloqueio vira ressalva.
-5. Encaminhe ao humano. O parecer não substitui a assinatura da baseline.
+1. Run `daia gate SP3 --json`. Separate the findings with the `ENG-` prefix.
+2. Examine the mechanical points:
+   - An `engineering` view with a `deployment` model exists.
+   - The engineering view has a correspondence (COR-*) with a computational view or an information view.
+   - A minimum of one AD that affects the engineering view has a trace to FR, NFR or QS.
+3. Read the model for the point that the gate does not interpret: do the nodes, channels and policies answer the quality scenarios? Or do they only repeat a conventional topology?
+4. Record the review report. If the gate blocks, the verdict is `rejected`.
+5. If a critical reading finds a gap and the gate does not block, record a reservation.
+6. Send the review report to the human. The review report does not replace the signature of the baseline.
 
-Pare se for preciso inventar fonte, evidência ou aprovação para fechar o parecer.
+If you must invent a source, evidence or an approval to complete the review report, stop.

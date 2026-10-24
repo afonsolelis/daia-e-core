@@ -4,32 +4,32 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 /**
- * Carrega e valida a squad DAIA-E.
+ * Loads and validates the DAIA-E squad.
  *
- * Art. XI: a fonte da verdade e `squads/`, e a definicao de agente e markdown
- * com frontmatter YAML puro — sem caminho de IDE, sem chamada a script. Este
- * carregador verifica essa propriedade em vez de confiar nela.
+ * Art. XI: the source of truth is `squads/`. An agent definition is markdown
+ * with plain YAML frontmatter, with no IDE path and no script call. This
+ * loader verifies that property. It does not trust it.
  *
- * O parser de frontmatter cobre o subconjunto do contrato: escalares, listas
- * inline e listas em bloco. Nao e um parser YAML completo, e nao pretende ser —
- * o contrato de agente e deliberadamente pequeno.
+ * The frontmatter parser covers the subset of the contract: scalars, inline
+ * lists and block lists. It is not a full YAML parser, and it does not try to
+ * be one. The agent contract is small by design.
  */
 
 const REQUIRED_KEYS = ['id', 'name', 'sprint', 'views', 'bok', 'gate', 'skills', 'produces'];
 const REQUIRED_SECTIONS = [
-  '## Papel',
-  '## Pergunta característica',
-  '## O que você produz',
-  '## O que você não faz',
-  '## Procedimento',
-  '## Regras inegociáveis',
+  '## Role',
+  '## Key question',
+  '## What you produce',
+  '## What you do not do',
+  '## Procedure',
+  '## Mandatory rules',
 ];
 
-/** Padroes que violam a portabilidade exigida pelo Art. XI. */
+/** The patterns that break the portability that Art. XI makes mandatory. */
 const PORTABILITY_VIOLATIONS = [
-  { pattern: /\.(claude|codex|cursor|gemini|grok|antigravity)\//, label: 'caminho de IDE' },
-  { pattern: /\brequire\(|\bnode\s+\S+\.js/, label: 'chamada a script' },
-  { pattern: /permission_mode|prompt_mode|subagent_type/, label: 'diretiva de runtime especifico' },
+  { pattern: /\.(claude|codex|cursor|gemini|grok|antigravity)\//, label: 'IDE path' },
+  { pattern: /\brequire\(|\bnode\s+\S+\.js/, label: 'script call' },
+  { pattern: /permission_mode|prompt_mode|subagent_type/, label: 'runtime-specific directive' },
 ];
 
 function parseScalar(raw) {
@@ -46,10 +46,10 @@ function parseScalar(raw) {
 
 function parseFrontmatter(text, file) {
   if (!text.startsWith('---')) {
-    throw new Error(`${path.basename(file)}: sem frontmatter YAML`);
+    throw new Error(`${path.basename(file)}: no YAML frontmatter`);
   }
   const end = text.indexOf('\n---', 3);
-  if (end === -1) throw new Error(`${path.basename(file)}: frontmatter nao fechado`);
+  if (end === -1) throw new Error(`${path.basename(file)}: the frontmatter is not closed`);
 
   const block = text.slice(4, end);
   const data = {};
@@ -82,19 +82,19 @@ function loadAgent(file) {
   const problems = [];
 
   for (const key of REQUIRED_KEYS) {
-    if (frontmatter[key] === undefined) problems.push(`campo obrigatorio ausente no frontmatter: ${key}`);
+    if (frontmatter[key] === undefined) problems.push(`a mandatory field is missing in the frontmatter: ${key}`);
   }
   for (const section of REQUIRED_SECTIONS) {
-    if (!body.includes(section)) problems.push(`secao obrigatoria ausente: ${section}`);
+    if (!body.includes(section)) problems.push(`a mandatory section is missing: ${section}`);
   }
   for (const { pattern, label } of PORTABILITY_VIOLATIONS) {
     if (pattern.test(body) || pattern.test(JSON.stringify(frontmatter))) {
-      problems.push(`viola a portabilidade do Art. XI: ${label}`);
+      problems.push(`breaks the portability of Art. XI: ${label}`);
     }
   }
   const expectedId = path.basename(file, '.md');
   if (frontmatter.id && frontmatter.id !== expectedId) {
-    problems.push(`id "${frontmatter.id}" difere do nome do arquivo "${expectedId}"`);
+    problems.push(`the id "${frontmatter.id}" is different from the file name "${expectedId}"`);
   }
 
   return { file, id: frontmatter.id || expectedId, frontmatter, problems };
@@ -102,7 +102,7 @@ function loadAgent(file) {
 
 function loadSquad(squadDir) {
   const manifestPath = path.join(squadDir, 'squad.json');
-  if (!fs.existsSync(manifestPath)) throw new Error(`squad.json ausente em ${squadDir}`);
+  if (!fs.existsSync(manifestPath)) throw new Error(`squad.json is missing in ${squadDir}`);
   const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 
   const agentsDir = path.join(squadDir, 'agents');
@@ -115,10 +115,10 @@ function loadSquad(squadDir) {
   const present = new Set(agents.map((a) => a.id));
   const problems = [];
   for (const id of declared) {
-    if (!present.has(id)) problems.push(`agente "${id}" declarado no manifesto mas ausente em agents/`);
+    if (!present.has(id)) problems.push(`the agent "${id}" is declared in the manifest but is missing in agents/`);
   }
   for (const id of present) {
-    if (!declared.has(id)) problems.push(`agente "${id}" presente em agents/ mas nao declarado no manifesto`);
+    if (!declared.has(id)) problems.push(`the agent "${id}" is in agents/ but is not declared in the manifest`);
   }
 
   return { manifest, agents, problems };

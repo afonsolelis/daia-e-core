@@ -2,14 +2,14 @@
   "id": "VW-information",
   "kind": "View",
   "viewpoint": "information",
-  "title": "Modelo de dados de eventos de ABPj",
+  "title": "Data model of PjBL events",
   "addresses_concerns": [
-    "CON-conformidade",
-    "CON-privacidade"
+    "CON-compliance",
+    "CON-privacy"
   ],
   "stakeholders": [
-    "STK-professor",
-    "STK-aluno"
+    "STK-teacher",
+    "STK-student"
   ],
   "models": [
     {

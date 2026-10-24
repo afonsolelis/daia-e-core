@@ -1,19 +1,19 @@
 {
   "name": "daia-e",
   "version": "0.2.0",
-  "description": "Squad do metodo DAIA-E: cinco sprints ancoradas em BABOK, SWEBOK e SEBoK, com descricao arquitetural ISO/IEC/IEEE 42010 e baselines encerradas por decisao humana.",
+  "description": "Squad of the DAIA-E method: five sprints anchored in BABOK, SWEBOK and SEBoK, with an ISO/IEC/IEEE 42010 architecture description and baselines that a human decision closes.",
   "author": "Afonso Cesar Lelis Brandao",
   "license": "MIT",
   "slashPrefix": "daia",
   "method": {
     "name": "DAIA-E",
-    "adapted_from": "Brandao, Arakaki & Silva (2026), An RM-ODP Method to Model PBL Digital Twins for Supporting Closed-Loop Supervision, MethodsX (no prelo)",
+    "adapted_from": "Brandao, Arakaki & Silva (2026), An RM-ODP Method to Model PBL Digital Twins for Supporting Closed-Loop Supervision, MethodsX (in press)",
     "constitution": ".daia-core/constitution.md"
   },
   "portability": {
     "source_of_truth": "squads/daia-e/agents/",
-    "format": "markdown + YAML frontmatter, sem caminho de IDE e sem chamada a script",
-    "note": "Art. XI — as projecoes de runtime sao derivadas, nunca canonicas. Um humano le. Qualquer LLM le."
+    "format": "markdown + YAML frontmatter, with no IDE path and no script call",
+    "note": "Art. XI: the runtime projections are derived, never canonical. A human can read them. Any LLM can read them."
   },
   "lineage": {
     "source": "SynkraAI/aiox-core@4ef6530f",
@@ -35,7 +35,7 @@
   "skills": [
     { "id": "model-business-context", "sprint": "SP1", "agent": "analyst", "gate": "SP1" },
     { "id": "model-business-processes", "sprint": "SP1", "agent": "analyst", "gate": "SP1" },
-    { "id": "validate-business-layer", "sprint": "SP1", "agent": "val-neg", "gate": "SP1" },
+    { "id": "validate-business-layer", "sprint": "SP1", "agent": "val-biz", "gate": "SP1" },
     { "id": "elicit-requirements-from-business", "sprint": "SP2", "agent": "po", "gate": "SP2" },
     { "id": "validate-requirements-layer", "sprint": "SP2", "agent": "val-req", "gate": "SP2" },
     { "id": "specify-quality-scenarios", "sprint": "SP2", "agent": "po", "gate": "SP2" },
@@ -57,27 +57,27 @@
   ],
   "agents": [
     { "id": "analyst", "sprint": "SP1", "views": ["enterprise"], "bok": "BABOK" },
-    { "id": "val-neg", "sprint": "SP1", "views": [], "bok": "BABOK - Personas e Process Modelling" },
+    { "id": "val-biz", "sprint": "SP1", "views": [], "bok": "BABOK - Personas and Process Modelling" },
     { "id": "po", "sprint": "SP2", "views": ["information"], "bok": "SWEBOK + SEBoK + ISO/IEC 25010:2023" },
-    { "id": "val-req", "sprint": "SP2", "views": [], "bok": "SWEBOK - Elicitacao + SEBoK - Requisitos" },
+    { "id": "val-req", "sprint": "SP2", "views": [], "bok": "SWEBOK - Elicitation + SEBoK - Requirements" },
     { "id": "qaw", "sprint": "SP2-SP3", "views": [], "bok": "Quality Attribute Workshop" },
     { "id": "arch", "sprint": "SP3", "views": ["information", "computational", "engineering", "technology"], "bok": "SEBoK + ISO 42010 + RM-ODP" },
-    { "id": "val-eng", "sprint": "SP3", "views": [], "bok": "SEBoK - Arquitetura fisica + RM-ODP Engineering" },
+    { "id": "val-eng", "sprint": "SP3", "views": [], "bok": "SEBoK - Physical Architecture + RM-ODP Engineering" },
     { "id": "val-tec", "sprint": "SP3", "views": [], "bok": "RM-ODP Technology + SEBoK" },
     { "id": "atam", "sprint": "SP3-SP4", "views": [], "bok": "ATAM" },
     { "id": "spec", "sprint": "SP3", "views": ["computational"], "bok": "SWEBOK" },
-    { "id": "test", "sprint": "SP3", "views": [], "bok": "SWEBOK - Testes" },
-    { "id": "dev", "sprint": "SP4", "views": ["technology"], "bok": "SWEBOK - Construcao" },
-    { "id": "audit", "sprint": "SP4", "views": [], "bok": "SWEBOK - Qualidade" },
+    { "id": "test", "sprint": "SP3", "views": [], "bok": "SWEBOK - Testing" },
+    { "id": "dev", "sprint": "SP4", "views": ["technology"], "bok": "SWEBOK - Construction" },
+    { "id": "audit", "sprint": "SP4", "views": [], "bok": "SWEBOK - Quality" },
     { "id": "val", "sprint": "SP5", "views": [], "bok": "SEBoK - V&V" },
     { "id": "rec", "sprint": "*", "views": [], "bok": "-" },
     { "id": "pm", "sprint": "SP1-SP2", "views": ["enterprise"], "bok": "BABOK - Strategy Analysis + MoSCoW/RICE" },
     { "id": "ux-design-expert", "sprint": "SP1-SP4", "views": [], "bok": "ISO 9241-210 + WCAG 2.2 + Atomic Design" },
-    { "id": "data-engineer", "sprint": "SP3-SP4", "views": ["information"], "bok": "SWEBOK - Design e Construcao + SEBoK" },
-    { "id": "qa", "sprint": "SP3-SP5", "views": [], "bok": "SWEBOK - Testes e Qualidade + ISO/IEC 25010:2023" },
-    { "id": "devops", "sprint": "SP4-SP5", "views": [], "bok": "SWEBOK - Configuration Management e Operations" },
-    { "id": "sm", "sprint": "*", "views": [], "bok": "Scrum Guide 2020 (adaptado ao Art. III)" },
-    { "id": "daia-master", "sprint": "*", "views": [], "bok": "Constituicao DAIA-E" },
-    { "id": "squad-creator", "sprint": "*", "views": [], "bok": "Art. XI + contratos de agente e skill" }
+    { "id": "data-engineer", "sprint": "SP3-SP4", "views": ["information"], "bok": "SWEBOK - Design and Construction + SEBoK" },
+    { "id": "qa", "sprint": "SP3-SP5", "views": [], "bok": "SWEBOK - Testing and Quality + ISO/IEC 25010:2023" },
+    { "id": "devops", "sprint": "SP4-SP5", "views": [], "bok": "SWEBOK - Configuration Management and Operations" },
+    { "id": "sm", "sprint": "*", "views": [], "bok": "Scrum Guide 2020 (adapted to Art. III)" },
+    { "id": "daia-master", "sprint": "*", "views": [], "bok": "DAIA-E Constitution" },
+    { "id": "squad-creator", "sprint": "*", "views": [], "bok": "Art. XI + agent and skill contracts" }
   ]
 }

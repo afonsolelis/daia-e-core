@@ -4,7 +4,7 @@
   "rule": "consistent-with",
   "from": "VW-information",
   "to": "VW-computational",
-  "rationale": "As entidades do modelo estatico sao exatamente as consumidas pelo pipeline de quatro fases.",
+  "rationale": "The entities of the static model are exactly the entities that the four-phase pipeline consumes.",
   "sprint": "SP3",
   "status": "accepted",
   "provenance": {

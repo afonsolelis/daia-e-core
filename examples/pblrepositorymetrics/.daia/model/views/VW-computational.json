@@ -2,13 +2,13 @@
   "id": "VW-computational",
   "kind": "View",
   "viewpoint": "computational",
-  "title": "Pipeline de avaliacao em quatro fases e correlacao CEP",
+  "title": "Four-phase evaluation pipeline and CEP correlation",
   "addresses_concerns": [
-    "CON-conformidade",
-    "CON-carga-docente"
+    "CON-compliance",
+    "CON-teaching-load"
   ],
   "stakeholders": [
-    "STK-professor"
+    "STK-teacher"
   ],
   "models": [
     {

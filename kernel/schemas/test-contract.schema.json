@@ -1,7 +1,7 @@
 {
   "$id": "daia-e/test-contract",
-  "title": "Test Contract (SP3 vermelho → SP4 verde)",
-  "description": "Art. VIII: os testes que travam os contratos comportamentais existem em fase vermelha antes de a geração começar.",
+  "title": "Test Contract (SP3 red → SP4 green)",
+  "description": "Art. VIII: the tests that lock the behavior contracts exist in the red phase before code generation starts.",
   "type": "object",
   "required": ["id", "kind", "verifies", "test_path", "phase", "provenance"],
   "additionalProperties": false,
@@ -12,14 +12,14 @@
     "verifies": {
       "$ref": "daia-e/common#/definitions/idRefList",
       "minItems": 1,
-      "description": "Cenários ou requisitos verificados (QS-*, RF-*, RNF-*)"
+      "description": "The verified scenarios or requirements (QS-*, FR-*, NFR-*)"
     },
-    "test_path": { "type": "string", "minLength": 3, "description": "Caminho do arquivo de teste" },
-    "test_name": { "type": "string", "description": "Nome do caso de teste dentro do arquivo" },
+    "test_path": { "type": "string", "minLength": 3, "description": "The path of the test file" },
+    "test_name": { "type": "string", "description": "The name of the test case in the file" },
     "phase": {
       "type": "string",
       "enum": ["red", "green"],
-      "description": "red = escrito e falhando (SP3); green = passando (SP4)"
+      "description": "red = written and fails (SP3). green = passes (SP4)."
     },
     "sprint": { "$ref": "daia-e/common#/definitions/sprint" },
     "status": { "$ref": "daia-e/common#/definitions/status" },

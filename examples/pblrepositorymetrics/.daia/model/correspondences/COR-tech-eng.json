@@ -4,7 +4,7 @@
   "rule": "realizes",
   "from": "VW-technology",
   "to": "VW-engineering",
-  "rationale": "Node.js, MongoDB e a API do GitLab instanciam o mecanismo decidido na view de engenharia.",
+  "rationale": "Node.js, MongoDB and the GitLab API instantiate the mechanism that the engineering view decided.",
   "sprint": "SP3",
   "status": "accepted",
   "provenance": {

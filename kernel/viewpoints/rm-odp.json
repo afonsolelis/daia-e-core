@@ -3,7 +3,7 @@
   "name": "RM-ODP — Reference Model of Open Distributed Processing",
   "standard": "ISO/IEC 10746",
   "default": true,
-  "rationale": "Conjunto adotado pelo DAIA-E. A adequação a sistemas distribuídos é consolidada. A ISO 42010 não prescreve views — este é o catálogo default, não uma exigência da norma.",
+  "rationale": "The set that DAIA-E uses. It is a known good fit for distributed systems. ISO 42010 does not specify views. This is the default catalog, not a rule of the standard.",
   "viewpoints": [
     {
       "id": "enterprise",

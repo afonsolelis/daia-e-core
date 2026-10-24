@@ -4,7 +4,7 @@
   "rule": "refines",
   "from": "VW-information",
   "to": "VW-enterprise",
-  "rationale": "As entidades de dados refinam os papeis e politicas estabelecidos na modelagem de negocio.",
+  "rationale": "The data entities refine the roles and policies that the business modelling set.",
   "sprint": "SP3",
   "status": "accepted",
   "provenance": {

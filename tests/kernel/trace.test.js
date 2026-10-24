@@ -16,31 +16,31 @@ function scaffold() {
   fs.mkdirSync(model, { recursive: true });
   fs.writeFileSync(path.join(root, '.daia', 'config.json'), JSON.stringify({ viewpointCatalog: 'rm-odp' }));
   const docs = [
-    { id: 'STK-a', kind: 'Stakeholder', name: 'Professor', sprint: 'SP1', provenance: P },
-    { id: 'CON-a', kind: 'Concern', statement: 'uma preocupacao rastreavel do professor',
+    { id: 'STK-a', kind: 'Stakeholder', name: 'Teacher', sprint: 'SP1', provenance: P },
+    { id: 'CON-a', kind: 'Concern', statement: 'a concern of the teacher that has a trace',
       stakeholders: ['STK-a'], sprint: 'SP1', provenance: P },
-    { id: 'BD-a', kind: 'BusinessDriver', statement: 'direcionador de negocio do caso',
-      stakeholders: ['STK-a'], hypothesis: 'hipotese', sprint: 'SP1', provenance: P },
-    { id: 'RNF-a', kind: 'Requirement', type: 'non-functional', statement: 'requisito nao funcional do caso',
+    { id: 'BD-a', kind: 'BusinessDriver', statement: 'the business driver of the case',
+      stakeholders: ['STK-a'], hypothesis: 'hypothesis', sprint: 'SP1', provenance: P },
+    { id: 'NFR-a', kind: 'Requirement', type: 'non-functional', statement: 'the non-functional requirement of the case',
       traces_to: ['BD-a'], scenarios: ['QS-a'], sprint: 'SP2', provenance: P },
     { id: 'QS-a', kind: 'QualityScenario', characteristic: 'maintainability',
-      source: 'origem', stimulus: 'estimulo', artifact: 'artefato', environment: 'ambiente',
-      response: 'resposta', response_measure: { metric: 'complexidade', operator: '<=', threshold: 10 },
-      traces_to: ['RNF-a'], sprint: 'SP2', provenance: P },
+      source: 'source', stimulus: 'stimulus', artifact: 'artifact', environment: 'environment',
+      response: 'response', response_measure: { metric: 'complexity', operator: '<=', threshold: 10 },
+      traces_to: ['NFR-a'], sprint: 'SP2', provenance: P },
     { id: 'TC-a', kind: 'TestContract', verifies: ['QS-a'], test_path: 'tests/a.test.js',
       phase: 'green', sprint: 'SP3', provenance: P },
     { id: 'VW-a', kind: 'View', viewpoint: 'computational', addresses_concerns: ['CON-a'],
       stakeholders: ['STK-a'], models: [{ kind: 'dynamic', path: 'docs/a.md' }], sprint: 'SP3', provenance: P },
-    { id: 'AD-a', kind: 'ArchitectureDecision', title: 'decisao do caso',
-      decision: 'decidimos a estrutura do modulo', traces_to: ['RNF-a'], affects_views: ['VW-a'],
-      alternatives: [{ option: 'alternativa preterida', rejected_because: 'criterio registrado com detalhe' }],
+    { id: 'AD-a', kind: 'ArchitectureDecision', title: 'the decision of the case',
+      decision: 'we decide the structure of the module', traces_to: ['NFR-a'], affects_views: ['VW-a'],
+      alternatives: [{ option: 'rejected alternative', rejected_because: 'the criterion is recorded in detail' }],
       sprint: 'SP3', provenance: P },
   ];
   for (const d of docs) fs.writeFileSync(path.join(model, `${d.id}.json`), JSON.stringify(d));
   return root;
 }
 
-test('a cadeia a montante vai do teste ate a parte interessada (Art. IV)', () => {
+test('the upstream chain goes from the test to the stakeholder (Art. IV)', () => {
   const { trace } = kernel.openProject(scaffold());
   const chain = trace.chain('TC-a', 'up');
   const ids = [];
@@ -48,41 +48,41 @@ test('a cadeia a montante vai do teste ate a parte interessada (Art. IV)', () =>
     ids.push(node.id);
     node.children.forEach(collect);
   })(chain);
-  for (const expected of ['TC-a', 'QS-a', 'RNF-a', 'BD-a', 'STK-a']) {
-    assert.ok(ids.includes(expected), `cadeia deveria alcancar ${expected}; obteve ${ids.join(' -> ')}`);
+  for (const expected of ['TC-a', 'QS-a', 'NFR-a', 'BD-a', 'STK-a']) {
+    assert.ok(ids.includes(expected), `the chain must reach ${expected}; got ${ids.join(' -> ')}`);
   }
 });
 
-test('a matriz liga requisito, cenario e teste', () => {
+test('the matrix links requirement, scenario and test', () => {
   const { trace } = kernel.openProject(scaffold());
-  const row = trace.matrix().find((r) => r.requirement === 'RNF-a');
+  const row = trace.matrix().find((r) => r.requirement === 'NFR-a');
   assert.strictEqual(row.scenario, 'QS-a');
   assert.strictEqual(row.characteristic, 'maintainability');
   assert.deepStrictEqual(row.tests, ['TC-a']);
 });
 
-test('o impacto segue dependencia e efeito', () => {
+test('the impact follows dependency and effect', () => {
   const { trace } = kernel.openProject(scaffold());
-  const viaDependencia = trace.impact('QS-a');
-  assert.ok(viaDependencia.affected.includes('TC-a'), 'teste depende do cenario');
-  assert.ok(viaDependencia.affected.includes('RNF-a'), 'requisito depende do cenario');
+  const byDependency = trace.impact('QS-a');
+  assert.ok(byDependency.affected.includes('TC-a'), 'the test depends on the scenario');
+  assert.ok(byDependency.affected.includes('NFR-a'), 'the requirement depends on the scenario');
 
-  const viaEfeito = trace.impact('AD-a');
-  assert.ok(viaEfeito.views.includes('VW-a'), 'a decisao declara afetar a view');
+  const byEffect = trace.impact('AD-a');
+  assert.ok(byEffect.views.includes('VW-a'), 'the decision declares that it affects the view');
 });
 
-test('o impacto nao inclui o proprio no e termina em grafo ciclico', () => {
+test('the impact does not include the node itself and stops in a cyclic graph', () => {
   const { trace } = kernel.openProject(scaffold());
   const result = trace.impact('BD-a');
   assert.ok(!result.affected.includes('BD-a'));
 });
 
-test('orfaos sao artefatos sem rastreio em nenhum sentido', () => {
+test('orphans are artifacts with no trace in either direction', () => {
   const root = scaffold();
   fs.writeFileSync(
-    path.join(root, '.daia', 'model', 'STK-orfao.json'),
-    JSON.stringify({ id: 'STK-orfao', kind: 'Stakeholder', name: 'Ninguem', sprint: 'SP1', provenance: P })
+    path.join(root, '.daia', 'model', 'STK-orphan.json'),
+    JSON.stringify({ id: 'STK-orphan', kind: 'Stakeholder', name: 'Nobody', sprint: 'SP1', provenance: P })
   );
   const { trace } = kernel.openProject(root);
-  assert.ok(trace.orphans().includes('STK-orfao'));
+  assert.ok(trace.orphans().includes('STK-orphan'));
 });

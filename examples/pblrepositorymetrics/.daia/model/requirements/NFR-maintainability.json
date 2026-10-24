@@ -1,0 +1,21 @@
+{
+  "id": "NFR-maintainability",
+  "kind": "Requirement",
+  "type": "non-functional",
+  "statement": "The code base must stay modular, so that a developer can add a new CEP pattern without a change to the correlation engine",
+  "traces_to": [
+    "CON-compliance"
+  ],
+  "scenarios": [
+    "QS-complexity",
+    "QS-modularity"
+  ],
+  "priority": "must",
+  "sprint": "SP2",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

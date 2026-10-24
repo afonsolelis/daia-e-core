@@ -1,25 +1,28 @@
 ---
 name: describe-software-architecture
-description: Produza uma descrição arquitetural ISO 42010 com views, modelos, correspondências, decisões e alternativas. Use para desenhar ou recuperar a arquitetura de software.
+description: Make an ISO 42010 architecture description with views, models, correspondences, decisions and alternatives. Use to design or to recover a software architecture.
 ---
 
-# Descrever arquitetura de software
+# Describe the software architecture
 
-O catálogo ativo define as views concretas; a ISO 42010 define as relações que precisam permanecer coerentes.
+The active catalog sets the concrete views. ISO 42010 sets the relations that must stay consistent.
 
-## Resultado
+## Result
 
-Produza views em `.daia/model/views`, decisões em `decisions` e correspondências em `correspondences`. Inclua pelo menos um modelo estático e um dinâmico, enderece toda concern e registre alternativa preterida com critério para cada decisão relevante.
+Make views in `.daia/model/views`, decisions in `decisions` and correspondences in `correspondences`. Include a minimum of one static model and one dynamic model. Address each concern. For each important decision, record the rejected alternative and the criterion.
 
-## Fluxo
+## Procedure
 
-Antes de produzir artefatos, consulte `daia next --json`, `.daia/guide.md` e os schemas locais em `.daia/schemas/`. Registre o resultado com `daia verify` na etapa aplicável.
+Before you make artifacts, read `daia next --json`, `.daia/guide.md` and the local schemas in `.daia/schemas/`. Record the result with `daia verify` at the applicable step.
 
-1. Leia a baseline SP2 e os drivers priorizados; consulte `daia viewpoints`.
-2. Declare a fronteira do sistema e modele entidades/relações antes dos fluxos e estados.
-3. Instancie apenas as views necessárias, ligando stakeholders e concerns.
-4. Registre correspondências verificáveis entre views.
-5. Para cada decisão, registre motivação, alternativa, critério, riscos e views afetadas.
-6. Rode `daia gate SP3`; envie tradeoffs à avaliação e contratos à especificação.
+1. Read the SP2 baseline and the prioritized drivers.
+2. Run `daia viewpoints`.
+3. Declare the boundary of the system.
+4. Model the entities and relations before the flows and states.
+5. Make only the views that are necessary. Link each view to its stakeholders and concerns.
+6. Record correspondences between views that you can verify.
+7. For each decision, record the motivation, the alternative, the criterion, the risks and the affected views.
+8. Run `daia gate SP3`.
+9. Send the trade-offs to the evaluation. Send the contracts to the specification.
 
-Não gere código de produto antes de a SP3 ser assinada.
+Do not write product code before the human signs the SP3 baseline.

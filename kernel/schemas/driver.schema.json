@@ -1,7 +1,7 @@
 {
   "$id": "daia-e/driver",
   "title": "Business Driver (BABOK — SP1)",
-  "description": "Direcionador de negócio. Responde: por que o sistema deve existir e para quem.",
+  "description": "A business driver. It tells why the system must exist and for whom.",
   "type": "object",
   "required": ["id", "kind", "statement", "stakeholders", "provenance"],
   "additionalProperties": false,
@@ -11,8 +11,8 @@
     "statement": { "type": "string", "minLength": 10 },
     "rationale": { "type": "string" },
     "stakeholders": { "$ref": "daia-e/common#/definitions/idRefList", "minItems": 1 },
-    "idef0_node": { "type": "string", "description": "Nó da decomposição IDEF0, ex.: A-0, A1, A12" },
-    "hypothesis": { "type": "string", "description": "Hipótese que a SP5 deve confirmar ou refutar" },
+    "idef0_node": { "type": "string", "description": "A node of the IDEF0 decomposition, for example A-0, A1, A12" },
+    "hypothesis": { "type": "string", "description": "The hypothesis that SP5 must confirm or refute" },
     "sprint": { "const": "SP1" },
     "status": { "$ref": "daia-e/common#/definitions/status" },
     "provenance": { "$ref": "daia-e/common#/definitions/provenance" }

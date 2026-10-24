@@ -1,35 +1,35 @@
 {
   "$id": "daia-e/view",
   "title": "View (ISO/IEC/IEEE 42010:2022)",
-  "description": "Expressão da arquitetura sob a perspectiva de um Viewpoint. Governa uma ou mais Concerns.",
+  "description": "An expression of the architecture from the perspective of a Viewpoint. It addresses one or more Concerns.",
   "type": "object",
   "required": ["id", "kind", "viewpoint", "addresses_concerns", "stakeholders", "sprint", "provenance"],
   "additionalProperties": false,
   "properties": {
     "id": { "$ref": "daia-e/common#/definitions/id", "idPrefix": "VW" },
     "kind": { "const": "View" },
-    "viewpoint": { "type": "string", "description": "Viewpoint do catálogo ativo, ex.: enterprise, computational" },
+    "viewpoint": { "type": "string", "description": "A viewpoint of the active catalog, for example enterprise or computational" },
     "title": { "type": "string" },
     "addresses_concerns": {
       "$ref": "daia-e/common#/definitions/idRefList",
       "minItems": 1,
-      "description": "Preocupações que esta view responde (CON-*). ISO 42010 §5.4"
+      "description": "The concerns that this view addresses (CON-*). ISO 42010 §5.4"
     },
     "stakeholders": {
       "$ref": "daia-e/common#/definitions/idRefList",
       "minItems": 1,
-      "description": "Partes interessadas identificadas (STK-*)"
+      "description": "The identified stakeholders (STK-*)"
     },
     "models": {
       "type": "array",
-      "description": "Modelos que compõem a view. SP3 exige modelagem estática E dinâmica (Art. VIII).",
+      "description": "The models of the view. SP3 MUST have a static model AND a dynamic model (Art. VIII).",
       "items": {
         "type": "object",
         "required": ["kind", "path"],
         "properties": {
           "kind": { "type": "string", "enum": ["static", "dynamic", "deployment", "context", "other"] },
-          "notation": { "type": "string", "description": "ex.: UML, IDEF0, C4, mermaid, texto" },
-          "path": { "type": "string", "description": "Caminho relativo ao artefato que materializa o modelo" }
+          "notation": { "type": "string", "description": "for example UML, IDEF0, C4, mermaid, text" },
+          "path": { "type": "string", "description": "The relative path to the artifact that contains the model" }
         }
       }
     },
@@ -37,7 +37,7 @@
     "status": { "$ref": "daia-e/common#/definitions/status" },
     "confirmed": {
       "type": "boolean",
-      "description": "Views com status=recovered exigem confirmação humana antes de entrar em baseline"
+      "description": "A view with status=recovered MUST have a human confirmation before it goes into a baseline"
     },
     "provenance": { "$ref": "daia-e/common#/definitions/provenance" }
   }

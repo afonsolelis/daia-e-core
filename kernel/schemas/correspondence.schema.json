@@ -1,7 +1,7 @@
 {
   "$id": "daia-e/correspondence",
   "title": "Correspondence (ISO/IEC/IEEE 42010:2022)",
-  "description": "Relação declarada entre elementos de views distintas. É o que impede a descrição arquitetural de se fragmentar em documentos mutuamente inconsistentes (Art. VII).",
+  "description": "A declared relation between elements of different views. It keeps the architecture description from a split into documents that do not agree (Art. VII).",
   "type": "object",
   "required": ["id", "kind", "rule", "from", "to", "provenance"],
   "additionalProperties": false,

@@ -1,0 +1,18 @@
+{
+  "id": "TC-complexity",
+  "kind": "TestContract",
+  "title": "Mean cyclomatic complexity for each module stays <= 10",
+  "verifies": [
+    "QS-complexity"
+  ],
+  "test_path": "tests/quality/complexity.test.js",
+  "test_name": "mean for each module is within the threshold",
+  "phase": "green",
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

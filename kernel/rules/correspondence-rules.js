@@ -1,20 +1,20 @@
 'use strict';
 
 /**
- * Regras de correspondencia — o lint executavel do metamodelo.
+ * Correspondence rules: the executable lint of the metamodel.
  *
- * A ISO/IEC/IEEE 42010:2022 exige que a descricao arquitetural seja coerente:
- * cada view responde a preocupacoes identificadas de partes interessadas
- * identificadas, e as correspondencias entre views sao declaradas. Um schema
- * valida um documento isolado; estas regras validam o grafo.
+ * ISO/IEC/IEEE 42010:2022 states that the architecture description must be coherent.
+ * Each view answers identified concerns of identified stakeholders.
+ * The correspondences between views are declared.
+ * A schema validates one document. These rules validate the graph.
  *
- * Cada regra declara o artigo da Constituicao que a sustenta. Uma regra sem
- * artigo e opiniao; um artigo sem regra e aspiracao.
+ * Each rule declares the constitution article that supports it.
+ * A rule without an article is an opinion. An article without a rule is only an aim.
  */
 
 const SEVERITY = { BLOCK: 'BLOCK', WARN: 'WARN', INFO: 'INFO' };
 
-/** Coleta todos os campos que carregam referencias a outros documentos. */
+/** The fields that contain references to other documents. */
 const REF_FIELDS = [
   'concerns',
   'stakeholders',
@@ -53,7 +53,7 @@ function finding(rule, id, message, hint) {
 const RULES = [
   {
     id: 'REF-INTEGRITY',
-    title: 'Toda referencia aponta para documento existente',
+    title: 'Each reference points to a document that exists',
     article: 'IV',
     severity: SEVERITY.BLOCK,
     sprints: ['SP1', 'SP2', 'SP3', 'SP4', 'SP5'],
@@ -63,8 +63,8 @@ const RULES = [
         for (const { field, ref } of refsOf(doc)) {
           if (ref && !store.has(ref)) {
             out.push(
-              finding(this, doc.id, `referencia quebrada em "${field}": ${ref} nao existe no modelo`,
-                'Crie o documento referenciado ou corrija o id.')
+              finding(this, doc.id, `broken reference in "${field}": ${ref} does not exist in the model`,
+                'Create the referenced document or correct the id.')
             );
           }
         }
@@ -75,7 +75,7 @@ const RULES = [
 
   {
     id: 'CONCERN-ADDRESSED',
-    title: 'Toda Concern e enderecada por ao menos uma View',
+    title: 'Each Concern is addressed by one View or more',
     article: 'VII',
     severity: SEVERITY.BLOCK,
     sprints: ['SP3', 'SP4', 'SP5'],
@@ -88,15 +88,15 @@ const RULES = [
         .all('Concern')
         .filter((c) => !addressed.has(c.id))
         .map((c) =>
-          finding(this, c.id, `preocupacao nao enderecada por nenhuma view: "${c.statement.slice(0, 60)}..."`,
-            'ISO 42010 §5.4 — toda preocupacao identificada exige uma view que a responda.')
+          finding(this, c.id, `no view addresses this concern: "${c.statement.slice(0, 60)}..."`,
+            'ISO 42010 §5.4: add a view that answers each identified concern.')
         );
     },
   },
 
   {
     id: 'VIEW-STAKEHOLDER',
-    title: 'Toda View declara partes interessadas identificadas',
+    title: 'Each View declares identified stakeholders',
     article: 'VII',
     severity: SEVERITY.BLOCK,
     sprints: ['SP3', 'SP4', 'SP5'],
@@ -105,15 +105,15 @@ const RULES = [
         .all('View')
         .filter((v) => !Array.isArray(v.stakeholders) || v.stakeholders.length === 0)
         .map((v) =>
-          finding(this, v.id, 'view sem parte interessada declarada',
-            'Uma view que nao responde a ninguem nao e uma view — e um diagrama.')
+          finding(this, v.id, 'the view declares no stakeholder',
+            'Declare the stakeholders of the view. A view that answers no stakeholder is only a diagram.')
         );
     },
   },
 
   {
     id: 'VIEW-VIEWPOINT',
-    title: 'O viewpoint da View existe no catalogo ativo',
+    title: 'The viewpoint of each View exists in the active catalog',
     article: 'VII',
     severity: SEVERITY.BLOCK,
     sprints: ['SP3', 'SP4', 'SP5'],
@@ -123,15 +123,15 @@ const RULES = [
         .all('View')
         .filter((v) => !known.has(v.viewpoint))
         .map((v) =>
-          finding(this, v.id, `viewpoint "${v.viewpoint}" ausente do catalogo ${store.viewpoints.catalog}`,
-            `Viewpoints disponiveis: ${[...known.keys()].join(', ')}`)
+          finding(this, v.id, `viewpoint "${v.viewpoint}" is not in the catalog ${store.viewpoints.catalog}`,
+            `Use one of these viewpoints: ${[...known.keys()].join(', ')}`)
         );
     },
   },
 
   {
     id: 'STATIC-AND-DYNAMIC',
-    title: 'A SP3 exige modelagem estatica e dinamica',
+    title: 'SP3 must have a static model and a dynamic model',
     article: 'VIII',
     severity: SEVERITY.BLOCK,
     sprints: ['SP3', 'SP4', 'SP5'],
@@ -143,14 +143,14 @@ const RULES = [
       const out = [];
       if (!kinds.has('static')) {
         out.push(
-          finding(this, 'MODEL', 'nenhum modelo estatico declarado em nenhuma view',
-            'Sem modelagem estatica a decisao arquitetural tende a produzir estruturas que nao acomodam os dados reais.')
+          finding(this, 'MODEL', 'no view declares a static model',
+            'Add a static model. Without it, the decisions can give structures that do not hold the real data.')
         );
       }
       if (!kinds.has('dynamic')) {
         out.push(
-          finding(this, 'MODEL', 'nenhum modelo dinamico declarado em nenhuma view',
-            'Sem modelagem dinamica a decisao tende a produzir estruturas corretas em repouso e inadequadas em operacao.')
+          finding(this, 'MODEL', 'no view declares a dynamic model',
+            'Add a dynamic model. Without it, structures can be correct at rest but incorrect in operation.')
         );
       }
       return out;
@@ -159,7 +159,7 @@ const RULES = [
 
   {
     id: 'AD-ALTERNATIVE',
-    title: 'Toda decisao arquitetural registra alternativa preterida e criterio',
+    title: 'Each architecture decision records a rejected alternative and the criterion',
     article: 'IX',
     severity: SEVERITY.BLOCK,
     sprints: ['SP3', 'SP4', 'SP5'],
@@ -169,16 +169,16 @@ const RULES = [
         const alts = ad.alternatives || [];
         if (alts.length === 0) {
           out.push(
-            finding(this, ad.id, 'decisao sem alternativa considerada',
-              'O LLM converge para solucoes convencionais sem explicitar que outras existiam.')
+            finding(this, ad.id, 'the decision records no alternative',
+              'Record the alternatives. An LLM tends to select conventional solutions and not show the other options.')
           );
           continue;
         }
         alts.forEach((alt, i) => {
           if (!alt.rejected_because || alt.rejected_because.trim().length < 10) {
             out.push(
-              finding(this, ad.id, `alternativa ${i + 1} ("${alt.option}") sem criterio de preterição`,
-                'Registre o criterio, nao a preferencia.')
+              finding(this, ad.id, `alternative ${i + 1} ("${alt.option}") has no rejection criterion`,
+                'Record the criterion, not the preference.')
             );
           }
         });
@@ -189,7 +189,7 @@ const RULES = [
 
   {
     id: 'AD-TRACE',
-    title: 'Toda decisao arquitetural rastreia para requisito ou preocupacao',
+    title: 'Each architecture decision traces to a requirement or a concern',
     article: 'IV',
     severity: SEVERITY.BLOCK,
     sprints: ['SP3', 'SP4', 'SP5'],
@@ -198,15 +198,15 @@ const RULES = [
         .all('ArchitectureDecision')
         .filter((ad) => !Array.isArray(ad.traces_to) || ad.traces_to.length === 0)
         .map((ad) =>
-          finding(this, ad.id, 'decisao arquitetural sem rastreio a requisito ou preocupacao',
-            'A cadeia necessidade -> requisito -> decisao precisa permanecer navegavel.')
+          finding(this, ad.id, 'the architecture decision has no trace to a requirement or a concern',
+            'Add traces_to. Keep the chain stakeholder need -> requirement -> decision complete.')
         );
     },
   },
 
   {
     id: 'NFR-SCENARIO',
-    title: 'Todo requisito nao funcional tem cenario de qualidade',
+    title: 'Each non-functional requirement has a quality scenario',
     article: 'V',
     severity: SEVERITY.BLOCK,
     sprints: ['SP2', 'SP3', 'SP4', 'SP5'],
@@ -216,28 +216,28 @@ const RULES = [
         .filter((r) => r.type === 'non-functional')
         .filter((r) => !Array.isArray(r.scenarios) || r.scenarios.length === 0)
         .map((r) =>
-          finding(this, r.id, 'requisito nao funcional sem cenario de qualidade',
-            'Qualidade nao e adjetivo: expresse como cenario de seis partes com medida.')
+          finding(this, r.id, 'the non-functional requirement has no quality scenario',
+            'Write the quality as a six-part scenario with a response measure, not as an adjective.')
         );
     },
   },
 
   {
     id: 'SCENARIO-MEASURABLE',
-    title: 'Todo cenario tem medida de resposta efetiva',
+    title: 'Each quality scenario has a measurable response measure',
     article: 'V',
     severity: SEVERITY.BLOCK,
     sprints: ['SP2', 'SP3', 'SP4', 'SP5'],
     check(store) {
-      const PLACEHOLDERS = ['tbd', 'todo', 'n/a', '?', '-', 'a definir', 'rapido', 'aceitavel'];
+      const PLACEHOLDERS = ['tbd', 'todo', 'n/a', '?', '-', 'to be defined', 'fast', 'acceptable', 'a definir', 'rapido', 'aceitavel'];
       const out = [];
       for (const qs of store.all('QualityScenario')) {
         const m = qs.response_measure || {};
         const threshold = String(m.threshold ?? '').trim().toLowerCase();
         if (!threshold || PLACEHOLDERS.includes(threshold)) {
           out.push(
-            finding(this, qs.id, `medida de resposta sem limiar efetivo (recebido: "${m.threshold}")`,
-              'Sem limiar nao ha cenario — "rapido" nao e resposta mensuravel.')
+            finding(this, qs.id, `the response measure has no real threshold (received: "${m.threshold}")`,
+              'Give a numeric threshold. "Fast" is not a measurable response.')
           );
         }
       }
@@ -247,13 +247,13 @@ const RULES = [
 
   {
     id: 'SCENARIO-VERIFIED',
-    title: 'Todo cenario de qualidade e verificado por teste executavel',
+    title: 'Each quality scenario is verified by an executable test',
     article: 'V',
     severity: SEVERITY.BLOCK,
     sprints: ['SP4', 'SP5'],
     check(store) {
-      // A direcao e do teste para o cenario: o contrato declara o que verifica.
-      // O cenario nao precisa saber quais testes existem — isso o desacopla da SP3.
+      // The direction is from the test to the scenario: the contract declares what it verifies.
+      // The scenario does not know which tests exist. Thus it is independent of SP3.
       const verified = new Set();
       for (const tc of store.all('TestContract')) {
         for (const target of tc.verifies || []) verified.add(target);
@@ -262,15 +262,15 @@ const RULES = [
         .all('QualityScenario')
         .filter((qs) => !verified.has(qs.id))
         .map((qs) =>
-          finding(this, qs.id, 'cenario de qualidade sem teste que o verifique',
-            'Um cenario nao verificado e uma promessa, nao uma garantia.')
+          finding(this, qs.id, 'no test verifies the quality scenario',
+            'Add a test contract that verifies the scenario. A scenario without a test is only a promise.')
         );
     },
   },
 
   {
     id: 'TEST-PHASE-RED',
-    title: 'Na SP3 os contratos de teste existem em fase vermelha',
+    title: 'In SP3, the test contracts exist in the red phase',
     article: 'VIII',
     severity: SEVERITY.BLOCK,
     sprints: ['SP3'],
@@ -278,28 +278,28 @@ const RULES = [
       const contracts = store.all('TestContract');
       if (contracts.length === 0) {
         return [
-          finding(this, 'TC', 'nenhum contrato de teste declarado antes da geracao',
-            'Os testes travam os contratos comportamentais antes de o modelo gerar codigo.'),
+          finding(this, 'TC', 'no test contract is declared before the code generation',
+            'Declare the test contracts. They lock the behavior before the model generates code.'),
         ];
       }
-      // A exigencia de fase vermelha vale no momento de encerrar a SP3. Depois de
-      // assinada, o verde e o estado esperado — reavaliar a fase retroativamente
-      // impediria qualquer reassinatura da SP3 apos a geracao.
+      // The red phase is mandatory only when SP3 closes. After the signature, green is
+      // the expected state. A new check of the phase after the generation would stop
+      // each new signature of SP3.
       const sp3Closed = context.baselines && context.baselines.has('SP3');
       if (sp3Closed || store.config.mode === 'existing') return [];
 
       return contracts
         .filter((tc) => tc.phase !== 'red')
         .map((tc) =>
-          finding(this, tc.id, `contrato em fase "${tc.phase}" antes do encerramento da SP3`,
-            'A SP3 encerra com os testes em vermelho; o verde e baseline da SP4.')
+          finding(this, tc.id, `the contract is in phase "${tc.phase}" before SP3 closes`,
+            'Set the phase to red. SP3 closes with red tests. Green tests are the SP4 baseline.')
         );
     },
   },
 
   {
     id: 'TEST-PHASE-GREEN',
-    title: 'Na SP4 os contratos de teste estao em fase verde',
+    title: 'In SP4, the test contracts are in the green phase',
     article: 'VIII',
     severity: SEVERITY.BLOCK,
     sprints: ['SP4', 'SP5'],
@@ -308,15 +308,15 @@ const RULES = [
         .all('TestContract')
         .filter((tc) => tc.phase !== 'green')
         .map((tc) =>
-          finding(this, tc.id, `contrato ainda em fase "${tc.phase}" no encerramento da SP4`,
-            'A baseline executavel exige os testes em verde.')
+          finding(this, tc.id, `the contract is still in phase "${tc.phase}" when SP4 closes`,
+            'Make the tests green. The executable baseline must have green tests.')
         );
     },
   },
 
   {
     id: 'REQ-TRACE',
-    title: 'Todo requisito deriva de direcionador ou preocupacao',
+    title: 'Each requirement traces to a business driver or a concern',
     article: 'IV',
     severity: SEVERITY.BLOCK,
     sprints: ['SP2', 'SP3', 'SP4', 'SP5'],
@@ -325,15 +325,15 @@ const RULES = [
         .all('Requirement')
         .filter((r) => !Array.isArray(r.traces_to) || r.traces_to.length === 0)
         .map((r) =>
-          finding(this, r.id, 'requisito sem rastreio a direcionador ou preocupacao',
-            'Especificacoes nao inventam — apenas derivam.')
+          finding(this, r.id, 'the requirement has no trace to a business driver or a concern',
+            'Add traces_to. A specification does not invent requirements. It only derives them.')
         );
     },
   },
 
   {
     id: 'RECOVERED-CONFIRMED',
-    title: 'Views recuperadas de codigo existente exigem confirmacao humana',
+    title: 'A human must confirm each view recovered from existing code',
     article: 'II',
     severity: SEVERITY.BLOCK,
     sprints: ['SP1', 'SP2', 'SP3', 'SP4', 'SP5'],
@@ -342,27 +342,27 @@ const RULES = [
         .all()
         .filter((d) => d.status === 'recovered' && d.confirmed !== true)
         .map((d) =>
-          finding(this, d.id, 'artefato recuperado de codigo ainda nao confirmado por humano',
-            'Revise a origem com o humano e registre confirmed: true na view recuperada.')
+          finding(this, d.id, 'a human did not confirm this artifact recovered from code',
+            'Review the origin with the human. Then record confirmed: true in the recovered view.')
         );
     },
   },
 
   {
     id: 'SP1-FOUNDATION',
-    title: 'A SP1 estabelece direcionadores e partes interessadas',
+    title: 'SP1 declares business drivers and stakeholders',
     article: 'X',
     severity: SEVERITY.BLOCK,
     sprints: ['SP1', 'SP2', 'SP3', 'SP4', 'SP5'],
     check(store) {
       const out = [];
       if (store.all('BusinessDriver').length === 0) {
-        out.push(finding(this, 'SP1', 'nenhum direcionador de negocio declarado',
-          'BABOK — por que o sistema deve existir e para quem.'));
+        out.push(finding(this, 'SP1', 'no business driver is declared',
+          'BABOK: declare why the system must exist and for whom.'));
       }
       if (store.all('Stakeholder').length === 0) {
-        out.push(finding(this, 'SP1', 'nenhuma parte interessada declarada',
-          'ISO 42010 exige partes interessadas identificadas.'));
+        out.push(finding(this, 'SP1', 'no stakeholder is declared',
+          'ISO 42010: declare the identified stakeholders.'));
       }
       return out;
     },
@@ -370,7 +370,7 @@ const RULES = [
 
   {
     id: 'HYPOTHESIS-DECLARED',
-    title: 'A SP1 declara a hipotese que a SP5 deve confrontar',
+    title: 'SP1 declares the hypothesis that SP5 must test',
     article: 'X',
     severity: SEVERITY.WARN,
     sprints: ['SP1', 'SP2', 'SP3', 'SP4', 'SP5'],
@@ -378,15 +378,15 @@ const RULES = [
       const withHypothesis = store.all('BusinessDriver').filter((d) => d.hypothesis);
       if (withHypothesis.length > 0) return [];
       return [
-        finding(this, 'SP1', 'nenhum direcionador declara hipotese',
-          'A SP5 pergunta se a hipotese inicial se confirma — sem hipotese nao ha o que validar.'),
+        finding(this, 'SP1', 'no business driver declares a hypothesis',
+          'Declare a hypothesis. SP5 asks if the initial hypothesis is true. Without it, SP5 has nothing to validate.'),
       ];
     },
   },
 
   {
     id: 'ATAM-SENSITIVITY',
-    title: 'Decisoes arquiteturais declaram pontos de sensibilidade',
+    title: 'Architecture decisions declare sensitivity points',
     article: 'IX',
     severity: SEVERITY.WARN,
     sprints: ['SP3', 'SP4', 'SP5'],
@@ -395,15 +395,15 @@ const RULES = [
         .all('ArchitectureDecision')
         .filter((ad) => !Array.isArray(ad.sensitivity_points) || ad.sensitivity_points.length === 0)
         .map((ad) =>
-          finding(this, ad.id, 'decisao sem ponto de sensibilidade declarado',
-            'ATAM — que atributo de qualidade e sensivel a esta decisao?')
+          finding(this, ad.id, 'the decision declares no sensitivity point',
+            'ATAM: declare the quality attribute that is sensitive to this decision.')
         );
     },
   },
 
   {
     id: 'VIEW-SPRINT-ORDER',
-    title: 'A view nao abre antes da sprint prevista pelo viewpoint',
+    title: 'A view does not open before the sprint that its viewpoint sets',
     article: 'III',
     severity: SEVERITY.WARN,
     sprints: ['SP1', 'SP2', 'SP3', 'SP4', 'SP5'],
@@ -415,8 +415,8 @@ const RULES = [
         if (!vp || !vp.opens_at || !view.sprint) continue;
         if (order[view.sprint] < order[vp.opens_at]) {
           out.push(
-            finding(this, view.id, `view aberta em ${view.sprint}, antes de ${vp.opens_at} previsto para o viewpoint "${vp.id}"`,
-              'A descricao arquitetural se preenche progressivamente, mas nao fora de ordem.')
+            finding(this, view.id, `the view opens in ${view.sprint}, before ${vp.opens_at}, the sprint set for the viewpoint "${vp.id}"`,
+              'Move the view to the correct sprint. Fill the architecture description in sprint order.')
           );
         }
       }
@@ -426,7 +426,7 @@ const RULES = [
 
   {
     id: 'CHARACTERISTIC-COVERAGE',
-    title: 'Cobertura das caracteristicas nao funcionais da ISO 25010',
+    title: 'Coverage of the ISO 25010 non-functional characteristics',
     article: 'V',
     severity: SEVERITY.INFO,
     sprints: ['SP2', 'SP3', 'SP4', 'SP5'],
@@ -439,8 +439,8 @@ const RULES = [
       const missing = NON_FUNCTIONAL.filter((c) => !covered.has(c));
       if (missing.length === 0) return [];
       return [
-        finding(this, 'ISO25010', `${missing.length} de 8 caracteristicas nao funcionais sem cenario: ${missing.join(', ')}`,
-          'Cobertura total nao e exigida — a ausencia deliberada e decisao registravel.'),
+        finding(this, 'ISO25010', `${missing.length} of 8 non-functional characteristics have no scenario: ${missing.join(', ')}`,
+          'Full coverage is not mandatory. If you omit a characteristic deliberately, record that decision.'),
       ];
     },
   },

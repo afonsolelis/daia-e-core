@@ -3,12 +3,12 @@
 const { refsOf } = require('../rules/correspondence-rules');
 
 /**
- * Motor de rastreabilidade.
+ * Traceability engine.
  *
- * Art. IV: a cadeia necessidade -> requisito do sistema -> requisito de
- * software -> decisao arquitetural DEVE permanecer navegavel. Navegavel
- * significa nos dois sentidos: de um driver ate o teste que o verifica, e
- * de um teste de volta ate a razao de negocio que o justifica.
+ * Art. IV: the chain need -> system requirement -> software requirement ->
+ * architecture decision MUST stay navigable. Navigable means in the two
+ * directions: from a driver to the test that verifies it, and from a test
+ * back to the business reason for it.
  */
 class TraceabilityEngine {
   constructor(store) {
@@ -30,19 +30,19 @@ class TraceabilityEngine {
     }
   }
 
-  /** Quem este documento referencia. */
+  /** The documents that this document refers to. */
   upstream(id) {
     return [...(this.forward.get(id) || [])].sort();
   }
 
-  /** Quem referencia este documento. */
+  /** The documents that refer to this document. */
   downstream(id) {
     return [...(this.backward.get(id) || [])].sort();
   }
 
   /**
-   * Cadeia completa a partir de um id, em profundidade, no sentido pedido.
-   * Ciclos sao cortados — o grafo deveria ser aciclico, mas nao se assume.
+   * The full chain from an id, depth first, in the given direction.
+   * The engine cuts cycles. The graph must be acyclic, but the engine does not accept that as true.
    */
   chain(id, direction = 'down', depth = 0, seen = new Set()) {
     if (seen.has(id) || depth > 12) return { id, truncated: true, children: [] };
@@ -51,13 +51,13 @@ class TraceabilityEngine {
     const doc = this.store.get(id);
     return {
       id,
-      kind: doc ? doc.kind : 'AUSENTE',
-      label: doc ? (doc.statement || doc.title || doc.name || '') : 'referencia quebrada',
+      kind: doc ? doc.kind : 'MISSING',
+      label: doc ? (doc.statement || doc.title || doc.name || '') : 'broken reference',
       children: next.map((n) => this.chain(n, direction, depth + 1, seen)),
     };
   }
 
-  /** Artefatos que nao sao referenciados por ninguem e nao referenciam nada. */
+  /** The artifacts that no document refers to and that refer to no document. */
   orphans() {
     return this.store
       .all()
@@ -66,16 +66,16 @@ class TraceabilityEngine {
   }
 
   /**
-   * Matriz de rastreabilidade requisito -> cenario -> teste.
-   * E a evidencia que a SP5 exporta.
+   * The traceability matrix requirement -> scenario -> test.
+   * SP5 exports it as evidence.
    */
   matrix() {
     const rows = [];
     for (const req of this.store.all('Requirement')) {
       const scenarios = (req.scenarios || []).map((id) => this.store.get(id)).filter(Boolean);
       if (scenarios.length === 0) {
-        // Requisito funcional nao exige cenario de qualidade (Art. V trata de RNF),
-        // mas ainda pode ser verificado por contrato de teste direto.
+        // A functional requirement does not need a quality scenario (Art. V is about NFR).
+        // A test contract can still verify it directly.
         rows.push({
           requirement: req.id,
           type: req.type,
@@ -98,7 +98,7 @@ class TraceabilityEngine {
     return rows;
   }
 
-  /** Contratos de teste que verificam um artefato. */
+  /** The test contracts that verify an artifact. */
   testsVerifying(id) {
     return this.store
       .all('TestContract')
@@ -108,16 +108,16 @@ class TraceabilityEngine {
   }
 
   /**
-   * Analise de impacto: dado um id, o que e afetado por mudanca nele.
-   * Base do laco de manutencao — o ATAM reabre so nos cenarios afetados.
+   * Impact analysis: for an id, find what a change to it affects.
+   * This is the base of the maintenance loop. ATAM opens again only for the affected scenarios.
    */
   impact(id) {
-    // O grafo tem duas classes de aresta com sentidos opostos:
-    //  - dependencia (traces_to, scenarios, addresses_concerns): aponta do
-    //    derivado para a origem, logo o impacto de mudar a origem flui ao contrario;
-    //  - efeito (affects_views): aponta do agente para o afetado, e o impacto
-    //    segue a propria seta.
-    // Percorrer so uma direcao perde metade do alcance real de uma mudanca.
+    // The graph has two classes of edge with opposite directions:
+    //  - dependency (traces_to, scenarios, addresses_concerns): it points from
+    //    the derived artifact to the origin. A change to the origin has an impact in the opposite direction;
+    //  - effect (affects_views): it points from the cause to the affected artifact.
+    //    The impact goes in the direction of the arrow.
+    // If the search goes in one direction only, it loses half of the real range of a change.
     const affected = new Set();
     const queue = [id];
     while (queue.length > 0) {

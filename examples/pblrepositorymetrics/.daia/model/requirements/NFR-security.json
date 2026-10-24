@@ -1,0 +1,21 @@
+{
+  "id": "NFR-security",
+  "kind": "Requirement",
+  "type": "non-functional",
+  "statement": "Access credentials for the GitLab API must not be in the source code",
+  "traces_to": [
+    "CON-privacy"
+  ],
+  "scenarios": [
+    "QS-secrets",
+    "QS-eval"
+  ],
+  "priority": "must",
+  "sprint": "SP2",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

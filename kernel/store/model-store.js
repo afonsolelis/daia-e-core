@@ -12,7 +12,7 @@ const KERNEL_DIR = path.join(__dirname, '..');
 const SCHEMA_DIR = path.join(KERNEL_DIR, 'schemas');
 const VIEWPOINT_DIR = path.join(KERNEL_DIR, 'viewpoints');
 
-/** Prefixo de id por tipo de artefato. O prefixo e a chave do roteamento de schema. */
+/** The id prefix for each artifact type. The prefix selects the schema. */
 const KIND_BY_PREFIX = {
   STK: 'stakeholder',
   CON: 'concern',
@@ -20,6 +20,9 @@ const KIND_BY_PREFIX = {
   COR: 'correspondence',
   AD: 'decision',
   BD: 'driver',
+  FR: 'requirement',
+  NFR: 'requirement',
+  // Deprecated pt-BR aliases. They stay valid so that old projects load.
   RF: 'requirement',
   RNF: 'requirement',
   QS: 'quality-scenario',
@@ -37,11 +40,12 @@ const DEFAULT_CONFIG = {
 };
 
 /**
- * Carrega o modelo arquitetural de disco, valida cada documento contra o
- * schema do seu tipo e indexa tudo por id para as regras de correspondencia.
+ * Loads the architecture model from disk. Validates each document against the
+ * schema of its type. Makes an index of all documents by id for the
+ * correspondence rules.
  *
- * O store nao interpreta o metodo — ele so garante que o grafo existe e e
- * bem formado. As regras da ISO 42010 vivem em kernel/rules.
+ * The store does not interpret the method. It only makes sure that the graph
+ * exists and has a correct form. The ISO 42010 rules are in kernel/rules.
  */
 class ModelStore {
   constructor(rootDir) {
@@ -63,7 +67,7 @@ class ModelStore {
     try {
       return { ...DEFAULT_CONFIG, ...readJson(file) };
     } catch (err) {
-      throw new Error(`Configuracao invalida em .daia/config.json: ${err.message}`);
+      throw new Error(`The configuration in .daia/config.json is not valid: ${err.message}`);
     }
   }
 
@@ -84,8 +88,8 @@ class ModelStore {
     const file = path.join(VIEWPOINT_DIR, `${name}.json`);
     if (!fs.existsSync(file)) {
       throw new Error(
-        `Catalogo de viewpoints "${name}" nao encontrado. ` +
-          'A ISO 42010 nao prescreve views — declare um catalogo valido em .daia/config.json.'
+        `The viewpoint catalog "${name}" was not found. ` +
+          'ISO 42010 does not specify views. Declare a valid catalog in .daia/config.json.'
       );
     }
     const catalog = readJson(file);
@@ -94,7 +98,7 @@ class ModelStore {
     return { catalog: catalog.catalog, name: catalog.name, standard: catalog.standard, index };
   }
 
-  /** Deduz o schema a partir do prefixo do id. */
+  /** Finds the schema from the id prefix. */
   schemaNameFor(id) {
     const prefix = String(id).split('-')[0];
     return KIND_BY_PREFIX[prefix] || null;
@@ -111,19 +115,19 @@ class ModelStore {
         continue;
       }
       if (!doc || !doc.id) {
-        this.parseErrors.push({ file, message: 'documento sem campo "id"' });
+        this.parseErrors.push({ file, message: 'the document has no "id" field' });
         continue;
       }
       const schemaName = this.schemaNameFor(doc.id);
       if (!schemaName) {
         this.parseErrors.push({
           file,
-          message: `prefixo de id desconhecido em "${doc.id}" (esperado um de: ${Object.keys(KIND_BY_PREFIX).join(', ')})`,
+          message: `unknown id prefix in "${doc.id}" (expected one of: ${Object.keys(KIND_BY_PREFIX).join(', ')})`,
         });
         continue;
       }
       if (this.documents.has(doc.id)) {
-        this.parseErrors.push({ file, message: `id duplicado: ${doc.id}` });
+        this.parseErrors.push({ file, message: `duplicate id: ${doc.id}` });
         continue;
       }
 
@@ -159,12 +163,12 @@ class ModelStore {
     return this.files.get(id) || null;
   }
 
-  /** Artefatos de uma sprint especifica. */
+  /** The artifacts of one sprint. */
   bySprint(sprint) {
     return this.all().filter((d) => d.sprint === sprint);
   }
 
-  /** Artefatos ate uma sprint, inclusive — o escopo de uma baseline. */
+  /** The artifacts up to and including one sprint. This is the scope of a baseline. */
   bySprintUpTo(sprint) {
     const ORDER = { SP1: 1, SP2: 2, SP3: 3, SP4: 4, SP5: 5 };
     const ceiling = ORDER[String(sprint).toUpperCase()] || 0;
@@ -172,20 +176,19 @@ class ModelStore {
   }
 
   /**
-   * Hash canonico do estado do modelo. Entra na baseline: alterar o modelo
-   * depois de assinada invalida a assinatura (Art. II).
+   * The canonical hash of the model state. The baseline records it. A change
+   * to the model after the signature makes the signature not valid (Art. II).
    *
-   * O escopo importa. Uma baseline de SP2 cobre os artefatos ate a SP2 — nao o
-   * modelo inteiro. Sem isso, avancar para a SP3 invalidaria retroativamente
-   * toda assinatura anterior, o que tornaria a deteccao de deriva inutil por
-   * excesso de ruido.
+   * The scope is important. An SP2 baseline covers the artifacts up to SP2,
+   * not the full model. Without this scope, the move to SP3 makes all earlier
+   * signatures not valid. Then drift detection has too much noise to be useful.
    *
-   * @param {string} [upToSprint] SP1..SP5; omitido, cobre o modelo inteiro
+   * @param {string} [upToSprint] SP1..SP5. If you omit it, the hash covers the full model.
    */
   stateHash(upToSprint) {
     const ORDER = { SP1: 1, SP2: 2, SP3: 3, SP4: 4, SP5: 5 };
     const ceiling = upToSprint ? ORDER[String(upToSprint).toUpperCase()] : Infinity;
-    if (upToSprint && !ceiling) throw new Error(`Sprint invalida no escopo do hash: ${upToSprint}`);
+    if (upToSprint && !ceiling) throw new Error(`The sprint in the hash scope is not valid: ${upToSprint}`);
 
     const canonical = [...this.documents.keys()]
       .sort()
@@ -218,12 +221,12 @@ class ModelStore {
 }
 
 /**
- * Campos excluidos do hash canonico da baseline.
+ * The fields that the canonical baseline hash does not include.
  *
- * `phase` e estado de execucao, nao conteudo do contrato: o mesmo contrato de
- * teste nasce vermelho na SP3 e fica verde na SP4 sem que nada nele tenha sido
- * decidido de novo. Incluir a fase no hash faria a SP4 invalidar a assinatura
- * da SP3 por um fato que a SP3 ja previa.
+ * `phase` is the execution state, not the content of the contract. The same
+ * test contract starts red in SP3 and becomes green in SP4. Nobody decides
+ * anything new in it. If the hash includes the phase, SP4 makes the SP3
+ * signature not valid because of a fact that SP3 already expected.
  */
 const VOLATILE_FIELDS = new Set(['phase']);
 

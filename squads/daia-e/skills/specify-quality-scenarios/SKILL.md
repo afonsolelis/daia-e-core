@@ -1,24 +1,25 @@
 ---
 name: specify-quality-scenarios
-description: Converta necessidades em requisitos rastreáveis e atributos de qualidade em cenários mensuráveis de seis partes. Use na engenharia de requisitos ou ao reparar RNFs vagos.
+description: Change stakeholder needs into requirements that have a trace. Change quality attributes into measurable quality scenarios with six parts. Use in requirements engineering or when you correct vague NFR.
 ---
 
-# Especificar requisitos e qualidade
+# Specify requirements and quality
 
-Use a ISO/IEC 25010 como vocabulário, não como checklist obrigatório. Um cenário sem limiar efetivo ainda não é uma especificação.
+Use ISO/IEC 25010 as a vocabulary, not as a mandatory checklist. A scenario without an effective threshold is not a specification yet.
 
-## Resultado
+## Result
 
-Produza `Requirement` e `QualityScenario` sob `.daia/model/`. Cada RNF deve apontar para cenário com `source`, `stimulus`, `artifact`, `environment`, `response` e `response_measure` (`metric`, `operator`, `threshold`).
+Make the `Requirement` and `QualityScenario` artifacts in `.daia/model/`. Each NFR MUST point to a scenario with `source`, `stimulus`, `artifact`, `environment`, `response` and `response_measure` (`metric`, `operator`, `threshold`).
 
-## Fluxo
+## Procedure
 
-Antes de produzir artefatos, consulte `daia next --json`, `.daia/guide.md` e os schemas locais em `.daia/schemas/`. Registre o resultado com `daia verify` na etapa aplicável.
+Before you make artifacts, read `daia next --json`, `.daia/guide.md` and the local schemas in `.daia/schemas/`. Record the result with `daia verify` in the applicable step.
 
-1. Leia drivers e concerns assinados na SP1.
-2. Derive requisitos sem introduzir funcionalidades ou tecnologias não solicitadas.
-3. Identifique somente características de qualidade relevantes ao contexto.
-4. Negocie métricas e limites observáveis; recuse “rápido”, “aceitável” ou “TBD”.
-5. Rode `daia gate SP2` e apresente lacunas ao humano.
+1. Read the business drivers and the concerns that the human signed in SP1.
+2. Get the requirements from them. Do not add functions or technologies that nobody asked for.
+3. Identify only the quality characteristics that are relevant to the context.
+4. Agree on metrics and limits that you can observe with the human.
+5. Do not accept "fast", "acceptable" or "TBD" as a measure.
+6. Run `daia gate SP2`. Show the gaps to the human.
 
-Não decida arquitetura nem escreva testes nesta skill.
+Do not decide the architecture in this skill. Do not write tests in this skill.

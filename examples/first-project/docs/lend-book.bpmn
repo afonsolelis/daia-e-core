@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" id="defs-loan" targetNamespace="https://example.org/library">
+  <bpmn:process id="lend-book" isExecutable="false">
+    <bpmn:laneSet id="lanes">
+      <bpmn:lane id="lane-librarian" name="Librarian">
+        <bpmn:flowNodeRef>start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>check-pending-items</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>record-loan</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>end</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="start" name="Student asks for a book"/>
+    <bpmn:userTask id="check-pending-items" name="Check the pending items of the student"/>
+    <bpmn:userTask id="record-loan" name="Record the loan with a due date"/>
+    <bpmn:endEvent id="end" name="Book is lent"/>
+    <bpmn:sequenceFlow id="f1" sourceRef="start" targetRef="check-pending-items"/>
+    <bpmn:sequenceFlow id="f2" sourceRef="check-pending-items" targetRef="record-loan"/>
+    <bpmn:sequenceFlow id="f3" sourceRef="record-loan" targetRef="end"/>
+  </bpmn:process>
+</bpmn:definitions>

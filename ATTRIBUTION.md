@@ -1,65 +1,65 @@
-# Atribuição e Linhagem
+# Attribution and Lineage
 
-O DAIA-E é um trabalho derivado. Esta página registra a cadeia completa, o que foi
-preservado e o que foi substituído — exigência do Artigo IV da Constituição
-(*Traceability & No Invention*).
+DAIA-E is a derived work. This page records the complete chain, the parts that
+DAIA-E kept and the parts that DAIA-E replaced. Article IV of the Constitution
+(*Traceability & No Invention*) makes this record mandatory.
 
-## Cadeia de derivação
+## Derivation chain
 
 ```
 BMad Method (Brian Madison, BMad Code LLC, MIT)
-      │  método ágil story-driven para desenvolvimento assistido por IA
+      │  agile story-driven method for AI-assisted development
       ▼
 Synkra AIOX (SynkraAI Inc., MIT) — v5.4.1
-      │  framework de orquestração de agentes, CLI First, arquitetura de squads
+      │  agent orchestration framework, CLI First, squad architecture
       ▼
-DAIA-E (Afonso Cesar Lelis Brandão, MIT) — este projeto
-         método baseline-driven com descrição arquitetural ISO/IEC/IEEE 42010
+DAIA-E (Afonso Cesar Lelis Brandão, MIT) — this project
+         baseline-driven method with an ISO/IEC/IEEE 42010 architecture description
 ```
 
-Fork realizado a partir de `SynkraAI/aiox-core@4ef6530f` (v5.4.1, 2026-08-15).
+The fork started from `SynkraAI/aiox-core@4ef6530f` (v5.4.1, 2026-08-15).
 
-## O que foi preservado do AIOX
+## What DAIA-E kept from AIOX
 
-| Elemento | Situação |
+| Element | Status |
 |----------|----------|
-| Artigo I — CLI First | Preservado integralmente, com justificativa acrescentada |
-| Artigo VI — Absolute Imports | Preservado |
-| Artigo XI — Squad-First Portability | Preservado, com regra de portabilidade acrescentada |
-| Conceito de *squad* como unidade modular | Preservado |
-| Hierarquia CLI → Observability → UI | Preservada |
+| Article I — CLI First | Kept completely, with an added justification |
+| Article VI — Absolute Imports | Kept |
+| Article XI — Squad-First Portability | Kept, with an added portability rule |
+| Concept of the *squad* as a modular unit | Kept |
+| Hierarchy CLI → Observability → UI | Kept |
 
-## O que foi substituído
+## What DAIA-E replaced
 
-| Elemento do AIOX | Substituição no DAIA-E | Razão |
+| AIOX element | Replacement in DAIA-E | Reason |
 |------------------|------------------------|-------|
-| Artigo III — Story-Driven Development | Artigo III — Baseline-Driven Development | O DAIA-E não é ágil: a sprint é unidade de escopo, não de tempo |
-| Artigo II — Agent Authority | Artigo II — Human Decision Authority | A autoridade que importa é humana, não distribuída entre agentes |
-| Gates documentais (checklists) | Gates executáveis no CLI | Um princípio sem gate executável é aspiração |
-| 35 agentes, 204 tasks | Squad DAIA-E de 23 agentes ligados a sprints e *views*, compondo skills | Cada agente responde a uma preocupação rastreável |
-| Camada Pro (licenciamento, telemetria) | Removida | Artefato de pesquisa não comporta licenciamento comercial |
-| 24 dependências npm | Zero dependências externas | Reprodutibilidade: o kernel roda sem `npm install` |
+| Article III — Story-Driven Development | Article III — Baseline-Driven Development | DAIA-E is not agile: the sprint is a unit of scope, not of time |
+| Article II — Agent Authority | Article II — Human Decision Authority | The important authority is human. It is not distributed among agents |
+| Document gates (checklists) | Executable gates in the CLI | A principle without an executable gate is only an aspiration |
+| 35 agents, 204 tasks | DAIA-E squad of 23 agents, linked to sprints and *views*, that compose skills | Each agent answers a traceable concern |
+| Pro layer (licensing, telemetry) | Removed | A research artifact cannot contain commercial licensing |
+| 24 npm dependencies | Zero external dependencies | Reproducibility: the kernel runs without `npm install` |
 
-## Código removido do fork
+## Code removed from the fork
 
-`pro/`, `packages/`, `bin/`, `scripts/`, `.aiox-core/` (exceto as constituições),
+`pro/`, `packages/`, `bin/`, `scripts/`, `.aiox-core/` (except the constitutions),
 `docs/`, `tests/`, `squads/claude-code-mastery`, `outputs/`, `audits/`,
-`governance/`, `compat/` e as projeções de runtime (`.codex/`, `.grok/`,
+`governance/`, `compat/` and the runtime projections (`.codex/`, `.grok/`,
 `.gemini/`, `.antigravity/`, `.cursor/`, `.kimi/`).
 
-Nenhum código do AIOX permanece no DAIA-E além das duas constituições preservadas
-em `.daia-core/`, mantidas para efeito de rastreabilidade documental. O kernel,
-o CLI e a squad são escritos do zero.
+No AIOX code stays in DAIA-E, except the two constitutions in `.daia-core/`.
+DAIA-E keeps them for the documentary traceability. The kernel, the CLI and the
+squad are new code.
 
-## Agentes derivados do AIOX
+## Agents derived from AIOX
 
-Os 12 agentes de `.aiox-core/development/agents/` em
-`SynkraAI/aiox-core@4ef6530f` (MIT) têm correspondente na squad. Os textos foram
-reescritos no contrato de agente do DAIA-E; o que se aproveitou foi o
-conhecimento de cada papel: princípios, fronteiras, procedimentos e armadilhas
-comuns. Cada agente derivado termina com uma seção `## Derivação do AIOX` que
-registra o que foi preservado, substituído e removido. O mapa fica em
-`lineage`, no `squad.json`, e um teste verifica que todo destino existe.
+Each of the 12 agents in `.aiox-core/development/agents/` in
+`SynkraAI/aiox-core@4ef6530f` (MIT) has a related agent in the squad. The texts
+were written again with the DAIA-E agent contract. DAIA-E used the knowledge of
+each role: principles, boundaries, procedures and frequent pitfalls. Each
+derived agent ends with a `## Derivation from AIOX` section. This section
+records the parts that DAIA-E kept, replaced and removed. The map is in
+`lineage`, in `squad.json`. A test verifies that each target exists.
 
 | aiox-core | DAIA-E |
 |-----------|--------|
@@ -76,25 +76,26 @@ registra o que foi preservado, substituído e removido. O mapa fica em
 | `squad-creator` | `squad-creator` |
 | `ux-design-expert` | `ux-design-expert` |
 
-Não foram trazidos: o bloco de ativação (saudação, badges, handoffs), os
-comandos com prefixo `*`, as dependências de tasks, templates e scripts, a
-integração obrigatória com CodeRabbit e os comandos do AIOX Pro. Todos dependem
-de runtime ou de scripts, o que o Artigo XI proíbe.
+DAIA-E did not bring these parts: the activation block (greeting, badges,
+handoffs), the commands with the `*` prefix, the dependencies on tasks,
+templates and scripts, the mandatory CodeRabbit integration and the AIOX Pro
+commands. All of them depend on a runtime or on scripts. Article XI prohibits
+this dependency.
 
-## Fundamentação do método
+## Foundation of the method
 
-O método DAIA-E é adaptado de:
+The DAIA-E method is adapted from:
 
 > Brandão, A. C. L., Arakaki, R. & Silva, L. A. (2026). *An RM-ODP Method to
 > Model PBL Digital Twins for Supporting Closed-Loop Supervision.* MethodsX
-> (no prelo).
+> (in press).
 
-## Referências normativas
+## Normative references
 
-| Norma | Uso |
+| Standard | Use |
 |-------|-----|
-| ISO/IEC/IEEE 42010:2022 | Metamodelo da descrição arquitetural |
-| ISO/IEC 10746 (RM-ODP) | Catálogo de *viewpoints* default |
-| ISO/IEC 25010:2023 | Vocabulário de qualidade de produto |
-| BABOK, SWEBOK v4, SEBoK | Corpos de conhecimento por sprint |
-| QAW / ATAM (SEI) | Confronto arquitetural em ciclo |
+| ISO/IEC/IEEE 42010:2022 | Metamodel of the architecture description |
+| ISO/IEC 10746 (RM-ODP) | Default *viewpoint* catalog |
+| ISO/IEC 25010:2023 | Product quality vocabulary |
+| BABOK, SWEBOK v4, SEBoK | Bodies of knowledge for each sprint |
+| QAW / ATAM (SEI) | Cyclic architecture evaluation |

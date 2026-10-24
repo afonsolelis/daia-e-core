@@ -1,7 +1,7 @@
 {
   "$id": "daia-e/process",
   "title": "Business Process (BABOK v3 §10.35 — SP1)",
-  "description": "Processo de negócio modelado em BPMN 2.0. Cada persona que o executa aparece como raia; cada processo realiza uma atividade IDEF0 e sustenta ao menos um direcionador.",
+  "description": "A business process, modelled in BPMN 2.0. Each persona that does the process is a lane. Each process realizes one IDEF0 activity and supports at least one driver.",
   "type": "object",
   "required": ["id", "kind", "name", "trigger", "outcome", "performed_by", "supports", "activity", "models", "sprint", "provenance"],
   "additionalProperties": false,
@@ -10,23 +10,23 @@
     "kind": { "const": "BusinessProcess" },
     "name": { "type": "string", "minLength": 3 },
     "state": { "type": "string", "enum": ["as-is", "to-be"] },
-    "trigger": { "type": "string", "minLength": 5, "description": "Evento de negócio que dispara o processo" },
-    "outcome": { "type": "string", "minLength": 5, "description": "Resultado de negócio entregue" },
+    "trigger": { "type": "string", "minLength": 5, "description": "The business event that starts the process" },
+    "outcome": { "type": "string", "minLength": 5, "description": "The business result that the process delivers" },
     "performed_by": {
       "$ref": "daia-e/common#/definitions/idRefList",
       "minItems": 1,
-      "description": "Personas que executam o processo (PER-*); cada uma é uma raia no BPMN"
+      "description": "The personas that do the process (PER-*). Each persona is a lane in the BPMN."
     },
     "supports": {
       "$ref": "daia-e/common#/definitions/idRefList",
       "minItems": 1,
-      "description": "Direcionadores de negócio sustentados (BD-*)"
+      "description": "The business drivers that the process supports (BD-*)"
     },
-    "activity": { "$ref": "daia-e/common#/definitions/idRef", "description": "Atividade IDEF0 que o processo realiza (IDF-*)" },
+    "activity": { "$ref": "daia-e/common#/definitions/idRef", "description": "The IDEF0 activity that the process realizes (IDF-*)" },
     "models": {
       "type": "array",
       "minItems": 1,
-      "description": "Ao menos um modelo com notation BPMN apontando para um arquivo .bpmn (XML BPMN 2.0)",
+      "description": "At least one model with notation BPMN and a path to a .bpmn file (BPMN 2.0 XML)",
       "items": {
         "type": "object",
         "required": ["kind", "notation", "path"],

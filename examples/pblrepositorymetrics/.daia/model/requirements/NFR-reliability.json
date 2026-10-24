@@ -1,0 +1,20 @@
+{
+  "id": "NFR-reliability",
+  "kind": "Requirement",
+  "type": "non-functional",
+  "statement": "The evaluation pipeline must complete without failure for a full class",
+  "traces_to": [
+    "CON-teaching-load"
+  ],
+  "scenarios": [
+    "QS-tests"
+  ],
+  "priority": "must",
+  "sprint": "SP2",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

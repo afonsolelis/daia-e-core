@@ -1,66 +1,69 @@
 ---
 name: evaluate-performance-tactics
-description: Avalie se as decisões que atendem cenários de desempenho controlam a demanda por recursos e gerenciam recursos compartilhados (Bass, Clements & Kazman, cap. 8). Use na SP3 e na reavaliação ATAM da SP4 quando houver cenários com characteristic performance_efficiency.
+description: Evaluate if the decisions for performance scenarios control the resource demand and manage the shared resources (Bass, Clements & Kazman, chapter 8). Use in SP3 and in the SP4 ATAM evaluation when there are scenarios with characteristic performance_efficiency.
 ---
 
-# Avaliar táticas de desempenho
+# Evaluate the performance tactics
 
-Exponha lacunas e consequências; não escolha a tática no lugar do arquiteto.
+Show the gaps and the consequences. Do not select the tactic for the architect.
 
-## Resultado
+## Result
 
-Em cada `ArchitectureDecision` avaliada, complete:
+In each `ArchitectureDecision` that you evaluate, complete:
 
-- `tactics`: táticas que a decisão realiza, no formato `performance/<tática>`.
-- `sensitivity_points` e `tradeoff_points`, com os trade-offs conhecidos abaixo.
-- `risks`: lacunas que dependem de uma decisão existente.
+- `tactics`: the tactics that the decision applies, in the format `performance/<tactic>`.
+- `sensitivity_points` and `tradeoff_points`, with the known trade-offs below.
+- `risks`: the gaps that depend on an existing decision.
 
-Relate ao humano os cenários sem nenhuma decisão e as decisões cuja tática não está explícita.
+Tell the human about the scenarios that have no decision. Also tell the human about the decisions that do not state their tactic explicitly.
 
-## Fluxo
+## Procedure
 
-Antes de produzir artefatos, consulte `daia next --json`, `.daia/guide.md` e os schemas locais em `.daia/schemas/`.
+Before you make artifacts, read `daia next --json`, `.daia/guide.md` and the local schemas in `.daia/schemas/`.
 
-1. Selecione os `QualityScenario` com `characteristic` `performance_efficiency` (sub_characteristic time behaviour, resource utilization ou capacity) ou `flexibility` com sub_characteristic scalability. Comece pelos de importância H no `utility_tree`. Sem `utility_tree`, avalie todos e aponte a falta de priorização. Sem cenários, a skill não se aplica.
-2. Leia as decisões cujo `traces_to` inclui cada cenário. Cenário sem decisão é lacuna para `@arch`; não crie a decisão.
-3. Separe o tempo de resposta em processamento e bloqueio, e identifique qual dos dois a decisão afeta.
-4. Registre em `tactics` somente táticas que o texto da decisão realiza explicitamente. Se ela cita um padrão (ex.: cache, load balancer), registre a tática que ele realiza apenas quando o texto deixar claro; na dúvida, pergunte a `@arch`.
-5. Sem tática de controle de demanda ou de gerência de recurso para o gargalo identificado, registre lacuna.
-6. Percorra o design checklist do §8.3 nas sete categorias: alocação de responsabilidades, modelo de coordenação, modelo de dados, mapeamento entre elementos, gerência de recursos, momento de binding e escolha de tecnologia.
-7. Na SP4, rode `daia impact <AD-id>` e reavalie apenas os cenários listados.
-8. Devolva as lacunas a `@arch` e registre o resultado com `daia verify` na etapa aplicável.
+1. Select the `QualityScenario` items with `characteristic` `performance_efficiency`. The sub_characteristic is time behaviour, resource utilization or capacity.
+2. Also select the `flexibility` scenarios with sub_characteristic scalability.
+3. Start with the scenarios that have importance H in the `utility_tree`. If there is no `utility_tree`, evaluate all scenarios and report that they have no priority. If there are no scenarios, do not use this skill.
+4. Read the decisions that have each scenario in `traces_to`. A scenario without a decision is a gap for `@arch`. Do not make the decision.
+5. Divide the response time into computation time and blocked time. Find which of the two the decision changes.
+6. Record in `tactics` only the tactics that the decision text applies explicitly.
+7. If the decision names a pattern (for example, cache or load balancer), record its tactic only when the text makes it clear. If you have a doubt, ask `@arch`.
+8. If no demand tactic or resource tactic controls the bottleneck that you found, record a gap.
+9. Go through the design checklist of §8.3 in its seven categories: allocation of responsibilities, coordination model, data model, mapping among architectural elements, resource management, binding time and choice of technology.
+10. In SP4, run `daia impact <AD-id>`. Evaluate again only the listed scenarios.
+11. Send the gaps to `@arch`. Record the result with `daia verify` at the applicable step.
 
-## Catálogo
+## Catalog
 
-**Controlar demanda**
+**Control resource demand**
 
-| Tática | Pergunta de verificação |
+| Tactic | Verification question |
 |---|---|
-| `manage-sampling-rate` | A frequência de amostragem de fluxos ambientais pode ser reduzida com perda controlada? |
-| `limit-event-response` | Eventos acima de uma taxa máxima são limitados? Há política para os excedentes (descartar, registrar, notificar)? |
-| `prioritize-events` | Eventos têm prioridade explícita sob escassez? |
-| `reduce-overhead` | Intermediários e separações desnecessárias foram removidos, com componentes cooperantes co-localizados? |
-| `bound-execution-times` | Algoritmos iterativos têm limite de tempo ou de iterações? |
-| `increase-resource-efficiency` | Algoritmos nos caminhos críticos foram revisados? |
+| `manage-sampling-rate` | Can the system decrease the sample rate of environmental data streams, with a controlled loss? |
+| `limit-event-response` | Does the system limit the events above a maximum rate? Is there a policy for the excess events (discard, log, notify)? |
+| `prioritize-events` | Do events have an explicit priority when resources are not sufficient? |
+| `reduce-overhead` | Did the decision remove the intermediaries and separations that are not necessary? Are the components that cooperate in the same location? |
+| `bound-execution-times` | Do iterative algorithms have a limit of time or of iterations? |
+| `increase-resource-efficiency` | Did someone review the algorithms in the critical paths? |
 
-**Gerenciar recursos**
+**Manage resources**
 
-| Tática | Pergunta de verificação |
+| Tactic | Verification question |
 |---|---|
-| `increase-resources` | Recurso adicional é a forma mais direta de cumprir a medida? Qual o custo? |
-| `introduce-concurrency` | Streams independentes são processados em threads ou processos distintos? |
-| `maintain-multiple-copies-computations` | Há réplicas com balanceamento de carga para computação? |
-| `maintain-multiple-copies-data` | Há cache ou replicação de dados? Qual a política de consistência? |
-| `bound-queue-sizes` | Filas têm tamanho máximo? |
-| `schedule-resources` | A política de escalonamento (FIFO, prioridade fixa, RM/DM, EDF, estática) corresponde ao cenário? |
+| `increase-resources` | Is more resource the most direct way to meet the response measure? What is the cost? |
+| `introduce-concurrency` | Does the system process independent streams in different threads or processes? |
+| `maintain-multiple-copies-computations` | Are there replicas of the computation, with a load balancer? |
+| `maintain-multiple-copies-data` | Is there a cache or a data replication? What is the consistency policy? |
+| `bound-queue-sizes` | Do the queues have a maximum size? |
+| `schedule-resources` | Does the schedule policy (FIFO, fixed priority, RM/DM, EDF, static) agree with the scenario? |
 
-## Trade-offs conhecidos
+## Known trade-offs
 
-- Desempenho × modificabilidade: co-location e menos camadas reduzem latência e aumentam acoplamento.
-- Desempenho × custo: aumentar recursos é rápido e caro.
-- Desempenho × consistência: caches e réplicas exigem política de coerência.
+- Performance against modifiability: co-location and fewer layers decrease latency, but they increase coupling.
+- Performance against cost: more resources give a fast result, but they cost much.
+- Performance against consistency: caches and replicas need a coherence policy.
 
-## Não faz
+## Does not do
 
-- Não define metas de desempenho; isso é papel do cenário (`specify-quality-scenarios`).
-- Não recomenda tática sem cenário que a justifique.
+- It does not set performance targets. The scenario sets them (`specify-quality-scenarios`).
+- It does not recommend a tactic without a scenario that justifies it.

@@ -1,54 +1,55 @@
-# Contrato de agente DAIA-E
+# DAIA-E agent contract
 
-Este documento define o formato dos agentes desta squad. Ele existe porque o
-Artigo XI exige que os artefatos executáveis funcionem **independentemente do
-runtime que os invoca** — Claude, Codex, Gemini, Grok, um chat web sem
-ferramenta alguma, ou um runtime que ainda não existe.
+This document defines the format of the agents in this squad. Article XI is
+the reason for this contract. Executable artifacts MUST work **independently
+of the runtime that invokes them**. The runtime can be Claude, Codex, Gemini,
+Grok, a web chat with no tools, or a runtime that does not exist yet.
 
-## Regras do formato
+## Format rules
 
-1. **Markdown com frontmatter YAML.** Nada além disso.
-2. **Sem caminho de IDE.** Nenhuma referência a `.claude/`, `.codex/`, `.cursor/`.
-3. **Sem chamada a script.** O agente não executa código para se ativar.
-4. **Sem badge de permissão, sem hook, sem handoff de sessão.**
-5. **O agente propõe; o kernel decide.** Toda validação é `daia gate`.
+1. **Markdown with YAML frontmatter.** Nothing more.
+2. **No IDE paths.** Do not refer to `.claude/`, `.codex/` or `.cursor/`.
+3. **No script calls.** The agent does not run code to start.
+4. **No permission badges, no hooks, no session handoffs.**
+5. **The agent proposes; the kernel decides.** Each validation is `daia gate`.
 
-O teste do formato é simples: *cole o arquivo num chat qualquer e ele funciona.*
-Se precisar de mais alguma coisa para funcionar, o formato foi violado.
+The test of the format is easy: *paste the file into any chat, and it works.*
+If the file needs more to work, the file violates the format.
 
-## Frontmatter obrigatório
+## Mandatory frontmatter
 
 ```yaml
-id: arch                  # kebab-case, unico na squad
-name: Arquiteto           # nome legivel
-sprint: SP3               # SP1..SP5, ou "*" para transversal
-views: [computational]    # views do catalogo que este agente preenche
-bok: SEBoK + ISO 42010    # corpo de conhecimento que o fundamenta
+id: arch                  # kebab-case, unique in the squad
+name: Architect           # readable name
+sprint: SP3               # SP1..SP5, or "*" for a cross-sprint agent
+views: [computational]    # catalog views that this agent fills
+bok: SEBoK + ISO 42010    # body of knowledge that supports the agent
 produces: [View, ArchitectureDecision]
-gate: sp3                 # gate que valida o trabalho deste agente
-skills: [describe-software-architecture] # capacidades canonicas que compoe
+gate: sp3                 # gate that validates the work of this agent
+skills: [describe-software-architecture] # canonical skills that the agent uses
 ```
 
-As skills vivem em `squads/daia-e/skills/<nome>/SKILL.md`. O agente define
-papel e fronteira; a skill define uma capacidade invocável e reutilizável.
-Ao executar trabalho, carregue as skills declaradas antes do procedimento.
-O guia instalado em `.daia/guide.md` define a sequencia e as evidencias atuais.
-Procedimentos do papel resumem responsabilidades; comandos e verificacoes
-operacionais devem seguir as skills e o CLI.
+The skills are in `squads/daia-e/skills/<name>/SKILL.md`. The agent defines
+the role and the boundary. The skill defines one capability that agents can
+invoke and use again. Before you do the work, load the declared skills. Then
+do the procedure. The installed guide in `.daia/guide.md` defines the current
+sequence and the current evidence. The role procedures summarize the
+responsibilities. For commands and operational checks, follow the skills and
+the CLI.
 
-## Estrutura do corpo
+## Body structure
 
-| Seção | Obrigatória | Conteúdo |
-|-------|-------------|----------|
-| `## Papel` | sim | Uma frase. O que este agente responde. |
-| `## Pergunta característica` | sim | A pergunta da sprint, literal |
-| `## O que você produz` | sim | Artefatos e onde eles vivem |
-| `## O que você não faz` | sim | Fronteira explícita — a quem delegar |
-| `## Procedimento` | sim | Passos numerados |
-| `## Regras inegociáveis` | sim | Artigos da Constituição que se aplicam |
+| Section | Mandatory | Content |
+|---------|-----------|---------|
+| `## Role` | yes | One sentence. The question that this agent answers. |
+| `## Key question` | yes | The sprint question, literal |
+| `## What you produce` | yes | The artifacts and their locations |
+| `## What you do not do` | yes | The explicit boundary, and the agent that gets the delegated work |
+| `## Procedure` | yes | Numbered steps |
+| `## Mandatory rules` | yes | The articles of the constitution that apply |
 
-## Por que a fronteira é obrigatória
+## Why the boundary is mandatory
 
-Um agente que pode escrever qualquer coisa não responde a preocupação nenhuma.
-A seção `## O que você não faz` é o que torna o agente rastreável a uma *view* —
-e, portanto, auditável pelo gate.
+An agent that can write anything does not answer a concern.
+The `## What you do not do` section connects the agent to a *view* with a
+trace. Thus, the gate can audit the agent.

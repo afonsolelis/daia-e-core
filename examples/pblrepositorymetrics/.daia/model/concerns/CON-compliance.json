@@ -1,0 +1,17 @@
+{
+  "id": "CON-compliance",
+  "kind": "Concern",
+  "statement": "How can the teams process be evaluated for compliance against a configuration management baseline?",
+  "stakeholders": [
+    "STK-coordination",
+    "STK-teacher"
+  ],
+  "category": "quality",
+  "sprint": "SP1",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

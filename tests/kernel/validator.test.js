@@ -23,30 +23,30 @@ function buildRegistry() {
 const registry = buildRegistry();
 const validator = new SchemaValidator(registry);
 
-test('aceita documento valido', () => {
+test('accepts a valid document', () => {
   const doc = {
-    id: 'STK-professor', kind: 'Stakeholder', name: 'Professor',
+    id: 'STK-teacher', kind: 'Stakeholder', name: 'Teacher',
     sprint: 'SP1', provenance: { drafted_by: 'human' },
   };
   assert.deepStrictEqual(validator.validate(doc, registry.get('stakeholder')), []);
 });
 
-test('recusa campo obrigatorio ausente', () => {
+test('rejects a missing mandatory field', () => {
   const doc = { id: 'STK-x', kind: 'Stakeholder', sprint: 'SP1', provenance: { drafted_by: 'human' } };
   const errors = validator.validate(doc, registry.get('stakeholder'));
-  assert.ok(errors.some((e) => e.path === '$.name' && /obrigatorio/.test(e.message)));
+  assert.ok(errors.some((e) => e.path === '$.name' && /mandatory/.test(e.message)));
 });
 
-test('recusa campo nao previsto quando additionalProperties e false', () => {
+test('rejects an unknown field if additionalProperties is false', () => {
   const doc = {
     id: 'STK-x', kind: 'Stakeholder', name: 'X', sprint: 'SP1',
-    provenance: { drafted_by: 'human' }, inventado: true,
+    provenance: { drafted_by: 'human' }, invented: true,
   };
   const errors = validator.validate(doc, registry.get('stakeholder'));
-  assert.ok(errors.some((e) => e.path === '$.inventado'));
+  assert.ok(errors.some((e) => e.path === '$.invented'));
 });
 
-test('recusa valor fora do enum', () => {
+test('rejects a value that is not in the enum', () => {
   const doc = {
     id: 'STK-x', kind: 'Stakeholder', name: 'X', sprint: 'SP9',
     provenance: { drafted_by: 'human' },
@@ -55,49 +55,49 @@ test('recusa valor fora do enum', () => {
   assert.ok(errors.some((e) => /enum/.test(e.message)));
 });
 
-test('resolve $ref entre schemas distintos', () => {
+test('resolves a $ref between different schemas', () => {
   const doc = {
-    id: 'CON-x', kind: 'Concern', statement: 'uma preocupacao suficientemente longa',
+    id: 'CON-x', kind: 'Concern', statement: 'a concern that is long enough',
     stakeholders: ['STK-professor'], sprint: 'SP1', provenance: { drafted_by: 'ai' },
   };
   assert.deepStrictEqual(validator.validate(doc, registry.get('concern')), []);
 });
 
-test('aplica pattern de id atraves de $ref cross-schema', () => {
+test('applies the id pattern through a cross-schema $ref', () => {
   const doc = {
-    id: 'CON-x', kind: 'Concern', statement: 'uma preocupacao suficientemente longa',
-    stakeholders: ['id-invalido'], sprint: 'SP1', provenance: { drafted_by: 'ai' },
+    id: 'CON-x', kind: 'Concern', statement: 'a concern that is long enough',
+    stakeholders: ['invalid-id'], sprint: 'SP1', provenance: { drafted_by: 'ai' },
   };
   const errors = validator.validate(doc, registry.get('concern'));
-  assert.ok(errors.some((e) => /padrao/.test(e.message)), 'id fora do padrao deveria falhar');
+  assert.ok(errors.some((e) => /pattern/.test(e.message)), 'an id that does not match the pattern must fail');
 });
 
-test('exige minItems em lista', () => {
+test('applies minItems to a list', () => {
   const doc = {
-    id: 'CON-x', kind: 'Concern', statement: 'uma preocupacao suficientemente longa',
+    id: 'CON-x', kind: 'Concern', statement: 'a concern that is long enough',
     stakeholders: [], sprint: 'SP1', provenance: { drafted_by: 'ai' },
   };
   const errors = validator.validate(doc, registry.get('concern'));
-  assert.ok(errors.some((e) => /minimo 1/.test(e.message)));
+  assert.ok(errors.some((e) => /minimum 1/.test(e.message)));
 });
 
-test('todos os schemas do kernel sao JSON valido com $id', () => {
+test('all kernel schemas are valid JSON with $id', () => {
   const dir = path.join(__dirname, '..', '..', 'kernel', 'schemas');
   const files = walk(dir, '.json');
-  assert.ok(files.length >= 10, 'esperado ao menos 10 schemas');
+  assert.ok(files.length >= 10, 'expected at least 10 schemas');
   for (const file of files) {
     const schema = readJson(file);
-    assert.ok(schema.$id, `${path.basename(file)} sem $id`);
-    assert.ok(schema.title, `${path.basename(file)} sem title`);
+    assert.ok(schema.$id, `${path.basename(file)} has no $id`);
+    assert.ok(schema.title, `${path.basename(file)} has no title`);
   }
 });
 
-test('decisao aceita taticas no formato atributo/tatica e rejeita formato livre', () => {
+test('a decision accepts tactics in the attribute/tactic form and rejects free text', () => {
   const P = { drafted_by: 'ai' };
   const base = {
-    id: 'AD-a', kind: 'ArchitectureDecision', title: 'replicar o servico de pedidos',
-    decision: 'replicamos o servico em modo ativo', traces_to: ['QS-a'],
-    alternatives: [{ option: 'cold spare', rejected_because: 'failover lento demais para o cenario' }],
+    id: 'AD-a', kind: 'ArchitectureDecision', title: 'replicate the order service',
+    decision: 'we replicate the service in active mode', traces_to: ['QS-a'],
+    alternatives: [{ option: 'cold spare', rejected_because: 'the failover is too slow for the scenario' }],
     sprint: 'SP3', provenance: P,
   };
   const ok = { ...base, tactics: ['availability/active-redundancy', 'performance/introduce-concurrency'] };

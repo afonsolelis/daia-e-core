@@ -1,0 +1,26 @@
+{
+  "id": "IDF-A0",
+  "kind": "Idef0Activity",
+  "node": "A0",
+  "title": "Manage the loans of the book collection",
+  "inputs": [
+    "loan request",
+    "returned book"
+  ],
+  "controls": [
+    "library rules"
+  ],
+  "outputs": [
+    "recorded loan",
+    "due date notice"
+  ],
+  "mechanisms": [
+    "Librarian",
+    "loan system"
+  ],
+  "automation": "system",
+  "sprint": "SP1",
+  "provenance": {
+    "drafted_by": "ai-assisted"
+  }
+}

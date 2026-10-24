@@ -8,6 +8,6 @@ coverage/
 *.bak
 .claude/settings.json.aiox-legacy
 
-# Corpos de conhecimento: copias locais, licenca nao permite redistribuicao
+# Bodies of knowledge: local copies. The license does not permit redistribution.
 docs/references/bok/*.pdf
 docs/references/bok/*.md

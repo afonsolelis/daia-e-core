@@ -1,0 +1,16 @@
+{
+  "id": "CON-privacy",
+  "kind": "Concern",
+  "statement": "How can the system collect repository events and not show more personal data of the students than necessary?",
+  "stakeholders": [
+    "STK-student"
+  ],
+  "category": "regulatory",
+  "sprint": "SP1",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

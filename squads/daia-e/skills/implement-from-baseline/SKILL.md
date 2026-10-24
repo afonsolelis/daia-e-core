@@ -1,24 +1,27 @@
 ---
 name: implement-from-baseline
-description: Implemente software a partir de uma baseline arquitetural assinada e leve contratos de teste de vermelho para verde. Use somente após a SP3.
+description: Implement software from a signed architecture baseline. Move the test contracts from red to green. Use only after SP3.
 ---
 
-# Implementar a partir da baseline
+# Implement from the baseline
 
-A baseline e seus contratos são a autoridade de escopo. Pedidos em linguagem natural não substituem decisões registradas.
+The baseline and its contracts are the authority for the scope. A request in natural language does not replace a recorded decision.
 
-## Resultado
+## Result
 
-Produza código rastreável à especificação, preserve os contratos e atualize `TestContract.phase` para `green` somente após execução bem-sucedida.
+Write code that has a trace to the specification. Keep the contracts. Change `TestContract.phase` to `green` only after a successful run.
 
-## Fluxo
+## Procedure
 
-Antes de produzir artefatos, consulte `daia next --json`, `.daia/guide.md` e os schemas locais em `.daia/schemas/`. Registre o resultado com `daia verify` na etapa aplicável.
+Before you make artifacts, read `daia next --json`, `.daia/guide.md` and the local schemas in `.daia/schemas/`. Record the result with `daia verify` in the applicable step.
 
-1. Rode `daia status` e pare se a SP3 não estiver assinada ou tiver drift não deliberado.
-2. Leia views, decisões, especificações e testes antes de editar código.
-3. Implemente contrato por contrato, sem funcionalidades oportunistas.
-4. Se houver lacuna de decisão, devolva à arquitetura; se o cenário estiver errado, devolva a requisitos.
-5. Declare os arquivos de implementacao/configuracao em `verification.<TC-id>.inputs`, execute os gates tecnicos e `daia verify SP4`. Produza o relatorio de qualidade por caracteristica.
+1. Run `daia status`. If SP3 is not signed, stop. If SP3 has drift that nobody decided, stop.
+2. Read the views, the decisions, the specifications and the tests before you edit code.
+3. Implement one contract at a time. Do not add functions that nobody asked for.
+4. If a decision is not available, send the finding back to the architecture.
+5. If the scenario is not correct, send the finding back to the requirements.
+6. Declare the implementation files and the configuration files in `verification.<TC-id>.inputs`.
+7. Run the technical gates. Then run `daia verify SP4`.
+8. Write the quality report for each characteristic.
 
-Não altere um teste apenas para obter resultado verde e não assine a baseline.
+Do not change a test only to get a green result. Do not sign the baseline.

@@ -1,27 +1,28 @@
 ---
 name: elicit-requirements-from-business
-description: Elicite requisitos a partir das personas, processos BPMN e atividades IDEF0 da baseline SP1, registrando técnica e fontes. Use na SP2 antes de escrever cenários de qualidade.
+description: Elicit requirements from the personas, the BPMN processes and the IDEF0 activities of the SP1 baseline. Record the technique and the sources. Use in SP2 before you write quality scenarios.
 ---
 
-# Elicitar requisitos a partir do negócio
+# Elicit requirements from the business
 
-Transforme o modelo de negócio assinado em necessidades e requisitos verificáveis. Base: SWEBOK v4 cap. 1 (§2 Requirements Elicitation: fontes e técnicas) e SEBoK (Stakeholder Needs Definition → System Requirements Definition).
+Change the signed business model into stakeholder needs and requirements that you can verify. Basis: SWEBOK v4 ch. 1 (§2 Requirements Elicitation: sources and techniques) and SEBoK (Stakeholder Needs Definition → System Requirements Definition).
 
-## Resultado
+## Result
 
-`Requirement` (`RF-*`, `RNF-*`) com:
+`Requirement` (`FR-*`, `NFR-*`) with:
 
-- `traces_to` apontando para `BP-*` ou `IDF-*`, ou para uma necessidade (`level: stakeholder-need`) que aponte para eles;
-- `elicitation.technique` (entrevista, workshop, observação, análise de documento, análise de processo, prototipação, cenário de uso, questionário, mapeamento de user stories);
-- `elicitation.sources` com as personas, stakeholders, processos ou atividades consultados;
-- `level` opcional: `stakeholder-need` para a necessidade na linguagem do negócio, `system` para o requisito que a transforma.
+- `traces_to` that points to `BP-*` or `IDF-*`, or to a stakeholder need (`level: stakeholder-need`) that points to them;
+- `elicitation.technique` (`interview`, `workshop`, `observation`, `document-analysis`, `process-analysis`, `prototyping`, `usage-scenario`, `survey`, `user-story-mapping`);
+- `elicitation.sources` with the personas, stakeholders, processes or activities that you consulted;
+- an optional `level`: `stakeholder-need` for the need in the business language, `system` for the requirement that changes the need into a system requirement.
 
-## Fluxo
+## Procedure
 
-1. Percorra cada atividade IDEF0 com `automation: system` que não tenha filhos: ela precisa de ao menos um requisito funcional.
-2. Para cada tarefa do BPMN executada por uma persona, pergunte o que o sistema precisa fazer para ela. A resposta vira necessidade ou requisito.
-3. Registre técnica e fonte no momento da elicitação, não depois.
-4. Atividades `manual` ou `external` não geram requisito funcional. Se gerarem, a fronteira mudou: volte à SP1.
-5. Rode `daia gate SP2` e corrija os bloqueios `ELI-*`. Depois aplique `specify-quality-scenarios` aos RNF.
+1. Examine each IDEF0 activity that has `automation: system` and has no children. Each of these activities must have a minimum of one functional requirement.
+2. For each BPMN task that a persona does, ask what the system must do for the persona. Record the answer as a stakeholder need or as a requirement.
+3. Record the technique and the source at the time of the elicitation. Do not record them later.
+4. Do not make a functional requirement from a `manual` or `external` activity. If such an activity gives a functional requirement, the boundary changed. Then go back to SP1.
+5. Run `daia gate SP2`. Correct the blocking `ELI-*` findings.
+6. Apply `specify-quality-scenarios` to the NFR.
 
-Pare quando um requisito não tiver fonte demonstrável ou nomear componente ou tecnologia.
+If a requirement has no source that you can show, stop. If a requirement names a component or a technology, stop.

@@ -1,12 +1,12 @@
 {
   "id": "TC-eval",
   "kind": "TestContract",
-  "title": "Nenhum uso de eval()",
+  "title": "No use of eval()",
   "verifies": [
     "QS-eval"
   ],
   "test_path": "tests/security/eval.test.js",
-  "test_name": "varredura nao encontra eval",
+  "test_name": "scan finds no eval",
   "phase": "green",
   "sprint": "SP3",
   "status": "accepted",

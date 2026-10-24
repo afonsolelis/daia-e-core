@@ -6,13 +6,13 @@ const { SchemaValidator } = require('../validator/schema-validator');
 const { architectureFindings } = require('../rules/architecture');
 
 /**
- * Motor de gates.
+ * Gate engine.
  *
- * Um gate avalia o modelo contra as regras aplicaveis a uma sprint e devolve
- * um veredito. O CLI traduz o veredito em exit code — BLOCK produz exit != 0.
+ * A gate examines the model against the rules of one sprint and returns a verdict.
+ * The CLI changes the verdict into an exit code. BLOCK gives an exit code that is not 0.
  *
- * Art. I: o gate e executavel pelo CLI e nao depende de hook de nenhuma IDE.
- * Art. II: passar no gate NAO encerra a baseline; a assinatura humana e outra etapa.
+ * Art. I: the CLI runs the gate. The gate does not use a hook of an IDE.
+ * Art. II: a gate that passes does NOT close the baseline. The human signature is a different step.
  */
 class GateEngine {
   constructor(store) {
@@ -31,7 +31,7 @@ class GateEngine {
     const sprint = getSprint(sprintId);
     const findings = [];
 
-    // Erros estruturais precedem as regras: um modelo que nao carrega nao se avalia.
+    // Structural errors come before the rules. The gate cannot examine a model that does not load.
     for (const err of this.store.parseErrors) {
       findings.push({
         rule: 'PARSE',
@@ -39,7 +39,7 @@ class GateEngine {
         article: 'IV',
         id: err.file,
         message: err.message,
-        hint: 'Corrija o documento antes de avaliar o gate.',
+        hint: 'Correct the document. Then run the gate again.',
       });
     }
     for (const err of this.store.schemaErrors) {
@@ -49,7 +49,7 @@ class GateEngine {
         article: 'IV',
         id: err.id,
         message: `${err.path}: ${err.message}`,
-        hint: 'O documento nao satisfaz o schema do seu tipo.',
+        hint: 'Correct the document. It does not agree with the schema of its kind.',
       });
     }
 
@@ -63,8 +63,8 @@ class GateEngine {
           severity: SEVERITY.BLOCK,
           article: rule.article,
           id: 'RULE-ERROR',
-          message: `regra falhou ao executar: ${err.message}`,
-          hint: 'Isto e um defeito do kernel, nao do modelo.',
+          message: `the rule failed when it ran: ${err.message}`,
+          hint: 'Report this kernel defect. The model is not the cause.',
         }];
       }
       findings.push(...produced);
@@ -73,7 +73,7 @@ class GateEngine {
     if (!this.store.parseErrors.length && !this.store.schemaErrors.length) {
       findings.push(...architectureFindings(this.store, sprint.id));
     }
-    // Art. III: nenhuma sprint fecha antes da anterior estar assinada.
+    // Art. III: a sprint does not close before the human signs the sprint before it.
     const preceding = ['SP1', 'SP2', 'SP3', 'SP4', 'SP5'].slice(0, ['SP1', 'SP2', 'SP3', 'SP4', 'SP5'].indexOf(sprint.id));
     for (const id of options.baselines ? preceding : []) {
       const previous = getSprint(id);
@@ -84,8 +84,8 @@ class GateEngine {
           severity: SEVERITY.BLOCK,
           article: 'III',
           id: previous.id,
-          message: `baseline ${previous.id} nao foi encerrada`,
-          hint: `Rode: daia baseline sign ${previous.id} --by "<nome>" --rationale "<razao>"`,
+          message: `baseline ${previous.id} is not closed`,
+          hint: `Run: daia baseline sign ${previous.id} --by "<name>" --rationale "<reason>"`,
         });
       } else if (new SchemaValidator(this.store.schemas).validate(signed, this.store.schemas.get('baseline')).length ||
           signed.state_hash !== this.store.stateHash(previous.id) || !['accepted', 'accepted-with-debt'].includes(signed.signature?.decision)) {
@@ -94,8 +94,8 @@ class GateEngine {
           severity: SEVERITY.BLOCK,
           article: 'II',
           id: previous.id,
-          message: `o modelo mudou desde a assinatura de ${previous.id}`,
-          hint: 'A assinatura cobre um estado especifico. Reassine se a mudanca for deliberada.',
+          message: `the model changed after the signature of ${previous.id}`,
+          hint: 'If the change is deliberate, sign the baseline again. A signature covers one specific state.',
         });
       }
     }
@@ -118,7 +118,7 @@ class GateEngine {
     };
   }
 
-  /** Avalia todas as sprints em ordem — usado por `daia status`. */
+  /** Examines all the sprints in order. `daia status` uses this function. */
   evaluateAll(options = {}) {
     return ['SP1', 'SP2', 'SP3', 'SP4', 'SP5'].map((id) => this.evaluate(id, options));
   }

@@ -1,0 +1,14 @@
+{
+  "project": "School library",
+  "mode": "new",
+  "objective": "Decrease the late returns of the school library books",
+  "stack": "to be defined",
+  "constraints": "to be defined",
+  "verification": {},
+  "method": "DAIA-E",
+  "viewpointCatalog": "rm-odp",
+  "modelDir": ".daia/model",
+  "baselineDir": ".daia/baselines",
+  "evidenceDir": ".daia/evidence",
+  "source": "README tutorial. SP1 is complete, with no signed baseline"
+}

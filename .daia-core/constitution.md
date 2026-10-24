@@ -1,31 +1,32 @@
 # DAIA-E Constitution
 
 > **Version:** 1.0.0 | **Ratified:** 2026-09-09
-> **Derivada de:** Synkra AIOX Constitution v1.1.0 (MIT) — que por sua vez deriva do BMad Method
-> **Método adaptado de:** Brandão, A. C. L., Arakaki, R. & Silva, L. A. (2026). *An RM-ODP Method to Model PBL Digital Twins for Supporting Closed-Loop Supervision.* MethodsX (no prelo).
+> Translated to English (STE) on 2026-10-23. The meaning of the articles did not change.
+> **Derived from:** Synkra AIOX Constitution v1.1.0 (MIT), which is derived from the BMad Method
+> **Method adapted from:** Brandão, A. C. L., Arakaki, R. & Silva, L. A. (2026). *An RM-ODP Method to Model PBL Digital Twins for Supporting Closed-Loop Supervision.* MethodsX (in press).
 
-Este documento define os princípios inegociáveis do **DAIA-E** — *Desenvolvimento Assistido por Inteligência Artificial Orientado por Especificação*. Todos os agentes, tasks e workflows DEVEM respeitar estes princípios. Violações são bloqueadas por gates executáveis no CLI, nunca por checklist documental.
+This document gives the non-negotiable principles of **DAIA-E**, *specification-driven, AI-assisted development*. All agents, tasks and workflows MUST obey these principles. Executable gates in the CLI block the violations. A documentary checklist does not block them.
 
 ---
 
-## Derivação em relação ao AIOX
+## Derivation from AIOX
 
-O DAIA-E não rompe com o AIOX: ele preserva o que é neutro quanto ao método e substitui o que é específico do desenvolvimento ágil *story-driven*.
+DAIA-E does not break with AIOX. It keeps the parts that are neutral about the method. It replaces the parts that are specific to agile, *story-driven* development.
 
-| Artigo | Origem | Situação |
+| Article | Origin | Status |
 |--------|--------|----------|
-| I — CLI First | AIOX I | **Preservado** integralmente |
-| II — Human Decision Authority | AIOX II (Agent Authority) | **Refundado** — a autoridade migra do agente para o humano |
-| III — Baseline-Driven Development | AIOX III (Story-Driven) | **Substituído** — a unidade é a baseline, não a story |
-| IV — Traceability & No Invention | AIOX IV | **Preservado e expandido** |
-| V — Quality as Specified Scenario | AIOX V (Quality First) | **Expandido** — acrescenta ISO/IEC 25010:2023 |
-| VI — Absolute Imports | AIOX VI | **Preservado** (regra técnica, neutra quanto ao método) |
-| VII — Architectural Description | — | **Novo** (ISO/IEC/IEEE 42010:2022) |
-| VIII — Specification Before Generation | — | **Novo** (tese central do método) |
-| IX — Recorded Alternative | — | **Novo** (análise de alternativas, SEBoK) |
-| X — Body of Knowledge Anchoring | — | **Novo** (BABOK, SWEBOK, SEBoK) |
-| XI — Squad-First Portability | AIOX XI | **Preservado** integralmente |
-| XII — Model Governance | AIOX XII | **Adaptado** — *story binding* passa a *baseline binding* |
+| I — CLI First | AIOX I | **Kept** without change |
+| II — Human Decision Authority | AIOX II (Agent Authority) | **Rebuilt**: the authority moves from the agent to the human |
+| III — Baseline-Driven Development | AIOX III (Story-Driven) | **Replaced**: the unit is the baseline, not the story |
+| IV — Traceability & No Invention | AIOX IV | **Kept and expanded** |
+| V — Quality as Specified Scenario | AIOX V (Quality First) | **Expanded**: adds ISO/IEC 25010:2023 |
+| VI — Absolute Imports | AIOX VI | **Kept** (a technical rule, neutral about the method) |
+| VII — Architectural Description | — | **New** (ISO/IEC/IEEE 42010:2022) |
+| VIII — Specification Before Generation | — | **New** (the central thesis of the method) |
+| IX — Recorded Alternative | — | **New** (analysis of alternatives, SEBoK) |
+| X — Body of Knowledge Anchoring | — | **New** (BABOK, SWEBOK, SEBoK) |
+| XI — Squad-First Portability | AIOX XI | **Kept** without change |
+| XII — Model Governance | AIOX XII | **Adapted**: *story binding* becomes *baseline binding* |
 
 ---
 
@@ -33,15 +34,15 @@ O DAIA-E não rompe com o AIOX: ele preserva o que é neutro quanto ao método e
 
 ### I. CLI First (NON-NEGOTIABLE)
 
-O CLI é a fonte da verdade onde toda execução, validação e automação vivem.
+The CLI is the source of truth. All execution, validation and automation occur in the CLI.
 
-**Regras:**
-- MUST: Toda funcionalidade nova DEVE funcionar 100% via CLI antes de qualquer UI
-- MUST: Dashboards apenas observam, NUNCA controlam ou tomam decisões
-- MUST: A UI NUNCA é requisito para operação do sistema
-- MUST: **Todo gate DEVE ser executável pelo CLI**, sem depender de hooks de nenhuma IDE
+**Rules:**
+- MUST: Each new function works 100% through the CLI before any UI exists
+- MUST: Dashboards only observe. They NEVER control or make decisions
+- MUST: The operation of the system NEVER needs the UI
+- MUST: **The CLI can run each gate** without the hooks of an IDE
 
-**Justificativa acrescentada pelo DAIA-E:** a paridade de hooks entre IDEs é desigual — Cursor e GitHub Copilot não possuem *lifecycle hooks* equivalentes. Um gate ancorado em hook seria inaplicável em metade dos ambientes. O gate no CLI é a única forma de o método valer independentemente do runtime, inclusive quando conduzido por um LLM sem ferramenta alguma.
+**Reason added by DAIA-E:** the hooks are not equal across IDEs. Cursor and GitHub Copilot do not have equivalent *lifecycle hooks*. A gate that uses a hook cannot apply in half of the environments. A gate in the CLI is the only way for the method to apply in every runtime. This is also true when an LLM with no tools leads the work.
 
 **Gate:** `daia gate` — BLOCK
 
@@ -49,16 +50,16 @@ O CLI é a fonte da verdade onde toda execução, validação e automação vive
 
 ### II. Human Decision Authority (NON-NEGOTIABLE)
 
-A IA generativa assiste à produção de artefatos em **todas** as sprints. O que preserva o caráter deliberado das decisões não é restringir a participação da IA a um momento, e sim exigir decisão humana registrada no encerramento de cada baseline.
+Generative AI helps to produce artifacts in **all** sprints. The method does not limit AI participation to one moment. The decisions stay deliberate because a recorded human decision closes each baseline.
 
-**Regras:**
-- MUST: Nenhuma baseline é encerrada sem decisão humana registrada e assinada
-- MUST: A assinatura registra quem decidiu, quando, e sobre qual estado do modelo (hash)
-- MUST NOT: Nenhum agente pode encerrar baseline, assinar por humano ou inferir aprovação de silêncio
-- MUST: A IA PODE redigir, propor e sugerir qualquer artefato, inclusive os direcionadores de negócio
-- MUST: Agentes DEVEM delegar quando fora de seu escopo de *view*
+**Rules:**
+- MUST: No baseline closes without a recorded and signed human decision
+- MUST: The signature records who decided, when, and on which state of the model (hash)
+- MUST NOT: An agent closes a baseline, signs for a human or infers approval from silence
+- MUST: The AI CAN write, propose and suggest any artifact, also the business drivers
+- MUST: When a task is outside the scope of its *view*, an agent delegates the task
 
-**Distinção em relação ao AIOX:** o AIOX concentra autoridades em agentes (`git push` é exclusivo de `@devops`). No DAIA-E a autoridade que importa não é distribuída entre agentes — é retida pelo humano, e incide sobre o encerramento de baseline.
+**Difference from AIOX:** AIOX gives authorities to agents (only `@devops` can `git push`). In DAIA-E, agents do not share the important authority. The human keeps it, and it applies to the closure of a baseline.
 
 **Gate:** `daia baseline sign` — BLOCK
 
@@ -66,23 +67,23 @@ A IA generativa assiste à produção de artefatos em **todas** as sprints. O qu
 
 ### III. Baseline-Driven Development (NON-NEGOTIABLE)
 
-O desenvolvimento organiza-se em cinco sprints, entendidas como **unidades de delimitação de escopo e não de tempo**, cada uma encerrada por uma baseline.
+The development has five sprints. A sprint is a **unit of scope, not a unit of time**. A baseline closes each sprint.
 
-| Sprint | Pergunta característica | Baseline de encerramento |
+| Sprint | Key question | Baseline at the end |
 |--------|------------------------|--------------------------|
-| **SP1 — NEG** | Por que o sistema deve existir e para quem? | Modelo de negócio: personas, processos em BPMN, decomposição IDEF0, direcionadores, mapa de stakeholders, hipótese |
-| **SP2 — REQ** | O que o sistema precisa fazer e com que qualidade? | Requisitos elicitados do negócio: RF, RNF como cenários de seis partes, matriz de rastreabilidade |
-| **SP3 — ST** | Como o sistema será estruturado e por quê? | Arquitetural: especificação técnica, esqueleto, documentos de especificação, testes em fase vermelha |
-| **SP4 — IMPL** | A estrutura decidida se sustenta na prática? | Executável: código, testes em fase verde, relatório de qualidade por característica |
-| **SP5 — DEMO** | A hipótese inicial se confirma? | Release demonstrável: roteiro, evidências, métricas e limitações declaradas |
+| **SP1 — BIZ** | Why must the system exist, and for whom? | Business model: personas, business processes in BPMN, IDEF0 decomposition, business drivers, stakeholder map, hypothesis |
+| **SP2 — REQ** | What must the system do, and with which quality? | Requirements elicited from the business: FR, NFR as six-part scenarios, traceability matrix |
+| **SP3 — ST** | How will the system be structured, and why? | Architecture: technical specification, skeleton, specification documents, tests in the red phase |
+| **SP4 — IMPL** | Does the decided structure work in practice? | Executable: code, tests in the green phase, quality report for each characteristic |
+| **SP5 — DEMO** | Is the initial hypothesis confirmed? | Release that can be demonstrated: script, evidence, metrics and declared limitations |
 
-**Regras:**
-- MUST: Nenhum artefato de uma sprint é produzido antes de a baseline anterior estar encerrada
-- MUST: Toda baseline registra o estado do modelo no momento do encerramento
-- MUST NOT: Sprint NÃO é unidade de tempo — prazo não encerra baseline
-- MUST NOT: Nenhum código de produto é escrito antes da baseline SP3
+**Rules:**
+- MUST: No artifact of a sprint is produced before the previous baseline is closed
+- MUST: Each baseline records the state of the model at the time of closure
+- MUST NOT: A sprint is NOT a unit of time. A deadline does not close a baseline
+- MUST NOT: No product code is written before the SP3 baseline
 
-**Substituição explícita:** o DAIA-E **não é** *story-driven*. Não há exigência de story associada a código. A unidade de rastreabilidade é a cadeia necessidade → requisito → decisão arquitetural → teste, não o cartão de backlog.
+**Explicit replacement:** DAIA-E **is not** *story-driven*. Code does not need an associated story. The unit of traceability is the chain stakeholder need → requirement → architecture decision → test. It is not the backlog card.
 
 **Gate:** `daia gate sp{1..5}` — BLOCK
 
@@ -90,16 +91,16 @@ O desenvolvimento organiza-se em cinco sprints, entendidas como **unidades de de
 
 ### IV. Traceability & No Invention (MUST)
 
-Especificações não inventam — apenas derivam. E toda derivação é rastreável em ambos os sentidos.
+Specifications do not invent. They only derive. Each derivation has a trace in the two directions.
 
-**Regras:**
-- MUST: Todo statement de especificação DEVE rastrear para um requisito funcional (RF-*), um requisito não funcional (RNF-*), uma restrição (CON-*) ou um direcionador de negócio (BD-*) verificado
-- MUST: A cadeia necessidade → requisito do sistema → requisito de software → decisão arquitetural DEVE permanecer navegável
-- MUST NOT: Adicionar funcionalidades ausentes dos requisitos
-- MUST NOT: Assumir detalhes de implementação não pesquisados ou especificar tecnologias não validadas
-- MUST: Toda `Concern` identificada DEVE ser endereçada por ao menos uma `View`
+**Rules:**
+- MUST: Each specification statement has a trace to a verified FR-*, NFR-*, CON-* constraint or BD-* business driver
+- MUST: The chain stakeholder need → system requirement → software requirement → architecture decision stays navigable
+- MUST NOT: Add functions that are not in the requirements
+- MUST NOT: Accept implementation details that nobody researched, or specify technologies that nobody validated
+- MUST: At least one `View` addresses each identified `Concern`
 
-**Justificativa acrescentada:** no desenvolvimento assistido por LLM a invenção não é acidental — o modelo preenche lacunas por padrão estatístico. A rastreabilidade bidirecional é o que torna a invenção detectável.
+**Reason added:** in LLM-assisted development, invention is not an accident. The model fills gaps with a statistical pattern. Bidirectional traceability makes invention detectable.
 
 **Gate:** `daia trace --strict` — BLOCK
 
@@ -107,17 +108,19 @@ Especificações não inventam — apenas derivam. E toda derivação é rastre�
 
 ### V. Quality as Specified Scenario (MUST)
 
-Qualidade não é adjetivo — é cenário mensurável, e a medição é verificada, não afirmada.
+Quality is not an adjective. It is a measurable scenario. The measurement is verified, not only stated.
 
-**Regras:**
-- MUST: Todo RNF é expresso como **cenário de seis partes** — fonte, estímulo, artefato, ambiente, resposta e medida de resposta
-- MUST: Todo cenário referencia ao menos uma característica da ISO/IEC 25010:2023 como vocabulário
-- MUST: Todo cenário de qualidade tem ao menos um teste executável que o verifica
-- MUST: As verificações aplicáveis ao projeto passam sem erro. Nesta biblioteca: `npm run check` e `npm test`; empacotamento: `npm run pack:check`. Compilação e tipos só se aplicam quando configurados.
-- MUST: O relatório de qualidade da SP4 é organizado **por característica**, não por arquivo
-- SHOULD: A cobertura de testes não diminui entre baselines
+**Rules:**
+- MUST: Each NFR is a **six-part scenario**: source, stimulus, artifact, environment, response and response measure
+- MUST: Each scenario refers to at least one ISO/IEC 25010:2023 characteristic as vocabulary
+- MUST: Each quality scenario has at least one executable test that verifies it
+- MUST: The verifications that apply to the project pass without error
+- MUST: In this library, run `npm run check` and `npm test`. For the package, run `npm run pack:check`
+- MUST: Compilation and type checks apply only when the project configures them
+- MUST: The SP4 quality report is organized **by characteristic**, not by file
+- SHOULD: The test coverage does not decrease between baselines
 
-**Distinção em relação ao AIOX:** o AIOX define qualidade por verificações de ferramenta (lint, typecheck, test, build). O DAIA-E preserva essas verificações e acrescenta o eixo que falta — a qualidade **especificada** e rastreada ao vocabulário normativo.
+**Difference from AIOX:** AIOX defines quality with tool checks (lint, typecheck, test, build). DAIA-E keeps these checks. It adds the missing axis: quality that is **specified** and has a trace to the normative vocabulary.
 
 **Gate:** `daia gate sp4` — BLOCK
 
@@ -125,12 +128,12 @@ Qualidade não é adjetivo — é cenário mensurável, e a medição é verific
 
 ### VI. Absolute Imports (SHOULD)
 
-Imports relativos criam acoplamento e dificultam refatoração.
+Relative imports increase the coupling and make refactoring difficult.
 
-**Regras:**
-- SHOULD: Sempre usar imports absolutos com alias `@/`
-- SHOULD NOT: Usar imports relativos (`../../../`)
-- EXCEPTION: Imports dentro do mesmo módulo podem ser relativos
+**Rules:**
+- SHOULD: Always use absolute imports with the `@/` alias
+- SHOULD NOT: Use relative imports (`../../../`)
+- EXCEPTION: Imports in the same module CAN be relative
 
 **Gate:** ESLint — INFO
 
@@ -138,26 +141,27 @@ Imports relativos criam acoplamento e dificultam refatoração.
 
 ### VII. Architectural Description (NON-NEGOTIABLE)
 
-A arquitetura é descrita segundo o arcabouço da **ISO/IEC/IEEE 42010:2022**, que estabelece as relações entre parte interessada, preocupação, *viewpoint*, *view* e correspondência entre *views*.
+The architecture description follows the framework of **ISO/IEC/IEEE 42010:2022**. The framework sets the relations between stakeholder, concern, *viewpoint*, *view* and correspondence between *views*.
 
-**O que a norma fornece e o que não fornece:** a 42010 define o **metamodelo** da descrição arquitetural — exige que cada *view* responda a preocupações identificadas de partes interessadas identificadas — mas **não prescreve quais views devem existir**. O conjunto concreto é decisão do projeto.
+**What the standard gives and what it does not give:** 42010 defines the **metamodel** of the architecture description. Each *view* must answer identified concerns of identified stakeholders. But the standard **does not tell which views must exist**. The project decides the concrete set.
 
-**Regras:**
-- MUST: Toda `View` declara os `Stakeholder` e as `Concern` a que responde
-- MUST: Toda `Concern` registrada é endereçada por ao menos uma `View`
-- MUST: As correspondências entre *views* são declaradas e verificadas — é o que impede a descrição de se fragmentar em documentos mutuamente inconsistentes
-- MUST: O catálogo de *viewpoints* é **plugável**; o default é RM-ODP (ISO/IEC 10746)
-- MUST: A descrição arquitetural **não é artefato de uma sprint** — começa na SP1 e se completa na SP4
+**Rules:**
+- MUST: Each `View` declares the `Stakeholder` and the `Concern` items that it answers
+- MUST: At least one `View` addresses each recorded `Concern`
+- MUST: The correspondences between *views* are declared and verified
+- MUST: The correspondences keep the description from a split into documents that do not agree with each other
+- MUST: The *viewpoint* catalog is **pluggable**. The default is RM-ODP (ISO/IEC 10746)
+- MUST: The architecture description **is not the artifact of one sprint**. It starts in SP1 and is complete in SP4
 
-**Catálogo default — RM-ODP:**
+**Default catalog — RM-ODP:**
 
-| View | Preocupação que responde | Sprint |
+| View | Concern that it answers | Sprint |
 |------|--------------------------|--------|
-| *Enterprise* | Quem são as partes interessadas, que políticas regem o domínio, que objetivo o sistema serve | SP1 |
-| *Information* | Que entidades existem, como se relacionam, sob que restrições | SP2, SP3 |
-| *Computational* | Como o sistema se decompõe em unidades e como elas interagem | SP3 |
-| *Engineering* | Como a solução se distribui, persiste e se implanta | SP3 |
-| *Technology* | Que produtos concretos instanciam o mecanismo decidido | SP3, SP4 |
+| *Enterprise* | Who the stakeholders are, which policies control the domain, which objective the system serves | SP1 |
+| *Information* | Which entities exist, how they relate, and under which constraints | SP2, SP3 |
+| *Computational* | How the system divides into units and how the units interact | SP3 |
+| *Engineering* | How the solution is distributed, persisted and deployed | SP3 |
+| *Technology* | Which concrete products implement the decided mechanism | SP3, SP4 |
 
 **Gate:** `daia gate sp3` — BLOCK
 
@@ -165,15 +169,17 @@ A arquitetura é descrita segundo o arcabouço da **ISO/IEC/IEEE 42010:2022**, q
 
 ### VIII. Specification Before Generation (NON-NEGOTIABLE)
 
-A ordem interna do método é deliberada: **as especificações são escritas antes dos testes, e os testes antes da implementação.**
+The internal order of the method is deliberate: **the specifications come before the tests, and the tests come before the implementation.**
 
-**Regras:**
-- MUST: Antes de qualquer decisão arquitetural, duas modelagens são obrigatórias — a **estática** (o que existe: entidades, atributos, relações) e a **dinâmica** (o que acontece: fluxos, sequências, transições de estado)
-- MUST: Os testes que travam os contratos comportamentais existem em fase vermelha antes de a geração começar
-- MUST NOT: Nenhum código de produto é gerado antes da baseline SP3 estar encerrada
-- MUST: A saída do modelo generativo é imediatamente confrontável contra teste executável
+**Rules:**
+- MUST: Before any architecture decision, make two models: the **static** model and the **dynamic** model
+- MUST: The static model shows what exists: entities, attributes and relations
+- MUST: The dynamic model shows what occurs: flows, sequences and state transitions
+- MUST: The tests that lock the behavioral contracts exist in the red phase before the generation starts
+- MUST NOT: No product code is generated before the SP3 baseline is closed
+- MUST: An executable test can examine the output of the generative model immediately
 
-**Justificativa:** uma decisão arquitetural tomada sem modelagem estática tende a produzir estruturas que não acomodam os dados reais; sem modelagem dinâmica, estruturas corretas em repouso e inadequadas em operação.
+**Reason:** an architecture decision without a static model often gives structures that do not hold the real data. Without a dynamic model, the structures are correct at rest but not correct in operation.
 
 **Gate:** `daia gate sp3`, `daia gate sp4` — BLOCK
 
@@ -181,15 +187,15 @@ A ordem interna do método é deliberada: **as especificações são escritas an
 
 ### IX. Recorded Alternative (MUST)
 
-Toda decisão arquitetural relevante registra ao menos uma alternativa considerada e o critério pelo qual foi preterida.
+Each relevant architecture decision records at least one alternative that the team examined. It also records the criterion that rejected the alternative.
 
-**Regras:**
-- MUST: Todo `AD` (decisão arquitetural) registra ≥1 alternativa considerada e o critério de preterição
-- MUST: Todo `AD` rastreia para ≥1 requisito ou preocupação que o motiva
-- MUST: O confronto arquitetural opera **em ciclo**: QAW entre SP2 e SP3, ATAM na SP3, e reabertura como laço de reavaliação na SP4
-- MUST: Na SP4 o ATAM reabre apenas sobre os cenários de qualidade afetados
+**Rules:**
+- MUST: Each `AD` (architecture decision) records ≥1 examined alternative and the criterion of the rejection
+- MUST: Each `AD` has a trace to ≥1 requirement or concern that is its reason
+- MUST: The architecture evaluation is **a cycle**: QAW between SP2 and SP3, ATAM in SP3, and a reevaluation loop in SP4
+- MUST: In SP4, ATAM opens again only for the affected quality scenarios
 
-**Justificativa:** esta exigência torna-se especialmente importante no desenvolvimento assistido por LLM, dado que o modelo tende a convergir para soluções convencionais sem explicitar que outras existiam.
+**Reason:** this rule is especially important in LLM-assisted development. The model tends to go to conventional solutions and does not tell that other solutions existed.
 
 **Gate:** `daia gate sp3` — BLOCK
 
@@ -197,20 +203,21 @@ Toda decisão arquitetural relevante registra ao menos uma alternativa considera
 
 ### X. Body of Knowledge Anchoring (MUST)
 
-Cada sprint ancora-se no corpo de conhecimento adequado à pergunta que responde.
+Each sprint is anchored in the body of knowledge that agrees with its key question.
 
-| Sprint | Corpo de conhecimento |
+| Sprint | Body of knowledge |
 |--------|----------------------|
-| SP1 | **BABOK** — análise de negócio: personas (§10.43), BPMN e IDEF0 (§10.35) |
-| SP2 | **SWEBOK** (elicitação) e **SEBoK** (necessidades → requisitos de sistema), com a ISO/IEC 25010:2023 como vocabulário |
-| SP3 | **SEBoK** e SWEBOK, com RM-ODP como arcabouço de *viewpoints* |
-| SP4 | **SWEBOK** — Construção, Testes e Gerência da Qualidade |
-| SP5 | **SEBoK** — verificação e validação |
+| SP1 | **BABOK** — business analysis: personas (§10.43), BPMN and IDEF0 (§10.35) |
+| SP2 | **SWEBOK** (elicitation) and **SEBoK** (stakeholder needs → system requirements), with ISO/IEC 25010:2023 as vocabulary |
+| SP3 | **SEBoK** and SWEBOK, with RM-ODP as the *viewpoint* framework |
+| SP4 | **SWEBOK** — Construction, Testing and Quality Management |
+| SP5 | **SEBoK** — verification and validation |
 
-**Regras:**
-- MUST: Cada agente declara o BoK que o fundamenta e a *view* que preenche
-- MUST: A definição da fronteira do sistema é **decisão de projeto registrada**, não constatação — determina o que será implementado, o que será simulado, o que permanece externo e o que fica fora de escopo
-- SHOULD: Divergências entre BoKs são registradas, não silenciadas
+**Rules:**
+- MUST: Each agent declares its BoK and the *view* that it fills
+- MUST: The system boundary is a **recorded project decision**, not an observation
+- MUST: The boundary sets what is implemented, what is simulated, what stays external and what is out of scope
+- SHOULD: Differences between BoKs are recorded, not hidden
 
 **Gate:** `daia gate sp{1..5}` — WARN
 
@@ -218,40 +225,43 @@ Cada sprint ancora-se no corpo de conhecimento adequado à pergunta que responde
 
 ### XI. Squad-First Portability (NON-NEGOTIABLE)
 
-`squads/` é a fonte da verdade dos artefatos executáveis. Projeções de runtime (`.claude/`, `.codex/`, `.gemini/`, `.grok/`) são **derivadas, nunca canônicas**.
+`squads/` is the source of truth for the executable artifacts. The runtime projections (`.claude/`, `.codex/`, `.gemini/`, `.grok/`) are **derived, never canonical**.
 
-**Regras:**
-- MUST: Scripts, templates, dados e checklists que pertencem a um squad vivem sob `squads/{squad}/`
-- MUST: Projeções de IDE contêm frontmatter + instruções apenas — **não** lógica executável oculta
-- MUST: A direção de sincronia é sempre `squads/` → projeção, nunca o inverso
-- MUST: Artefatos executáveis DEVEM funcionar independentemente do runtime que os invoca
-- MUST: **A definição de agente na fonte é markdown + YAML puro** — sem caminho de IDE, sem chamada a script, sem badge de permissão. Um humano lê. Qualquer LLM lê.
+**Rules:**
+- MUST: The scripts, templates, data and checklists of a squad are under `squads/{squad}/`
+- MUST: IDE projections contain only frontmatter and instructions, **not** hidden executable logic
+- MUST: The synchronization direction is always `squads/` → projection, never the opposite
+- MUST: Executable artifacts work in every runtime that calls them
+- MUST: **The source agent definition is pure markdown + YAML**, with no IDE path, script call or permission badge
+- MUST: A human can read the source agent definition. Any LLM can read it
 
-**Hierarquia de portabilidade:**
+**Portability hierarchy:**
 ```
-squads/daia-e/ (SOT) → .claude/ → .codex/ → .gemini/ → .grok/ → runtimes futuros
+squads/daia-e/ (SOT) → .claude/ → .codex/ → .gemini/ → .grok/ → future runtimes
 ```
 
-**Justificativa:** artefatos que vivem sob uma única pasta de IDE ficam presos ao host. O valor está no processo, não na ferramenta.
+**Reason:** artifacts that are in the folder of one IDE stay locked to that host. The value is in the process, not in the tool.
 
-**Gate:** validadores de sincronia — WARN
+**Text standard:** all squad and kernel text is in English STE, as [`docs/ste/README.md`](../docs/ste/README.md) specifies.
+
+**Gate:** synchronization validators — WARN
 
 ---
 
 ### XII. Model Governance (MUST)
 
-Acesso a modelo por automação DEVE respeitar tetos de orçamento, autoridade de roteamento, vínculo a baseline e varredura de intenção.
+When automation uses a model, the access MUST obey budget limits, routing authority, baseline binding and intent scans.
 
-**Regras:**
-- MUST: Todo laço de auto-dispatch declara teto de orçamento antes da primeira chamada
-- MUST: Configuração de roteamento exige revisão de `@arch` (PR)
-- MUST: **Baseline binding** — trabalho auto-despachado DEVE vincular-se a uma sprint e baseline válidas
-- MUST NOT: Auto-dispatch anônimo de código de produto (trabalho-sombra)
-- MUST: Intenções vindas de automação são varridas contra injeção de prompt antes do processamento
+**Rules:**
+- MUST: Each auto-dispatch loop declares a budget limit before the first call
+- MUST: A change to the routing configuration must have a review by `@arch` (PR)
+- MUST: **Baseline binding**: auto-dispatched work has a link to a valid sprint and baseline
+- MUST NOT: Anonymous auto-dispatch of product code (shadow work)
+- MUST: A scan for prompt injection examines each intent from automation before the system processes it
 
-**Adaptação:** o AIOX exige vínculo a *story* (XII-C). No DAIA-E o vínculo é a **baseline**, coerente com o Artigo III.
+**Adaptation:** AIOX gives a link to a *story* (XII-C). In DAIA-E the link is to the **baseline**, in agreement with Article III.
 
-**Gate:** gates de permissão/pre-dispatch — BLOCK
+**Gate:** permission and pre-dispatch gates — BLOCK
 
 ---
 
@@ -259,41 +269,41 @@ Acesso a modelo por automação DEVE respeitar tetos de orçamento, autoridade d
 
 ### Amendment Process
 
-1. Proposta documentada com justificativa e rastreio ao método publicado
-2. Review por `@arch` e `@rec`
-3. Aprovação exige **decisão humana registrada** (Artigo II)
-4. Implementação com atualização de versão
-5. Propagação para templates, tasks e projeções de runtime
+1. Write a proposal with the reason and a trace to the published method
+2. `@arch` and `@rec` review the proposal
+3. The approval must have a **recorded human decision** (Article II)
+4. Implement the change and update the version
+5. Propagate the change to the templates, tasks and runtime projections
 
 ### Versioning
 
-- **MAJOR:** Remoção ou redefinição incompatível de princípio
-- **MINOR:** Novo princípio ou expansão significativa
-- **PATCH:** Clarificações e correções de texto
+- **MAJOR:** Removal of a principle, or a redefinition that is not compatible
+- **MINOR:** A new principle or a significant expansion
+- **PATCH:** Clarifications and text corrections
 
 ### Gate Severity Levels
 
-| Severidade | Comportamento | Uso |
+| Severity | Behavior | Use |
 |------------|---------------|-----|
-| BLOCK | Impede execução, exit ≠ 0 | NON-NEGOTIABLE, MUST críticos |
-| WARN | Permite continuar com alerta | MUST não críticos |
-| INFO | Apenas reporta | SHOULD |
+| BLOCK | Stops the execution, exit ≠ 0 | NON-NEGOTIABLE, critical MUST rules |
+| WARN | Continues with a warning | MUST rules that are not critical |
+| INFO | Only reports | SHOULD |
 
-**Princípio de enforcement:** gate é código, não checklist. Um princípio que não tem gate executável é aspiração, não constituição.
+**Enforcement principle:** a gate is code, not a checklist. A principle without an executable gate is an aspiration, not a constitution.
 
 ---
 
 ## Normative References
 
-| Referência | Uso no método |
+| Reference | Use in the method |
 |-----------|---------------|
-| ISO/IEC/IEEE 42010:2022 | Metamodelo da descrição arquitetural (Art. VII) |
-| ISO/IEC 10746 (RM-ODP) | Catálogo de *viewpoints* default (Art. VII) |
-| ISO/IEC 25010:2023 | Vocabulário de qualidade de produto (Art. V) |
-| BABOK | Análise de negócio, SP1 (Art. X) |
-| SWEBOK v4 | Requisitos, construção, testes, qualidade (Art. X) |
-| SEBoK | Perspectiva sistêmica, V&V (Art. X) |
-| QAW / ATAM (SEI) | Confronto arquitetural em ciclo (Art. IX) |
+| ISO/IEC/IEEE 42010:2022 | Metamodel of the architecture description (Art. VII) |
+| ISO/IEC 10746 (RM-ODP) | Default *viewpoint* catalog (Art. VII) |
+| ISO/IEC 25010:2023 | Vocabulary of product quality (Art. V) |
+| BABOK | Business analysis, SP1 (Art. X) |
+| SWEBOK v4 | Requirements, construction, tests, quality (Art. X) |
+| SEBoK | System perspective, V&V (Art. X) |
+| QAW / ATAM (SEI) | Architecture evaluation as a cycle (Art. IX) |
 
 ---
 

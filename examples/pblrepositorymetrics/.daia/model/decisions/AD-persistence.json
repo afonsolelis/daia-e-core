@@ -1,0 +1,35 @@
+{
+  "id": "AD-persistence",
+  "kind": "ArchitectureDecision",
+  "title": "MongoDB as the store for events and baselines",
+  "context": "Repository events have different forms for commits, merge requests, issues and documents.",
+  "decision": "Persist the data in MongoDB with 12 declared collection schemas.",
+  "consequences": "It accepts different event forms without a schema migration. It loses the relational guarantee of referential integrity.",
+  "alternatives": [
+    {
+      "option": "PostgreSQL with JSONB",
+      "rejected_because": "The domain does not use the relational guarantee, and the cost of the first modelling would delay SP3 with no verifiable benefit"
+    }
+  ],
+  "traces_to": [
+    "FR-acquisition",
+    "CON-privacy"
+  ],
+  "affects_views": [
+    "VW-engineering",
+    "VW-technology"
+  ],
+  "sensitivity_points": [
+    "flexibility: new event types are accepted"
+  ],
+  "risks": [
+    "Without referential integrity, the application must validate the data"
+  ],
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

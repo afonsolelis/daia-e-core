@@ -6,18 +6,18 @@ const { loadSkills, validateAgentSkills } = require('./skill-loader');
 const { projectFile } = require('../util/project-files');
 
 function install(root, squadDir, runtime = 'codex', onlySkills = false, id, dryRun = false) {
-  if (!['codex', 'claude', 'portable'].includes(runtime)) throw new Error('Runtime suportado: codex, claude ou portable. Outros runtimes: use exportacao portable.');
+  if (!['codex', 'claude', 'portable'].includes(runtime)) throw new Error('Supported runtimes: codex, claude or portable. For other runtimes, use the portable export.');
   const squad = loadSquad(squadDir);
   const library = loadSkills(squadDir);
   const problems = [...squad.problems, ...library.problems, ...squad.agents.flatMap(a => a.problems),
     ...library.skills.flatMap(s => s.problems), ...validateAgentSkills(squad, new Set(library.skills.map(s => s.id)))];
   if (problems.length) throw new Error(problems.join('\n'));
-  if (id && !library.skills.some(s => s.id === id)) throw new Error(`Skill desconhecida: ${id}`);
+  if (id && !library.skills.some(s => s.id === id)) throw new Error(`Unknown skill: ${id}`);
   const base = runtime === 'codex' ? '.agents/skills' : runtime === 'claude' ? '.claude/skills' : '.daia/export/skills';
   const files = [];
   function collect(source, target) {
     const stat = fs.lstatSync(source);
-    if (stat.isSymbolicLink()) throw new Error(`Link simbolico na fonte: ${source}`);
+    if (stat.isSymbolicLink()) throw new Error(`Symbolic link in the source: ${source}`);
     if (stat.isDirectory()) for (const name of fs.readdirSync(source)) collect(path.join(source, name), `${target}/${name}`);
     else files.push([target, fs.readFileSync(source)]);
   }
@@ -27,7 +27,7 @@ function install(root, squadDir, runtime = 'codex', onlySkills = false, id, dryR
   for (const [relative, content] of files) {
     const destination = projectFile(root, relative);
     if (fs.existsSync(destination) && !fs.readFileSync(destination).equals(content)) {
-      throw new Error(`Conflito: ${relative}. Preserve sua versao ou mova-a antes de reinstalar.`);
+      throw new Error(`Conflict: ${relative}. Keep your version or move it before you install again.`);
     }
   }
   for (const [relative, content] of dryRun ? [] : files) {

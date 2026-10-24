@@ -1,0 +1,31 @@
+{
+  "id": "QS-complexity",
+  "kind": "QualityScenario",
+  "characteristic": "maintainability",
+  "sub_characteristic": "analysability",
+  "source": "Maintenance developer",
+  "stimulus": "Must understand a module to add a CEP pattern",
+  "artifact": "Module of the correlation engine",
+  "environment": "Code at rest, static review",
+  "response": "The developer can understand the module without a read of the full system",
+  "response_measure": {
+    "metric": "mean cyclomatic complexity for each module",
+    "operator": "<=",
+    "threshold": 10,
+    "unit": "points"
+  },
+  "traces_to": [
+    "NFR-maintainability"
+  ],
+  "utility_tree": {
+    "importance": "H",
+    "difficulty": "M"
+  },
+  "sprint": "SP2",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

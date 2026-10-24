@@ -16,47 +16,47 @@ function scaffold() {
   fs.writeFileSync(path.join(root, '.daia', 'config.json'), JSON.stringify({ viewpointCatalog: 'rm-odp' }));
   const P = { drafted_by: 'ai-assisted' };
   const docs = [
-    { id: 'STK-a', kind: 'Stakeholder', name: 'Parte A', sprint: 'SP1', provenance: P },
-    { id: 'BD-a', kind: 'BusinessDriver', statement: 'um direcionador valido para o teste',
-      stakeholders: ['STK-a'], hypothesis: 'hipotese a confrontar', sprint: 'SP1', provenance: P },
+    { id: 'STK-a', kind: 'Stakeholder', name: 'Party A', sprint: 'SP1', provenance: P },
+    { id: 'BD-a', kind: 'BusinessDriver', statement: 'a valid business driver for the test',
+      stakeholders: ['STK-a'], hypothesis: 'the hypothesis to test', sprint: 'SP1', provenance: P },
   ];
   for (const d of docs) fs.writeFileSync(path.join(model, `${d.id}.json`), JSON.stringify(d));
   return root;
 }
 
-const VALID = { signedBy: 'Afonso Brandao', rationale: 'baseline revisada e assumida pelo autor' };
+const VALID = { signedBy: 'Afonso Brandao', rationale: 'baseline reviewed and accepted by the author' };
 
-test('Art. II: assinatura sem identificacao humana e recusada', () => {
+test('Art. II: a signature without a human identification is refused', () => {
   const project = kernel.openProject(scaffold());
   assert.throws(
     () => project.baselines.sign('SP1', { rationale: VALID.rationale }),
-    /identificacao humana/
+    /human identification/
   );
 });
 
-test('Art. II: assinatura sem justificativa e recusada', () => {
+test('Art. II: a signature without a rationale is refused', () => {
   const project = kernel.openProject(scaffold());
   assert.throws(
     () => project.baselines.sign('SP1', { signedBy: VALID.signedBy }),
-    /justificativa/
+    /rationale/
   );
 });
 
-test('Art. II: justificativa vazia ou trivial e recusada', () => {
+test('Art. II: an empty or trivial rationale is refused', () => {
   const project = kernel.openProject(scaffold());
-  assert.throws(() => project.baselines.sign('SP1', { signedBy: 'A', rationale: 'ok' }), /identificacao|justificativa/);
+  assert.throws(() => project.baselines.sign('SP1', { signedBy: 'A', rationale: 'ok' }), /identification|rationale/);
 });
 
-test('registro declaratorio guarda assinante sem alegar autenticacao', () => {
+test('the declarative record keeps the signer and does not claim authentication', () => {
   const project = kernel.openProject(scaffold());
   assert.strictEqual(typeof project.baselines.signAsAgent, 'undefined',
-    'a API publica usa sign para registrar uma decisao declarada');
+    'the public API uses sign to record a declared decision');
   const baseline = project.baselines.sign('SP1', VALID);
   assert.ok(baseline.signature.signed_by);
   assert.strictEqual(baseline.signature.agent, undefined);
 });
 
-test('assinatura valida registra quem, quando e por que', () => {
+test('a valid signature records who, when and why', () => {
   const project = kernel.openProject(scaffold());
   const baseline = project.baselines.sign('SP1', VALID);
   assert.strictEqual(baseline.signature.signed_by, VALID.signedBy);
@@ -66,15 +66,15 @@ test('assinatura valida registra quem, quando e por que', () => {
   assert.match(baseline.state_hash, /^sha256:[0-9a-f]{64}$/);
 });
 
-test('divida declarada exige itens explicitos', () => {
+test('declared debt must have explicit items', () => {
   const project = kernel.openProject(scaffold());
   assert.throws(
     () => project.baselines.sign('SP1', { ...VALID, decision: 'accepted-with-debt', debt: [] }),
-    /divida/
+    /debt item/
   );
 });
 
-test('a assinatura cobre um estado especifico do modelo', () => {
+test('the signature covers one specific state of the model', () => {
   const root = scaffold();
   const project = kernel.openProject(root);
   project.baselines.sign('SP1', VALID);
@@ -82,15 +82,15 @@ test('a assinatura cobre um estado especifico do modelo', () => {
 
   fs.writeFileSync(
     path.join(root, '.daia', 'model', 'STK-b.json'),
-    JSON.stringify({ id: 'STK-b', kind: 'Stakeholder', name: 'Parte B', sprint: 'SP1', provenance: { drafted_by: 'ai' } })
+    JSON.stringify({ id: 'STK-b', kind: 'Stakeholder', name: 'Party B', sprint: 'SP1', provenance: { drafted_by: 'ai' } })
   );
   const reloaded = kernel.openProject(root);
   const check = reloaded.baselines.verify('SP1');
   assert.strictEqual(check.valid, false);
-  assert.match(check.reason, /modelo mudou/);
+  assert.match(check.reason, /model changed/);
 });
 
-test('o hash de baseline e escopado por sprint', () => {
+test('the baseline hash has the scope of a sprint', () => {
   const root = scaffold();
   const project = kernel.openProject(root);
   const hashSp1 = project.store.stateHash('SP1');
@@ -98,19 +98,19 @@ test('o hash de baseline e escopado por sprint', () => {
   fs.writeFileSync(
     path.join(root, '.daia', 'model', 'AD-a.json'),
     JSON.stringify({
-      id: 'AD-a', kind: 'ArchitectureDecision', title: 'decisao de SP3',
-      decision: 'uma decisao qualquer registrada', traces_to: ['BD-a'],
-      alternatives: [{ option: 'outra via', rejected_because: 'criterio suficientemente descrito' }],
+      id: 'AD-a', kind: 'ArchitectureDecision', title: 'SP3 decision',
+      decision: 'a recorded decision for the test', traces_to: ['BD-a'],
+      alternatives: [{ option: 'other option', rejected_because: 'criterion with a sufficient description' }],
       sprint: 'SP3', provenance: { drafted_by: 'ai' },
     })
   );
   const reloaded = kernel.openProject(root);
   assert.strictEqual(reloaded.store.stateHash('SP1'), hashSp1,
-    'acrescentar artefato de SP3 nao pode invalidar a baseline de SP1');
+    'a new SP3 artifact must not invalidate the SP1 baseline');
   assert.notStrictEqual(reloaded.store.stateHash('SP3'), hashSp1);
 });
 
-test('a fase do teste nao entra no hash: o contrato nao muda ao ficar verde', () => {
+test('the test phase is not in the hash: the contract does not change when it becomes green', () => {
   const root = scaffold();
   const tcPath = path.join(root, '.daia', 'model', 'TC-a.json');
   const tc = {

@@ -1,23 +1,27 @@
 ---
 name: write-executable-specification
-description: Transforme decisões arquiteturais em contratos técnicos e testes executáveis inicialmente vermelhos. Use antes de implementar funcionalidades ou integrações.
+description: Change architecture decisions into technical contracts and executable tests that are red at the start. Use before you implement functions or integrations.
 ---
 
-# Escrever especificação executável
+# Write the executable specification
 
-A especificação precede o teste; o teste precede a implementação. Uma lacuna que exige decisão deve voltar à arquitetura.
+The specification comes before the test. The test comes before the implementation. If a gap needs a decision, send it back to the architecture.
 
-## Resultado
+## Result
 
-Produza contratos de interface, dados, regras e integrações referenciados em `models[].path`. Crie `TestContract` em `.daia/model/tests/` e o teste em `test_path`, com fase inicial `red` e `verifies` apontando ao requisito ou cenário.
+Write the contracts for interfaces, data, rules and integrations. Refer to them in `models[].path`. Make a `TestContract` in `.daia/model/tests/` and the test in `test_path`. The initial phase is `red`, and `verifies` points to the requirement or to the scenario.
 
-## Fluxo
+## Procedure
 
-Antes de produzir artefatos, consulte `daia next --json`, `.daia/guide.md` e os schemas locais em `.daia/schemas/`. Registre o resultado com `daia verify` na etapa aplicável.
+Before you make artifacts, read `daia next --json`, `.daia/guide.md` and the local schemas in `.daia/schemas/`. Record the result with `daia verify` in the applicable step.
 
-1. Leia views, decisões e cenários; mantenha rastreio por afirmação relevante.
-2. Especifique formatos, invariantes, erros e limites sem inventar comportamento.
-3. Escreva testes contra a especificação e confirme que falham pela ausência da implementação.
-4. Configure `verification` por contrato em `.daia/config.json` e execute `daia verify SP3`. Registre `phase` conforme o resultado. Inspecione a falha: erro de infraestrutura nao comprova comportamento ausente. Em projeto existente, preserve contratos ja verdes.
+1. Read the views, the decisions and the scenarios. Keep a trace for each relevant statement.
+2. Specify the formats, invariants, errors and limits. Do not invent behavior.
+3. Write the tests against the specification.
+4. Make sure that the tests fail because the implementation is not available.
+5. Configure `verification` for each contract in `.daia/config.json`.
+6. Run `daia verify SP3`. Record `phase` from the result.
+7. Examine the failure. An infrastructure error does not show that the behavior is absent.
+8. In a project that exists before DAIA-E, keep the contracts that are already green.
 
-Não implemente o produto e não afrouxe contratos para acomodar código existente.
+Do not implement the product. Do not make the contracts weaker to accept the code that exists.

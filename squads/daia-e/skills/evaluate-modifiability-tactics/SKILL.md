@@ -1,71 +1,76 @@
 ---
 name: evaluate-modifiability-tactics
-description: Avalie se as decisões que atendem cenários de mudança controlam tamanho, coesão, acoplamento e momento do binding (Bass, Clements & Kazman, cap. 7). Use na SP3 e na reavaliação ATAM da SP4 quando houver cenários com characteristic maintainability ou flexibility.
+description: Evaluate if the decisions for change scenarios control module size, cohesion, coupling and binding time (Bass, Clements & Kazman, chapter 7). Use in SP3 and in the SP4 ATAM evaluation when there are scenarios with characteristic maintainability or flexibility.
 ---
 
-# Avaliar táticas de modificabilidade
+# Evaluate the modifiability tactics
 
-Exponha lacunas e consequências; não escolha a tática no lugar do arquiteto.
+Show the gaps and the consequences. Do not select the tactic for the architect.
 
-## Resultado
+## Result
 
-Em cada `ArchitectureDecision` avaliada, complete:
+In each `ArchitectureDecision` that you evaluate, complete:
 
-- `tactics`: táticas que a decisão realiza, no formato `modifiability/<tática>`.
-- `sensitivity_points` e `tradeoff_points`, com os trade-offs conhecidos abaixo.
-- `risks`: lacunas que dependem de uma decisão existente.
+- `tactics`: the tactics that the decision applies, in the format `modifiability/<tactic>`.
+- `sensitivity_points` and `tradeoff_points`, with the known trade-offs below.
+- `risks`: the gaps that depend on an existing decision.
 
-Relate ao humano os cenários sem nenhuma decisão e as decisões cuja tática não está explícita.
+Tell the human about the scenarios that have no decision. Also tell the human about the decisions that do not state their tactic explicitly.
 
-## Fluxo
+## Procedure
 
-Antes de produzir artefatos, consulte `daia next --json`, `.daia/guide.md` e os schemas locais em `.daia/schemas/`.
+Before you make artifacts, read `daia next --json`, `.daia/guide.md` and the local schemas in `.daia/schemas/`.
 
-1. Selecione os `QualityScenario` com `characteristic` `maintainability` (sub_characteristic modularity, reusability, analysability ou modifiability) ou `flexibility` (adaptability ou replaceability). Cenário de `maintainability` sem sub_characteristic entra aqui quando o estímulo é uma mudança; se o estímulo é um teste, use `evaluate-testability-tactics`. Comece pelos de importância H no `utility_tree`. Sem `utility_tree`, avalie todos e aponte a falta de priorização. Sem cenários, a skill não se aplica.
-2. Leia as decisões cujo `traces_to` inclui cada cenário. Cenário sem decisão é lacuna para `@arch`; não crie a decisão.
-3. Liste as mudanças prováveis que cada cenário descreve. Elas são o critério das perguntas abaixo; não antecipe outras.
-4. Registre em `tactics` somente táticas que o texto da decisão realiza explicitamente. Se ela cita um padrão (ex.: camadas, publish-subscribe), registre a tática que ele realiza apenas quando o texto deixar claro; na dúvida, pergunte a `@arch`.
-5. Para cada mudança provável, verifique se alguma tática contém sua propagação. Se nenhuma contém, registre lacuna.
-6. Percorra o design checklist do §7.3 nas sete categorias: alocação de responsabilidades, modelo de coordenação, modelo de dados, mapeamento entre elementos, gerência de recursos, momento de binding e escolha de tecnologia.
-7. Na SP4, rode `daia impact <AD-id>` e reavalie apenas os cenários listados.
-8. Devolva as lacunas a `@arch` e registre o resultado com `daia verify` na etapa aplicável.
+1. Select the `QualityScenario` items with `characteristic` `maintainability` or `flexibility`.
+2. For `maintainability`, the sub_characteristic is modularity, reusability, analysability or modifiability. For `flexibility`, it is adaptability or replaceability.
+3. If a `maintainability` scenario has no sub_characteristic and its stimulus is a change, use this skill.
+4. If the stimulus is a test, use `evaluate-testability-tactics`.
+5. Start with the scenarios that have importance H in the `utility_tree`. If there is no `utility_tree`, evaluate all scenarios and report that they have no priority. If there are no scenarios, do not use this skill.
+6. Read the decisions that have each scenario in `traces_to`. A scenario without a decision is a gap for `@arch`. Do not make the decision.
+7. List the probable changes that each scenario describes. They are the criterion for the questions below. Do not predict other changes.
+8. Record in `tactics` only the tactics that the decision text applies explicitly.
+9. If the decision names a pattern (for example, layers or publish-subscribe), record its tactic only when the text makes it clear. If you have a doubt, ask `@arch`.
+10. For each probable change, verify if a tactic stops its propagation. If no tactic stops it, record a gap.
+11. Go through the design checklist of §7.3 in its seven categories: allocation of responsibilities, coordination model, data model, mapping among architectural elements, resource management, binding time and choice of technology.
+12. In SP4, run `daia impact <AD-id>`. Evaluate again only the listed scenarios.
+13. Send the gaps to `@arch`. Record the result with `daia verify` at the applicable step.
 
-## Catálogo
+## Catalog
 
-**Reduzir tamanho do módulo**
+**Reduce the size of a module**
 
-| Tática | Pergunta de verificação |
+| Tactic | Verification question |
 |---|---|
-| `split-module` | Algum módulo acumula responsabilidades que mudam por motivos diferentes? |
+| `split-module` | Does a module have responsibilities that change for different reasons? |
 
-**Aumentar coesão**
+**Increase cohesion**
 
-| Tática | Pergunta de verificação |
+| Tactic | Verification question |
 |---|---|
-| `increase-semantic-coherence` | Responsabilidades não afetadas pelas mudanças prováveis estão no mesmo módulo? |
+| `increase-semantic-coherence` | Are the responsibilities that the probable changes do not affect in the same module? |
 
-**Reduzir acoplamento**
+**Reduce coupling**
 
-| Tática | Pergunta de verificação |
+| Tactic | Verification question |
 |---|---|
-| `encapsulate` | Cada módulo expõe interface explícita e abstrata quanto aos detalhes prováveis de mudança? |
-| `use-intermediary` | Dependências diretas entre módulos que mudam juntos foram quebradas por intermediário? |
-| `restrict-dependencies` | Há restrição de quem pode depender de quem (camadas, visibilidade)? |
-| `refactor` | Duplicação que faz dois módulos sofrerem a mesma mudança foi fatorada? |
-| `abstract-common-services` | Serviços quase iguais foram generalizados e parametrizados? |
+| `encapsulate` | Does each module have an explicit interface that hides the details that will probably change? |
+| `use-intermediary` | Does an intermediary break the direct dependencies between modules that change together? |
+| `restrict-dependencies` | Is there a restriction on which module can depend on which module (layers, visibility)? |
+| `refactor` | Did the decision factor out the duplication that makes two modules get the same change? |
+| `abstract-common-services` | Are almost equal services generalized and parameterized? |
 
-**Deferir o binding**
+**Defer binding**
 
-| Tática | Pergunta de verificação |
+| Tactic | Verification question |
 |---|---|
-| `defer-binding` | Valores que mudam com frequência são ligados em build, deploy, inicialização ou runtime, conforme o cenário pedir, com mecanismo explícito (arquivo de configuração, plug-in, registro dinâmico)? |
+| `defer-binding` | Does the system bind values that change frequently at build, deploy, startup or runtime, as the scenario asks? Is there an explicit mechanism (configuration file, plug-in, dynamic registration)? |
 
-## Trade-offs conhecidos
+## Known trade-offs
 
-- Modificabilidade × desempenho: intermediários e separação de responsabilidades custam latência.
-- Modificabilidade × custo: binding tardio exige mecanismo que só compensa se a mudança se repetir.
+- Modifiability against performance: intermediaries and the separation of responsibilities add latency.
+- Modifiability against cost: late binding needs a mechanism. The mechanism has value only if the change occurs again.
 
-## Não faz
+## Does not do
 
-- Não antecipa mudanças que os cenários não descrevem (Art. IV).
-- Não recomenda tática sem cenário que a justifique.
+- It does not predict changes that the scenarios do not describe (Art. IV).
+- It does not recommend a tactic without a scenario that justifies it.

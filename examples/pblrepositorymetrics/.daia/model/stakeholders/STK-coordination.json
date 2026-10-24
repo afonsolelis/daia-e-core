@@ -1,0 +1,16 @@
+{
+  "id": "STK-coordination",
+  "kind": "Stakeholder",
+  "name": "Course coordination",
+  "role": "Monitors the process compliance across classes",
+  "concerns": [
+    "CON-compliance"
+  ],
+  "sprint": "SP1",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

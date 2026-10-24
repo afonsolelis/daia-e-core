@@ -5,5 +5,5 @@
   "modelDir": ".daia/model",
   "baselineDir": ".daia/baselines",
   "evidenceDir": ".daia/evidence",
-  "source": "Estudo de caso do metodo DAIA-E"
+  "source": "Case study of the DAIA-E method"
 }

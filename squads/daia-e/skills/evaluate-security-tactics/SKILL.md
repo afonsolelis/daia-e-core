@@ -1,81 +1,83 @@
 ---
 name: evaluate-security-tactics
-description: Avalie se as decisões que atendem cenários de segurança aplicam táticas de detecção, resistência, reação e recuperação de ataques (Bass, Clements & Kazman, cap. 9). Use na SP3 e na reavaliação ATAM da SP4 quando houver cenários com characteristic security.
+description: Evaluate if the decisions for security scenarios apply the security tactics (Bass, Clements & Kazman, chapter 9). The tactics detect, resist, react to and recover from attacks. Use in SP3 and in the SP4 ATAM evaluation when there are scenarios with characteristic security.
 ---
 
-# Avaliar táticas de segurança
+# Evaluate the security tactics
 
-Exponha lacunas e consequências; não escolha a tática no lugar do arquiteto.
+Show the gaps and the consequences. Do not select the tactic for the architect.
 
-## Resultado
+## Result
 
-Em cada `ArchitectureDecision` avaliada, complete:
+In each `ArchitectureDecision` that you evaluate, complete:
 
-- `tactics`: táticas que a decisão realiza, no formato `security/<tática>`.
-- `sensitivity_points` e `tradeoff_points`, com os trade-offs conhecidos abaixo.
-- `risks`: lacunas que dependem de uma decisão existente.
+- `tactics`: the tactics that the decision applies, in the format `security/<tactic>`.
+- `sensitivity_points` and `tradeoff_points`, with the known trade-offs below.
+- `risks`: the gaps that depend on an existing decision.
 
-Relate ao humano os cenários sem nenhuma decisão e as decisões cuja tática não está explícita.
+Tell the human about the scenarios that have no decision. Also tell the human about the decisions that do not state their tactic explicitly.
 
-## Fluxo
+## Procedure
 
-Antes de produzir artefatos, consulte `daia next --json`, `.daia/guide.md` e os schemas locais em `.daia/schemas/`.
+Before you make artifacts, read `daia next --json`, `.daia/guide.md` and the local schemas in `.daia/schemas/`.
 
-1. Selecione os `QualityScenario` com `characteristic` `security`. Comece pelos de importância H no `utility_tree`. Sem `utility_tree`, avalie todos e aponte a falta de priorização. Sem cenários, a skill não se aplica.
-2. Leia as decisões cujo `traces_to` inclui cada cenário. Cenário sem decisão é lacuna para `@arch`; não crie a decisão.
-3. Identifique, em cada cenário, o ator, o ativo e a superfície de entrada.
-4. Registre em `tactics` somente táticas que o texto da decisão realiza explicitamente. Se ela cita um mecanismo (ex.: OAuth, TLS), registre a tática que ele realiza apenas quando o texto deixar claro; na dúvida, pergunte a `@arch`.
-5. Responda às perguntas de verificação das famílias pertinentes ao estímulo do cenário. Uma tática ausente só é lacuna quando o cenário a exige.
-6. Percorra o design checklist do §9.3 nas sete categorias: alocação de responsabilidades, modelo de coordenação, modelo de dados, mapeamento entre elementos, gerência de recursos, momento de binding e escolha de tecnologia.
-7. Na SP4, rode `daia impact <AD-id>` e reavalie apenas os cenários listados.
-8. Devolva as lacunas a `@arch` e registre o resultado com `daia verify` na etapa aplicável.
+1. Select the `QualityScenario` items with `characteristic` `security`.
+2. Start with the scenarios that have importance H in the `utility_tree`. If there is no `utility_tree`, evaluate all scenarios and report that they have no priority. If there are no scenarios, do not use this skill.
+3. Read the decisions that have each scenario in `traces_to`. A scenario without a decision is a gap for `@arch`. Do not make the decision.
+4. In each scenario, find the actor, the asset and the entry surface.
+5. Record in `tactics` only the tactics that the decision text applies explicitly.
+6. If the decision names a mechanism (for example, OAuth or TLS), record its tactic only when the text makes it clear. If you have a doubt, ask `@arch`.
+7. Answer the verification questions of the families that apply to the stimulus of the scenario. A tactic that is not there is a gap only when the scenario needs it.
+8. Go through the design checklist of §9.3 in its seven categories: allocation of responsibilities, coordination model, data model, mapping among architectural elements, resource management, binding time and choice of technology.
+9. In SP4, run `daia impact <AD-id>`. Evaluate again only the listed scenarios.
+10. Send the gaps to `@arch`. Record the result with `daia verify` at the applicable step.
 
-## Catálogo
+## Catalog
 
-**Detectar ataques**
+**Detect attacks**
 
-| Tática | Pergunta de verificação |
+| Tactic | Verification question |
 |---|---|
-| `detect-intrusion` | Padrões de requisição são comparados com assinaturas conhecidas? |
-| `detect-service-denial` | Tráfego de entrada é comparado com perfis de negação de serviço? |
-| `verify-message-integrity` | Mensagens, arquivos de configuração e artefatos de deploy têm checksum ou hash verificado? |
-| `detect-message-delay` | Variações anômalas de tempo de entrega são detectadas? |
+| `detect-intrusion` | Does the system compare request patterns with known attack signatures? |
+| `detect-service-denial` | Does the system compare the input traffic with denial-of-service profiles? |
+| `verify-message-integrity` | Do messages, configuration files and deploy artifacts have a checksum or a hash that the system verifies? |
+| `detect-message-delay` | Does the system detect abnormal changes in the delivery time? |
 
-**Resistir a ataques**
+**Resist attacks**
 
-| Tática | Pergunta de verificação |
+| Tactic | Verification question |
 |---|---|
-| `identify-actors` | Toda entrada externa tem fonte identificada? |
-| `authenticate-actors` | O mecanismo de autenticação corresponde ao risco do cenário? |
-| `authorize-actors` | Permissões são verificadas por ator, grupo ou papel? |
-| `limit-access` | Há firewalls, DMZ ou restrição de portas e protocolos? |
-| `limit-exposure` | Recursos críticos estão divididos e distribuídos, de modo que uma única fraqueza não comprometa todos? Fatos sobre o sistema (ex.: número de pontos de entrada) são ocultados? |
-| `encrypt-data` | Dados em repouso e em trânsito estão cifrados? |
-| `separate-entities` | Dados sensíveis estão separados dos não sensíveis (servidor, VM, air-gap)? |
-| `change-default-settings` | Configurações padrão são forçadas a mudar? |
+| `identify-actors` | Does each external input have an identified source? |
+| `authenticate-actors` | Does the authentication mechanism agree with the risk of the scenario? |
+| `authorize-actors` | Does the system verify permissions for each actor, group or role? |
+| `limit-access` | Are there firewalls, a DMZ or restrictions on ports and protocols? |
+| `limit-exposure` | Are the critical resources divided and distributed, so that one weakness cannot compromise all of them? Are facts about the system hidden (for example, the number of entry points)? |
+| `encrypt-data` | Is the data encrypted at rest and in transit? |
+| `separate-entities` | Is sensitive data separate from data that is not sensitive (server, VM, air gap)? |
+| `change-default-settings` | Does the system force a change of the default settings? |
 
-**Reagir a ataques**
+**React to attacks**
 
-| Tática | Pergunta de verificação |
+| Tactic | Verification question |
 |---|---|
-| `revoke-access` | Há revogação rápida de acesso a recursos sensíveis sob suspeita? |
-| `lock-computer` | Tentativas repetidas de login bloqueiam a origem por janela de tempo? |
-| `inform-actors` | Operadores e sistemas cooperantes são notificados? |
+| `revoke-access` | Can the system quickly revoke access to sensitive resources when there is a suspicion? |
+| `lock-computer` | Do repeated login attempts lock the source for a time window? |
+| `inform-actors` | Does the system notify the operators and the systems that cooperate with it? |
 
-**Recuperar de ataques**
+**Recover from attacks**
 
-| Tática | Pergunta de verificação |
+| Tactic | Verification question |
 |---|---|
-| `maintain-audit-trail` | Ações de usuários e do sistema são registradas de forma auditável? |
-| `restore` | O serviço comprometido é restaurado? Avalie as táticas de recuperação com `evaluate-availability-tactics`. |
+| `maintain-audit-trail` | Does the system record user actions and system actions in an auditable form? |
+| `restore` | Does the system restore the compromised service? Evaluate the recovery tactics with `evaluate-availability-tactics`. |
 
-## Trade-offs conhecidos
+## Known trade-offs
 
-- Segurança × usabilidade: autenticação adiciona fricção.
-- Segurança × desempenho: cifragem e verificação de integridade custam ciclos.
-- Segurança × interoperabilidade: interfaces expostas ampliam a superfície.
+- Security against usability: authentication adds friction.
+- Security against performance: encryption and integrity verification cost cycles.
+- Security against interoperability: exposed interfaces make the attack surface larger.
 
-## Não faz
+## Does not do
 
-- Não cria requisito de segurança que não esteja nos requisitos (Art. IV).
-- Não recomenda tática sem cenário que a justifique.
+- It does not make a security requirement that is not in the requirements (Art. IV).
+- It does not recommend a tactic without a scenario that justifies it.

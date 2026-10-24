@@ -1,0 +1,18 @@
+{
+  "id": "TC-modularity",
+  "kind": "TestContract",
+  "title": "A new CEP pattern changes a maximum of 2 modules",
+  "verifies": [
+    "QS-modularity"
+  ],
+  "test_path": "tests/quality/modularity.test.js",
+  "test_name": "new pattern does not touch the engine",
+  "phase": "green",
+  "sprint": "SP3",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

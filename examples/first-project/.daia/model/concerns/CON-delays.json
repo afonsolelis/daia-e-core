@@ -1,0 +1,14 @@
+{
+  "id": "CON-delays",
+  "kind": "Concern",
+  "statement": "How can the library decrease late returns without a block on the access of students to the books?",
+  "stakeholders": [
+    "STK-librarian",
+    "STK-coordination"
+  ],
+  "category": "business",
+  "sprint": "SP1",
+  "provenance": {
+    "drafted_by": "ai-assisted"
+  }
+}

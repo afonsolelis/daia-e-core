@@ -1,0 +1,24 @@
+{
+  "id": "VW-enterprise",
+  "kind": "View",
+  "viewpoint": "enterprise",
+  "title": "School library loans",
+  "addresses_concerns": [
+    "CON-delays"
+  ],
+  "stakeholders": [
+    "STK-librarian",
+    "STK-coordination"
+  ],
+  "models": [
+    {
+      "kind": "dynamic",
+      "notation": "BPMN 2.0",
+      "path": "docs/lend-book.bpmn"
+    }
+  ],
+  "sprint": "SP1",
+  "provenance": {
+    "drafted_by": "ai-assisted"
+  }
+}

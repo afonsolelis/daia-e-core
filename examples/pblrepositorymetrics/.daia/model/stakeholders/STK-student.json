@@ -1,0 +1,16 @@
+{
+  "id": "STK-student",
+  "kind": "Stakeholder",
+  "name": "Student in a project team",
+  "role": "Makes repository events during the module",
+  "concerns": [
+    "CON-privacy"
+  ],
+  "sprint": "SP1",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

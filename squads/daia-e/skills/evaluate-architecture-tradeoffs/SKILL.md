@@ -1,22 +1,24 @@
 ---
 name: evaluate-architecture-tradeoffs
-description: Avalie decisões arquiteturais por sensibilidade, tradeoffs e riscos, e reabra somente cenários afetados por mudanças. Use em ATAM ou análise de impacto.
+description: Evaluate architecture decisions for sensitivity points, trade-offs and risks. Open again only the scenarios that a change affects. Use in ATAM or in impact analysis.
 ---
 
-# Avaliar tradeoffs arquiteturais
+# Evaluate architecture trade-offs
 
-Exponha consequências; a decisão continua pertencendo ao arquiteto e sua aceitação ao humano.
+Show the consequences. The decision stays with the architect. The acceptance of the decision stays with the human.
 
-## Resultado
+## Result
 
-Preencha `sensitivity_points`, `tradeoff_points` e `risks` das decisões. Em manutenção, produza o subconjunto de cenários que precisa ser reavaliado.
+Fill in `sensitivity_points`, `tradeoff_points` and `risks` of the decisions. In maintenance, make the subset of scenarios that you must evaluate again.
 
-## Fluxo
+## Procedure
 
-Antes de produzir artefatos, consulte `daia next --json`, `.daia/guide.md` e os schemas locais em `.daia/schemas/`. Registre o resultado com `daia verify` na etapa aplicável.
+Before you make artifacts, read `daia next --json`, `.daia/guide.md` and the local schemas in `.daia/schemas/`. Record the result with `daia verify` at the applicable step.
 
-1. Relacione cada decisão aos cenários prioritários que ela influencia.
-2. Identifique parâmetros cuja mudança altera atributos de qualidade.
-3. Registre onde melhorar um atributo degrada outro e descreva o risco observável.
-4. Em mudança existente, rode `daia impact <AD-id>` e limite a reavaliação ao alcance retornado.
-5. Devolva decisões incompletas ao arquiteto; não selecione a alternativa em seu lugar.
+1. Relate each decision to the priority scenarios that it has an effect on.
+2. Find the parameters that change quality attributes when they change.
+3. Record where an improvement to one attribute makes another attribute worse.
+4. Describe the observable risk of each trade-off.
+5. If the change is to an existing decision, run `daia impact <AD-id>`.
+6. Evaluate again only the scenarios in the scope that the command returns.
+7. Send incomplete decisions back to the architect. Do not select the alternative for the architect.

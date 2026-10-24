@@ -1,7 +1,7 @@
 {
   "$id": "daia-e/quality-scenario",
-  "title": "Quality Scenario — cenário de seis partes (SEI) com vocabulário ISO/IEC 25010:2023",
-  "description": "Art. V: qualidade não é adjetivo, é cenário mensurável. Todo RNF é expresso como cenário de seis partes e verificado por ao menos um teste executável.",
+  "title": "Quality Scenario — six-part scenario (SEI) with the ISO/IEC 25010:2023 vocabulary",
+  "description": "Art. V: quality is not an adjective. It is a measurable scenario. Each NFR is a six-part scenario, and at least one executable test verifies it.",
   "type": "object",
   "required": ["id", "kind", "characteristic", "source", "stimulus", "artifact", "environment", "response", "response_measure", "traces_to", "provenance"],
   "additionalProperties": false,
@@ -10,7 +10,7 @@
     "kind": { "const": "QualityScenario" },
     "characteristic": {
       "type": "string",
-      "description": "Característica da ISO/IEC 25010:2023. Oito das nove são não funcionais; functional_suitability é a exceção.",
+      "description": "A characteristic of ISO/IEC 25010:2023. Eight of the nine are non-functional. functional_suitability is the exception.",
       "enum": [
         "functional_suitability",
         "performance_efficiency",
@@ -24,30 +24,30 @@
       ]
     },
     "sub_characteristic": { "type": "string" },
-    "source": { "type": "string", "minLength": 3, "description": "1/6 — quem ou o que origina o estímulo" },
-    "stimulus": { "type": "string", "minLength": 3, "description": "2/6 — a condição que chega ao sistema" },
-    "artifact": { "type": "string", "minLength": 3, "description": "3/6 — a parte do sistema estimulada" },
-    "environment": { "type": "string", "minLength": 3, "description": "4/6 — o estado do sistema no momento" },
-    "response": { "type": "string", "minLength": 3, "description": "5/6 — a atividade resultante" },
+    "source": { "type": "string", "minLength": 3, "description": "1/6 — the person or the thing that starts the stimulus" },
+    "stimulus": { "type": "string", "minLength": 3, "description": "2/6 — the condition that arrives at the system" },
+    "artifact": { "type": "string", "minLength": 3, "description": "3/6 — the part of the system that gets the stimulus" },
+    "environment": { "type": "string", "minLength": 3, "description": "4/6 — the state of the system at that time" },
+    "response": { "type": "string", "minLength": 3, "description": "5/6 — the activity that occurs as a result" },
     "response_measure": {
       "type": "object",
-      "description": "6/6 — a medida. Sem medida não há cenário: 'rápido' não é resposta mensurável.",
+      "description": "6/6 — the measure. Without a measure, there is no scenario: 'fast' is not a measurable response.",
       "required": ["metric", "operator", "threshold"],
       "properties": {
-        "metric": { "type": "string", "minLength": 2, "description": "ex.: latência p95, tempo de recuperação, complexidade ciclomática" },
+        "metric": { "type": "string", "minLength": 2, "description": "for example p95 latency, recovery time, cyclomatic complexity" },
         "operator": { "type": "string", "enum": ["<", "<=", ">", ">=", "==", "!="] },
         "threshold": { "type": ["number", "string"] },
-        "unit": { "type": "string", "description": "ex.: ms, %, ocorrências, pontos" }
+        "unit": { "type": "string", "description": "for example ms, %, occurrences, points" }
       }
     },
-    "traces_to": { "$ref": "daia-e/common#/definitions/idRefList", "minItems": 1, "description": "RNF-* ou CON-* de origem" },
+    "traces_to": { "$ref": "daia-e/common#/definitions/idRefList", "minItems": 1, "description": "The source NFR-* or CON-*" },
     "verified_by": {
       "$ref": "daia-e/common#/definitions/idRefList",
-      "description": "Contratos de teste que verificam este cenário (TC-*). Exigido no gate SP4."
+      "description": "The test contracts that verify this scenario (TC-*). The SP4 gate MUST find them."
     },
     "utility_tree": {
       "type": "object",
-      "description": "QAW/ATAM — priorização no utility tree",
+      "description": "QAW/ATAM — the priority in the utility tree",
       "properties": {
         "importance": { "type": "string", "enum": ["H", "M", "L"] },
         "difficulty": { "type": "string", "enum": ["H", "M", "L"] }

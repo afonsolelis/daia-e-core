@@ -1,0 +1,13 @@
+{
+  "id": "STK-librarian",
+  "kind": "Stakeholder",
+  "name": "Librarian",
+  "role": "Operates the loans and asks students to return late books",
+  "concerns": [
+    "CON-delays"
+  ],
+  "sprint": "SP1",
+  "provenance": {
+    "drafted_by": "ai-assisted"
+  }
+}

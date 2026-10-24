@@ -1,0 +1,18 @@
+{
+  "id": "FR-correlation",
+  "kind": "Requirement",
+  "type": "functional",
+  "statement": "The system must correlate events by Complex Event Processing against an SCM baseline",
+  "traces_to": [
+    "BD-supervision",
+    "CON-compliance"
+  ],
+  "priority": "must",
+  "sprint": "SP2",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

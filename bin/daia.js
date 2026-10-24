@@ -11,7 +11,7 @@ const { SPRINTS, SPRINT_IDS, getSprint } = kernel;
 
 const EXIT = { OK: 0, BLOCKED: 1, USAGE: 2, ERROR: 3 };
 
-/** Parser de argv minimo — sem dependencia externa (Art. I). */
+/** Minimal argv parser. It has no external dependency (Art. I). */
 function parseArgs(argv) {
   const positional = [];
   const flags = {};
@@ -59,19 +59,19 @@ function printFindings(findings) {
 
 function summarize(report) {
   const parts = [];
-  parts.push(`${report.blocking.length} bloqueio(s)`);
-  parts.push(`${report.warnings.length} alerta(s)`);
-  parts.push(`${report.infos.length} informativo(s)`);
+  parts.push(`${report.blocking.length} blocking finding(s)`);
+  parts.push(`${report.warnings.length} warning(s)`);
+  parts.push(`${report.infos.length} info finding(s)`);
   return parts.join(' | ');
 }
 
-// ─────────────────────────────── comandos ───────────────────────────────
+// ─────────────────────────────── commands ───────────────────────────────
 
 async function cmdInit(root, flags) {
   if (process.stdin.isTTY && !flags.yes) {
     const rl = require('node:readline/promises').createInterface({ input: process.stdin, output: process.stdout });
     try {
-      for (const [key, label, fallback] of [['name','Nome',path.basename(root)], ['mode','Projeto (new/existing)','new'], ['objective','Objetivo',''], ['stack','Stack','a definir'], ['constraints','Restricoes','a definir'], ['runtime','Runtime (codex/claude/portable)','codex']]) {
+      for (const [key, label, fallback] of [['name','Name',path.basename(root)], ['mode','Project (new/existing)','new'], ['objective','Objective',''], ['stack','Stack','not defined'], ['constraints','Constraints','not defined'], ['runtime','Runtime (codex/claude/portable)','codex']]) {
         if (!flags[key]) flags[key] = (await rl.question(`${label} [${fallback}]: `)).trim() || fallback;
       }
     } finally { rl.close(); }
@@ -82,14 +82,14 @@ async function cmdInit(root, flags) {
   require('../kernel/util/project-files').projectFile(root, '.daia/config.json');
   const daiaDir = path.join(root, '.daia');
   if (fs.existsSync(path.join(daiaDir, 'config.json'))) {
-    console.error(term.red('Projeto ja inicializado. Use daia next para retomar.'));
+    console.error(term.red('The project is already initialized. To continue, run daia next.'));
     return EXIT.USAGE;
   }
   const catalog = flags.catalog || 'rm-odp';
   const catalogFile = path.join(__dirname, '..', 'kernel', 'viewpoints', `${catalog}.json`);
   if (!fs.existsSync(catalogFile)) {
-    console.error(term.red(`Catalogo de viewpoints "${catalog}" nao existe.`));
-    console.error(term.gray('Disponiveis: rm-odp (default), 4plus1, c4'));
+    console.error(term.red(`The viewpoint catalog "${catalog}" does not exist.`));
+    console.error(term.gray('Available catalogs: rm-odp (default), 4plus1, c4'));
     return EXIT.USAGE;
   }
 
@@ -116,11 +116,11 @@ async function cmdInit(root, flags) {
   fs.copyFileSync(path.join(__dirname, '..', 'squads', 'daia-e', 'guide.md'), path.join(daiaDir, 'guide.md'));
   writeJson(path.join(daiaDir, 'workflow.json'), { history: [] });
   cmdSetup(root, { to: flags.runtime || 'codex' });
-  console.log(term.green('Projeto DAIA-E inicializado.'));
-  console.log(`  catalogo de viewpoints: ${term.cyan(catalog)}`);
-  console.log(`  modelo: ${term.gray('.daia/model/')}`);
+  console.log(term.green('The DAIA-E project is initialized.'));
+  console.log(`  viewpoint catalog: ${term.cyan(catalog)}`);
+  console.log(`  model: ${term.gray('.daia/model/')}`);
   console.log('');
-  console.log('Proximo passo: SP1 — por que o sistema deve existir e para quem?');
+  console.log('Next step: SP1. Why must the system exist, and for whom?');
   console.log(term.gray('  daia next'));
   return EXIT.OK;
 }
@@ -130,28 +130,28 @@ function cmdStatus(root) {
   const baselines = project.baselines.load();
 
   header(`DAIA-E — ${project.store.config.project || path.basename(root)}`);
-  console.log(`catalogo   ${term.cyan(project.store.viewpoints.name)} ${term.gray(`(${project.store.viewpoints.standard})`)}`);
-  console.log(`artefatos  ${project.store.all().length}`);
-  console.log(`estado     ${term.gray(project.store.stateHash().slice(0, 23))}`);
+  console.log(`catalog    ${term.cyan(project.store.viewpoints.name)} ${term.gray(`(${project.store.viewpoints.standard})`)}`);
+  console.log(`artifacts  ${project.store.all().length}`);
+  console.log(`state      ${term.gray(project.store.stateHash().slice(0, 23))}`);
 
   header('Sprints');
   for (const sprint of SPRINTS) {
     const report = project.gate.evaluate(sprint.id, { baselines });
     const signed = baselines.get(sprint.id);
     let mark;
-    if (signed) mark = project.baselines.verify(sprint.id).valid ? term.green('assinada') : term.red('revisao necessaria');
-    else if (report.passed) mark = term.yellow('pronta para assinar');
-    else mark = term.red(`${report.blocking.length} bloqueio(s)`);
+    if (signed) mark = project.baselines.verify(sprint.id).valid ? term.green('signed') : term.red('review necessary');
+    else if (report.passed) mark = term.yellow('ready to sign');
+    else mark = term.red(`${report.blocking.length} blocking finding(s)`);
     console.log(`${term.bold(sprint.id)} ${term.gray(sprint.slug.padEnd(5))} ${sprint.name.padEnd(46)} ${mark}`);
     if (signed) {
-      console.log(term.gray(`     assinada por ${signed.signature.signed_by} em ${signed.signature.signed_at.slice(0, 10)}`));
+      console.log(term.gray(`     signed by ${signed.signature.signed_by} on ${signed.signature.signed_at.slice(0, 10)}`));
     }
   }
 
   const orphans = project.trace.orphans();
   if (orphans.length > 0) {
-    header('Artefatos orfaos');
-    console.log(term.yellow(`${orphans.length} artefato(s) sem rastreio em nenhum sentido:`));
+    header('Orphan artifacts');
+    console.log(term.yellow(`${orphans.length} artifact(s) with no trace in either direction:`));
     console.log(term.gray(`  ${orphans.join(', ')}`));
   }
   console.log('');
@@ -183,17 +183,17 @@ function cmdGate(root, positional, flags) {
   for (const report of reports) {
     header(`Gate ${report.sprint.id} — ${report.sprint.name}`);
     console.log(term.gray(report.sprint.question));
-    console.log(term.gray(`${report.rulesEvaluated} regras | ${report.documentCount} artefatos | ${summarize(report)}`));
+    console.log(term.gray(`${report.rulesEvaluated} rules | ${report.documentCount} artifacts | ${summarize(report)}`));
     const visible = flags.quiet
       ? report.findings.filter((f) => f.severity === 'BLOCK')
       : report.findings;
     if (visible.length > 0) printFindings(visible);
     console.log('');
     if (report.passed) {
-      console.log(`${term.green('PASSOU')} ${term.gray('— o gate nao encerra a baseline. Art. II exige assinatura humana:')}`);
-      console.log(term.gray(`  daia baseline sign ${report.sprint.id} --by "<nome>" --rationale "<razao>"`));
+      console.log(`${term.green('PASSED')} ${term.gray('— the gate does not close the baseline. Art. II: only a human signs it. Run:')}`);
+      console.log(term.gray(`  daia baseline sign ${report.sprint.id} --by "<name>" --rationale "<rationale>"`));
     } else {
-      console.log(`${term.red('BLOQUEADO')} ${term.gray(`— ${report.blocking.length} violacao(oes) inegociavel(is)`)}`);
+      console.log(`${term.red('BLOCKED')} ${term.gray(`— ${report.blocking.length} non-negotiable violation(s)`)}`);
     }
   }
   console.log('');
@@ -210,15 +210,15 @@ function cmdBaseline(root, positional, flags) {
     for (const sprint of SPRINTS) {
       const b = baselines.get(sprint.id);
       if (!b) {
-        console.log(`${term.bold(sprint.id)} ${term.gray('nao encerrada')}`);
+        console.log(`${term.bold(sprint.id)} ${term.gray('not closed')}`);
         continue;
       }
       const check = project.baselines.verify(sprint.id);
-      const state = check.valid ? term.green('valida') : term.yellow('modelo mudou desde a assinatura');
-      console.log(`${term.bold(sprint.id)} ${term.green(b.signature.decision)} ${term.gray(`por ${b.signature.signed_by} em ${b.signature.signed_at.slice(0, 10)}`)} ${state}`);
+      const state = check.valid ? term.green('valid') : term.yellow('the model changed after the signature');
+      console.log(`${term.bold(sprint.id)} ${term.green(b.signature.decision)} ${term.gray(`by ${b.signature.signed_by} on ${b.signature.signed_at.slice(0, 10)}`)} ${state}`);
       console.log(term.gray(`     "${b.signature.rationale}"`));
       if (b.signature.declared_debt) {
-        for (const d of b.signature.declared_debt) console.log(term.yellow(`     divida: ${d}`));
+        for (const d of b.signature.declared_debt) console.log(term.yellow(`     debt: ${d}`));
       }
     }
     console.log('');
@@ -227,7 +227,7 @@ function cmdBaseline(root, positional, flags) {
 
   if (action === 'sign') {
     if (!sprintArg) {
-      console.error(term.red('Informe a sprint: daia baseline sign SP1 --by "<nome>" --rationale "<razao>"'));
+      console.error(term.red('Give the sprint: daia baseline sign SP1 --by "<name>" --rationale "<rationale>"'));
       return EXIT.USAGE;
     }
     const sprint = getSprint(sprintArg);
@@ -235,10 +235,10 @@ function cmdBaseline(root, positional, flags) {
     const report = project.gate.evaluate(sprint.id, { baselines });
 
     if (!report.passed && !flags.force) {
-      console.error(`${term.red('BLOQUEADO')} — o gate ${sprint.id} tem ${report.blocking.length} violacao(oes).`);
+      console.error(`${term.red('BLOCKED')} — the gate ${sprint.id} has ${report.blocking.length} violation(s).`);
       printFindings(report.blocking);
       console.error('');
-      console.error(term.gray('Corrija as violacoes, ou use --force para registrar a decisao como divida rastreavel.'));
+      console.error(term.gray('Correct the violations. Or use --force to record the decision as traceable debt.'));
       return EXIT.BLOCKED;
     }
 
@@ -260,12 +260,12 @@ function cmdBaseline(root, positional, flags) {
           evaluated_at: report.evaluatedAt,
         },
       });
-      console.log(term.green(`Baseline ${sprint.id} encerrada.`));
-      console.log(`  decisao   ${baseline.signature.decision}`);
-      console.log(`  assinante ${baseline.signature.signed_by}`);
-      console.log(`  estado    ${term.gray(baseline.state_hash.slice(0, 23))}`);
+      console.log(term.green(`Baseline ${sprint.id} is closed.`));
+      console.log(`  decision  ${baseline.signature.decision}`);
+      console.log(`  signer    ${baseline.signature.signed_by}`);
+      console.log(`  state     ${term.gray(baseline.state_hash.slice(0, 23))}`);
       if (debt.length > 0) {
-        console.log(term.yellow(`  ${debt.length} item(ns) de divida declarada`));
+        console.log(term.yellow(`  ${debt.length} declared debt item(s)`));
       }
       return EXIT.OK;
     } catch (err) {
@@ -274,7 +274,7 @@ function cmdBaseline(root, positional, flags) {
     }
   }
 
-  console.error(term.red(`Acao desconhecida: ${action}. Use: list | sign`));
+  console.error(term.red(`Unknown action: ${action}. Use: list | sign`));
   return EXIT.USAGE;
 }
 
@@ -284,13 +284,13 @@ function cmdTrace(root, positional, flags) {
 
   if (flags.matrix) {
     const rows = project.trace.matrix();
-    header('Matriz de rastreabilidade');
-    console.log(term.gray('requisito      tipo             cenario        caracteristica            testes'));
+    header('Traceability matrix');
+    console.log(term.gray('requirement    type             scenario       characteristic            tests'));
     for (const r of rows) {
-      const tests = r.tests.length > 0 ? r.tests.join(',') : term.red('nenhum');
+      const tests = r.tests.length > 0 ? r.tests.join(',') : term.red('none');
       console.log(
         `${(r.requirement || '').padEnd(14)} ${(r.type || '').padEnd(16)} ` +
-        `${(r.scenario || term.red('nenhum')).padEnd(14)} ${(r.characteristic || '-').padEnd(25)} ${tests}`
+        `${(r.scenario || term.red('none')).padEnd(14)} ${(r.characteristic || '-').padEnd(25)} ${tests}`
       );
     }
     console.log('');
@@ -298,17 +298,17 @@ function cmdTrace(root, positional, flags) {
   }
 
   if (!target) {
-    console.error(term.red('Informe um id: daia trace RNF-latencia   |   daia trace --matrix'));
+    console.error(term.red('Give an id: daia trace NFR-latency   |   daia trace --matrix'));
     return EXIT.USAGE;
   }
   if (!project.store.has(target)) {
-    console.error(term.red(`Artefato nao encontrado: ${target}`));
+    console.error(term.red(`Artifact not found: ${target}`));
     return EXIT.USAGE;
   }
 
   const direction = flags.up ? 'up' : 'down';
   const tree = project.trace.chain(target, direction);
-  header(`Rastreio ${direction === 'down' ? 'a jusante' : 'a montante'} de ${target}`);
+  header(`${direction === 'down' ? 'Downstream' : 'Upstream'} trace of ${target}`);
   printTree(tree, '');
   console.log('');
   return EXIT.OK;
@@ -326,24 +326,24 @@ function printTree(node, prefix) {
 function cmdImpact(root, positional) {
   const target = positional[0];
   if (!target) {
-    console.error(term.red('Informe um id: daia impact AD-persistencia'));
+    console.error(term.red('Give an id: daia impact AD-persistence'));
     return EXIT.USAGE;
   }
   const project = kernel.openProject(root);
   if (!project.store.has(target)) {
-    console.error(term.red(`Artefato nao encontrado: ${target}`));
+    console.error(term.red(`Artifact not found: ${target}`));
     return EXIT.USAGE;
   }
   const result = project.trace.impact(target);
-  header(`Impacto de mudanca em ${target}`);
-  console.log(`afetados      ${result.affected.length}`);
-  console.log(`views         ${result.views.join(', ') || term.gray('nenhuma')}`);
-  console.log(`decisoes      ${result.decisions.join(', ') || term.gray('nenhuma')}`);
-  console.log(`cenarios      ${result.scenarios.join(', ') || term.gray('nenhum')}`);
-  console.log(`testes        ${result.tests.join(', ') || term.gray('nenhum')}`);
+  header(`Change impact of ${target}`);
+  console.log(`affected      ${result.affected.length}`);
+  console.log(`views         ${result.views.join(', ') || term.gray('none')}`);
+  console.log(`decisions     ${result.decisions.join(', ') || term.gray('none')}`);
+  console.log(`scenarios     ${result.scenarios.join(', ') || term.gray('none')}`);
+  console.log(`tests         ${result.tests.join(', ') || term.gray('none')}`);
   if (result.scenarios.length > 0) {
     console.log('');
-    console.log(term.yellow('O ATAM reabre apenas sobre os cenarios acima (Art. IX).'));
+    console.log(term.yellow('The ATAM opens again only for the scenarios above (Art. IX).'));
   }
   console.log('');
   return EXIT.OK;
@@ -352,20 +352,20 @@ function cmdImpact(root, positional) {
 function cmdViewpoints(root, flags) {
   const dir = path.join(__dirname, '..', 'kernel', 'viewpoints');
   if (flags.catalogs) {
-    header('Catalogos disponiveis');
+    header('Available catalogs');
     for (const file of fs.readdirSync(dir).filter((f) => f.endsWith('.json'))) {
       const c = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'));
       console.log(`${term.bold(c.catalog.padEnd(10))} ${c.name} ${c.default ? term.green('(default)') : ''}`);
       console.log(term.gray(`           ${c.standard} | ${c.viewpoints.length} viewpoints`));
     }
     console.log('');
-    console.log(term.gray('A ISO 42010 define o metamodelo, nao o conjunto de views. Troque em .daia/config.json.'));
+    console.log(term.gray('ISO 42010 defines the metamodel, not the set of views. To change the catalog, edit .daia/config.json.'));
     console.log('');
     return EXIT.OK;
   }
 
   const project = kernel.openProject(root);
-  header(`Catalogo ativo — ${project.store.viewpoints.name}`);
+  header(`Active catalog — ${project.store.viewpoints.name}`);
   for (const vp of project.store.viewpoints.index.values()) {
     console.log(`${term.bold(vp.id.padEnd(15))} ${term.gray(`${vp.opens_at} -> ${vp.completes_at}`)}  ${vp.frames_concerns.join(', ')}`);
   }
@@ -388,7 +388,7 @@ function cmdSquad(root, positional, flags) {
   header(`Squad ${squad.manifest.name} v${squad.manifest.version}`);
   console.log(term.gray(squad.manifest.description));
   console.log('');
-  console.log(term.gray('agente      sprint     bok'));
+  console.log(term.gray('agent       sprint     bok'));
   for (const agent of squad.agents) {
     const fm = agent.frontmatter;
     const mark = agent.problems.length === 0 ? term.green('v') : term.red('x');
@@ -400,9 +400,9 @@ function cmdSquad(root, positional, flags) {
   const conform = squad.agents.every((a) => a.problems.length === 0) && squad.problems.length === 0;
   console.log('');
   console.log(conform
-    ? term.green('Todos os agentes conformes ao contrato de portabilidade (Art. XI).')
-    : term.red('Ha violacoes do contrato de agente.'));
-  console.log(term.gray('Cole qualquer um destes arquivos num chat e ele funciona. Esse e o teste.'));
+    ? term.green('All agents agree with the portability contract (Art. XI).')
+    : term.red('The agent contract has violations.'));
+  console.log(term.gray('Paste one of these files into a chat, and it works. That is the test.'));
   console.log('');
   return conform ? EXIT.OK : EXIT.BLOCKED;
 }
@@ -428,7 +428,7 @@ function cmdSkills(root, positional, flags) {
   }
   for (const problem of library.problems) console.log(term.red(`! ${problem}`));
   console.log('');
-  console.log(term.gray('Instale no runtime: daia skills sync --to codex'));
+  console.log(term.gray('To install the skills in the runtime, run: daia skills sync --to codex'));
   console.log('');
   return library.skills.every((skill) => skill.problems.length === 0) && library.problems.length === 0
     ? EXIT.OK : EXIT.BLOCKED;
@@ -447,12 +447,12 @@ function cmdNext(root, flags) {
   if (flags.json) console.log(JSON.stringify(step, null, 2));
   else {
     header(step.sprint ? step.sprint + ' — ' + step.title : step.title);
-    console.log('Estado: ' + step.state);
+    console.log('State: ' + step.state);
     if (step.skills) console.log('Skills: ' + step.skills.join(', '));
-    if (step.inputs) console.log('Entradas: ' + step.inputs.join(', '));
-    if (step.outputs) console.log('Entregas: ' + step.outputs.join(', '));
-    if (step.command) console.log('Verificacao: ' + step.command);
-    if (step.guide) console.log('Guia: ' + step.guide + ' | Schemas: ' + step.schemas);
+    if (step.inputs) console.log('Inputs: ' + step.inputs.join(', '));
+    if (step.outputs) console.log('Outputs: ' + step.outputs.join(', '));
+    if (step.command) console.log('Verification: ' + step.command);
+    if (step.guide) console.log('Guide: ' + step.guide + ' | Schemas: ' + step.schemas);
     if (step.blocking?.length) printFindings(step.blocking);
   }
   return EXIT.OK;
@@ -462,7 +462,7 @@ function cmdVerify(root, positional) {
   const project = kernel.openProject(root);
   const workflow = require('../kernel/workflow/workflow');
   const sprint = positional[0] || workflow.next(project).sprint;
-  if (!sprint) { console.log('Fluxo concluido.'); return EXIT.OK; }
+  if (!sprint) { console.log('The workflow is complete.'); return EXIT.OK; }
   getSprint(sprint);
   if (['SP3','SP4','SP5'].includes(sprint.toUpperCase())) {
     const results = require('../kernel/verification/runner').verifyTests(project.store);
@@ -471,7 +471,7 @@ function cmdVerify(root, positional) {
   const report = project.gate.evaluate(sprint, { baselines: project.baselines.load() });
   workflow.record(project, report);
   printFindings(report.findings);
-  console.log(report.passed ? 'Verificado; aguarda decisao humana.' : 'Bloqueado.');
+  console.log(report.passed ? 'Verified. A human decision is necessary.' : 'Blocked.');
   return report.passed ? EXIT.OK : EXIT.BLOCKED;
 }
 
@@ -479,35 +479,35 @@ function cmdDoctor(root) {
   header('daia doctor');
   const checks = [];
   const nodeOk = Number(process.versions.node.split('.')[0]) >= 18;
-  checks.push({ ok: nodeOk, label: `Node.js ${process.versions.node}`, hint: 'Requer >= 18' });
-  // A ausencia de .daia nao e defeito: este mesmo repositorio e a ferramenta,
-  // nao um projeto que a usa. Reportar como informativo, nao como falha.
+  checks.push({ ok: nodeOk, label: `Node.js ${process.versions.node}`, hint: 'Node.js 18 or later is necessary' });
+  // A missing .daia directory is not a defect. This repository is the tool,
+  // not a project that uses the tool. Report it as information, not as a failure.
   const hasDaia = fs.existsSync(path.join(root, '.daia'));
   if (!hasDaia) {
-    console.log(`${term.blue('i')} nenhum projeto DAIA-E neste diretorio`);
-    console.log(term.gray('  Rode `daia init` para criar um, ou passe --root <projeto>'));
+    console.log(`${term.blue('i')} no DAIA-E project in this directory`);
+    console.log(term.gray('  To make a project, run `daia init`. Or give --root <project>.'));
   }
 
   let project = null;
   if (hasDaia) {
     try {
       project = kernel.openProject(root);
-      checks.push({ ok: true, label: `modelo carregado (${project.store.all().length} artefatos)` });
+      checks.push({ ok: true, label: `model loaded (${project.store.all().length} artifacts)` });
       checks.push({
         ok: project.store.parseErrors.length === 0,
-        label: `documentos bem formados (${project.store.parseErrors.length} erro(s))`,
+        label: `documents well formed (${project.store.parseErrors.length} error(s))`,
       });
       checks.push({
         ok: project.store.schemaErrors.length === 0,
-        label: `documentos validos contra schema (${project.store.schemaErrors.length} erro(s))`,
+        label: `documents valid against the schema (${project.store.schemaErrors.length} error(s))`,
       });
     } catch (err) {
-      checks.push({ ok: false, label: `falha ao carregar modelo: ${err.message}` });
+      checks.push({ ok: false, label: `cannot load the model: ${err.message}` });
     }
   }
-  checks.push({ ok: true, label: `${kernel.RULES.length} regras de correspondencia carregadas` });
+  checks.push({ ok: true, label: `${kernel.RULES.length} correspondence rules loaded` });
   checks.push({ ok: Object.keys(require('../package.json').dependencies || {}).length === 0,
-    label: 'zero dependencias externas' });
+    label: 'zero external dependencies' });
 
   for (const c of checks) {
     console.log(`${c.ok ? term.green('v') : term.red('x')} ${c.label}`);
@@ -518,55 +518,56 @@ function cmdDoctor(root) {
 }
 
 function cmdRules() {
-  header('Regras de correspondencia');
+  header('Correspondence rules');
   for (const rule of kernel.RULES) {
     console.log(`${severitySymbol(rule.severity)} ${term.bold(rule.id.padEnd(24))} ${term.gray(`Art. ${rule.article.padEnd(4)} ${rule.sprints.join(',')}`)}`);
     console.log(`   ${rule.title}`);
   }
   console.log('');
-  console.log(term.gray('Gate e codigo, nao checklist. Um principio sem gate executavel e aspiracao.'));
+  console.log(term.gray('A gate is code, not a checklist. A principle without an executable gate is only an aspiration.'));
   console.log('');
   return EXIT.OK;
 }
 
 function usage() {
   console.log(`
-${term.bold('daia')} — DAIA-E: Desenvolvimento Assistido por IA Orientado por Especificacao
+${term.bold('daia')} — DAIA-E: Specification-Driven, AI-Assisted Development
 
-${term.bold('COMANDOS')}
+${term.bold('COMMANDS')}
   init [dir] [--yes] [--mode new|existing] [--runtime codex|claude|portable]
-       [--catalog rm-odp|4plus1|c4] [--name <nome>] [--objective <texto>]
-                            Inicializa o modelo arquitetural em .daia/
+       [--catalog rm-odp|4plus1|c4] [--name <name>] [--objective <text>]
+                            Initializes the architecture model in .daia/
   setup [--to codex|claude|portable]
-                            Instala agentes e skills no runtime do projeto
-  next [--json]             Proxima etapa, skills, entregas e bloqueios
-  verify [SP1..SP5]          Executa testes configurados e registra progresso
-  validate architecture     Valida descricao e evidencias arquiteturais
-  status                    Estado das cinco sprints e das baselines
+                            Installs the agents and skills in the project runtime
+  next [--json]             Shows the next step, skills, outputs and blocking findings
+  verify [SP1..SP5]          Runs the configured tests and records the progress
+  validate architecture     Validates the architecture description and its evidence
+  status                    Shows the state of the five sprints and the baselines
   gate [SP1..SP5] [--json] [--quiet]
-                            Avalia as regras. Exit != 0 quando ha bloqueio.
-  baseline list             Lista as baselines e verifica as assinaturas
-  baseline sign <SP> --by <nome> --rationale <razao> [--debt "a;b"] [--force]
-                            Encerra a baseline com decisao humana registrada
-  trace <id> [--up]         Cadeia de rastreabilidade a partir de um artefato
-  trace --matrix            Matriz requisito -> cenario -> teste
-  impact <id>               O que e afetado por mudanca neste artefato
-  viewpoints [--catalogs]   Catalogo ativo, ou catalogos disponiveis
-  squad [adapt --to <alvo>] Lista a squad, ou projeta os agentes para um runtime
+                            Evaluates the rules. The exit code is not 0 if a finding blocks.
+  baseline list             Lists the baselines and verifies the signatures
+  baseline sign <SP> --by <name> --rationale <rationale> [--debt "a;b"] [--force]
+                            Closes the baseline with a recorded human decision
+  trace <id> [--up]         Shows the traceability chain from an artifact
+  trace --matrix            Shows the matrix requirement -> scenario -> test
+  impact <id>               Shows what a change to this artifact affects
+  viewpoints [--catalogs]   Shows the active catalog, or the available catalogs
+  squad [adapt --to <target>]
+                            Lists the squad, or projects the agents to a runtime
   skills [sync [id] --to <runtime>]
-                            Lista skills ou exporta para Codex/Claude/portable
-  rules                     Regras de correspondencia e artigos que as sustentam
-  doctor                    Diagnostico do ambiente e do modelo
+                            Lists the skills, or exports them to Codex/Claude/portable
+  rules                     Shows the correspondence rules and their articles
+  doctor                    Diagnoses the environment and the model
 
-${term.bold('OPCOES GLOBAIS')}
-  --root <dir>              Projeto alvo (padrao: diretorio atual)
+${term.bold('GLOBAL OPTIONS')}
+  --root <dir>              Target project (default: current directory)
 
-${term.bold('ARTIGOS INEGOCIAVEIS')}
+${term.bold('NON-NEGOTIABLE ARTICLES')}
   I    CLI First                       VII   Architectural Description (ISO 42010)
   II   Human Decision Authority        VIII  Specification Before Generation
   III  Baseline-Driven Development     XI    Squad-First Portability
 
-${term.gray('Nenhuma baseline e encerrada sem decisao humana registrada.')}
+${term.gray('No baseline closes without a recorded human decision.')}
 `);
   return EXIT.USAGE;
 }
@@ -585,8 +586,8 @@ async function main() {
   if (!command) return usage();
   const needsProject = ['status', 'gate', 'baseline', 'trace', 'impact', 'next', 'verify', 'validate'];
   if (needsProject.includes(command) && !fs.existsSync(path.join(root, '.daia'))) {
-    console.error(term.red('Nenhum projeto DAIA-E aqui.'));
-    console.error(term.gray('Rode: daia init'));
+    console.error(term.red('No DAIA-E project here.'));
+    console.error(term.gray('Run: daia init'));
     return EXIT.USAGE;
   }
 
@@ -609,13 +610,13 @@ async function main() {
     case 'rules': return cmdRules();
     case 'doctor': return cmdDoctor(root);
     default:
-      console.error(term.red(`Comando desconhecido: ${command}`));
+      console.error(term.red(`Unknown command: ${command}`));
       return usage();
   }
 }
 
 main().then(code => { process.exitCode = code; }).catch(err => {
-  console.error(term.red('Erro: ' + err.message));
+  console.error(term.red('Error: ' + err.message));
   if (process.env.DAIA_DEBUG) console.error(err.stack);
   process.exitCode = EXIT.ERROR;
 });

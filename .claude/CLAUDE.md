@@ -1,13 +1,15 @@
 # DAIA-E
 
-Validador de descricao arquitetural e processo guiado de desenvolvimento.
+A validator for the architecture description and a guided development process.
 
-Leia `.daia-core/constitution.md`. A fonte dos papeis e skills e `squads/daia-e/`.
-O kernel em `kernel/` valida documentos, referencias, arquivos e evidencias.
+Read `.daia-core/constitution.md`. The source of the roles and the skills is `squads/daia-e/`.
+The kernel in `kernel/` validates documents, references, files and evidence.
 
-Para desenvolver esta biblioteca: `npm run check` e `npm test`.
-Para conduzir um projeto consumidor: `daia init`, `daia next`, `daia verify`.
-Aprovacoes de baseline sao declaratorias; agentes so as registram apos decisao
-explicita do usuario. Nunca invente assinatura nem evidencia de teste.
+To develop this library, run `npm run check` and `npm test`.
+To guide a consumer project, run `daia init`, `daia next` and `daia verify`.
+The baseline approvals are declarations. An agent records an approval only after an explicit
+decision of the user. Do not invent a signature or test evidence.
 
-As instrucoes AIOX herdadas estao arquivadas em `docs/legacy/` e nao regem o DAIA-E.
+Write all text in English STE. See docs/ste/README.md.
+
+The inherited AIOX instructions are in the archive `docs/legacy/`. They do not apply to DAIA-E.

@@ -1,38 +1,38 @@
 {
   "id": "AD-cep",
   "kind": "ArchitectureDecision",
-  "title": "Correlacao de eventos por Processamento de Eventos Complexos",
-  "context": "Eventos de repositorio chegam isolados; a avaliacao de conformidade exige reconhecer padroes ao longo do tempo.",
-  "decision": "Adotar CEP com catalogo de padroes declarativos, avaliados contra um baseline de SCM.",
-  "consequences": "Novos padroes entram no catalogo sem alterar o motor; em contrapartida o motor precisa de janela temporal configuravel.",
+  "title": "Event correlation by Complex Event Processing",
+  "context": "Repository events arrive one by one. The compliance evaluation must recognize patterns over time.",
+  "decision": "Use CEP with a catalog of declarative patterns, evaluated against an SCM baseline.",
+  "consequences": "New patterns go into the catalog with no change to the engine. But the engine must have a configurable time window.",
   "alternatives": [
     {
-      "option": "Consultas SQL agregadas sobre a base de eventos",
-      "rejected_because": "Nao expressa relacao temporal entre eventos sem materializacao custosa, e acopla a regra ao schema"
+      "option": "Aggregate SQL queries on the event database",
+      "rejected_because": "It cannot show the time relation between events without costly materialization, and it couples the rule to the schema"
     },
     {
-      "option": "Regras imperativas codificadas por padrao",
-      "rejected_because": "Acrescentar um padrao exigiria alterar o motor, violando o cenario QS-modularidade"
+      "option": "Imperative rules coded for each pattern",
+      "rejected_because": "A new pattern would change the engine, and this violates the scenario QS-modularity"
     }
   ],
   "traces_to": [
-    "RF-correlacao",
-    "RNF-manutenibilidade",
-    "CON-conformidade"
+    "FR-correlation",
+    "NFR-maintainability",
+    "CON-compliance"
   ],
   "affects_views": [
     "VW-computational",
     "VW-information"
   ],
   "sensitivity_points": [
-    "maintainability: acrescimo de padrao sem alterar o motor",
-    "performance_efficiency: janela temporal de correlacao"
+    "maintainability: a new pattern does not change the engine",
+    "performance_efficiency: time window of the correlation"
   ],
   "tradeoff_points": [
-    "performance_efficiency degrada quando a janela cresce para ganhar cobertura de padrao"
+    "performance_efficiency decreases when the window becomes larger to cover more patterns"
   ],
   "risks": [
-    "Janela mal dimensionada produz falso negativo de conformidade"
+    "A window with an incorrect size gives a false negative for compliance"
   ],
   "sprint": "SP3",
   "status": "accepted",

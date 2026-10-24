@@ -3,19 +3,19 @@
   "kind": "QualityScenario",
   "characteristic": "security",
   "sub_characteristic": "integrity",
-  "source": "Analise estatica de seguranca",
-  "stimulus": "Varre a base em busca de execucao dinamica de codigo",
-  "artifact": "Toda a base de codigo",
-  "environment": "Integracao continua, a cada commit",
-  "response": "Nenhuma chamada a eval() e encontrada",
+  "source": "Static security analysis",
+  "stimulus": "Scans the code base for dynamic code execution",
+  "artifact": "All the code base",
+  "environment": "Continuous integration, at each commit",
+  "response": "The scan finds no call to eval()",
   "response_measure": {
-    "metric": "uso de eval()",
+    "metric": "use of eval()",
     "operator": "==",
     "threshold": 0,
-    "unit": "ocorrencias"
+    "unit": "occurrences"
   },
   "traces_to": [
-    "RNF-seguranca"
+    "NFR-security"
   ],
   "utility_tree": {
     "importance": "H",

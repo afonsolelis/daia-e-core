@@ -2,14 +2,14 @@
   "id": "VW-enterprise",
   "kind": "View",
   "viewpoint": "enterprise",
-  "title": "Papeis e politicas de supervisao em ABPj",
+  "title": "Supervision roles and policies in PjBL",
   "addresses_concerns": [
-    "CON-visibilidade",
-    "CON-carga-docente"
+    "CON-visibility",
+    "CON-teaching-load"
   ],
   "stakeholders": [
-    "STK-professor",
-    "STK-coordenacao"
+    "STK-teacher",
+    "STK-coordination"
   ],
   "models": [
     {

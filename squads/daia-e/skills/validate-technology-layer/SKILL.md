@@ -1,22 +1,29 @@
 ---
 name: validate-technology-layer
-description: Valide a camada de tecnologia da SP3: view technology correspondente à engenharia e cada escolha tecnológica registrada como decisão com alternativa. Use depois de validar a engenharia.
+description: Validate the SP3 technology layer. Examine the technology view that corresponds to the engineering view, and make sure that each technology choice is a decision with an alternative. Use after you validate the engineering layer.
 ---
 
-# Valide a camada de tecnologia da SP3
+# Validate the SP3 technology layer
 
-Você confere; não produz. Se o artefato estiver errado, devolva o achado ao agente produtor. Não o corrija. Base: RM-ODP Technology e SEBoK (análise de alternativas).
+You examine. You do not make artifacts. If an artifact is not correct, send the finding back to the agent that made it. Do not correct the artifact. Basis: RM-ODP Technology and SEBoK (analysis of alternatives).
 
-## Resultado
+## Result
 
-Um parecer em `.daia/evidence/review-technology-layer.md` com: veredito (`aprovado`, `reprovado` ou `aprovado com ressalvas`), os achados `TEC-*` do gate e as perguntas que exigem decisão humana.
+A review report in `.daia/evidence/review-technology-layer.md` with: the verdict (`accepted`, `rejected` or `accepted with reservations`), the `TEC-*` findings of the gate, and the questions that need a human decision.
 
-## Fluxo
+## Procedure
 
-1. Rode `daia gate SP3 --json` e separe os achados com prefixo `TEC-`.
-2. Confira mecanicamente: existe view `technology`; ela corresponde (COR-*) à view engineering; toda escolha tecnológica é AD com `affects_views` na view technology e alternativa preterida com critério.
-3. Confira por leitura o que o gate não interpreta: a tecnologia foi escolhida pelo que a engenharia exige ou por familiaridade? A alternativa preterida era real?
-4. Registre o parecer. Bloqueio do gate é reprovação; leitura crítica sem bloqueio vira ressalva.
-5. Encaminhe ao humano. O parecer não substitui a assinatura da baseline.
+1. Run `daia gate SP3 --json`. Separate the findings with the `TEC-` prefix.
+2. Examine the mechanical points:
+   - A `technology` view exists.
+   - The technology view has a correspondence (COR-*) with the engineering view.
+   - Each technology choice is an AD with `affects_views` on the technology view.
+   - Each technology AD has a rejected alternative with a criterion.
+3. Read the model for the points that the gate does not interpret:
+   - Did the team select the technology because the engineering needs it, or because the team knows it?
+   - Was the rejected alternative a real option?
+4. Record the review report. If the gate blocks, the verdict is `rejected`.
+5. If a critical reading finds a gap and the gate does not block, record a reservation.
+6. Send the review report to the human. The review report does not replace the signature of the baseline.
 
-Pare se for preciso inventar fonte, evidência ou aprovação para fechar o parecer.
+If you must invent a source, evidence or an approval to complete the review report, stop.

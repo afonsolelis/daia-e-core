@@ -1,0 +1,16 @@
+{
+  "id": "BD-return",
+  "kind": "BusinessDriver",
+  "statement": "Decrease the late returns of the school library books",
+  "rationale": "The check of the last semester showed that about 30% of the loans came back after the due date",
+  "stakeholders": [
+    "STK-librarian",
+    "STK-coordination"
+  ],
+  "idef0_node": "A0",
+  "hypothesis": "If the loan records the due date and the student gets a notice before that date, late returns decrease to less than 10%",
+  "sprint": "SP1",
+  "provenance": {
+    "drafted_by": "ai-assisted"
+  }
+}

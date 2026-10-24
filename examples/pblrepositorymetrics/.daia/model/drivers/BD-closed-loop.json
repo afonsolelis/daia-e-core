@@ -1,0 +1,17 @@
+{
+  "id": "BD-closed-loop",
+  "kind": "BusinessDriver",
+  "statement": "Feed the pedagogical decisions of the teacher back into the evaluation baseline, and close the supervision loop",
+  "rationale": "Derived from the Digital Twin reference architecture (Arakaki et al., ACDSA 2026)",
+  "stakeholders": [
+    "STK-teacher"
+  ],
+  "idef0_node": "A3",
+  "sprint": "SP1",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

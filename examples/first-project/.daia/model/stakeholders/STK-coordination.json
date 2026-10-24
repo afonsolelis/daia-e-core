@@ -1,0 +1,13 @@
+{
+  "id": "STK-coordination",
+  "kind": "Stakeholder",
+  "name": "Pedagogical coordination",
+  "role": "Is responsible for the book collection and for the access of students to the books",
+  "concerns": [
+    "CON-delays"
+  ],
+  "sprint": "SP1",
+  "provenance": {
+    "drafted_by": "ai-assisted"
+  }
+}

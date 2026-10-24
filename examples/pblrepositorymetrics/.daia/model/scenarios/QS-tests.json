@@ -1,0 +1,31 @@
+{
+  "id": "QS-tests",
+  "kind": "QualityScenario",
+  "characteristic": "reliability",
+  "sub_characteristic": "maturity",
+  "source": "Automated test suite",
+  "stimulus": "Runs the full suite after a change",
+  "artifact": "Four-phase evaluation pipeline",
+  "environment": "Continuous integration",
+  "response": "All the behavioral contracts stay satisfied",
+  "response_measure": {
+    "metric": "unit tests that pass",
+    "operator": ">=",
+    "threshold": 61,
+    "unit": "tests"
+  },
+  "traces_to": [
+    "NFR-reliability"
+  ],
+  "utility_tree": {
+    "importance": "H",
+    "difficulty": "M"
+  },
+  "sprint": "SP2",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

@@ -2,12 +2,12 @@
   "id": "VW-technology",
   "kind": "View",
   "viewpoint": "technology",
-  "title": "Node.js, MongoDB e API REST do GitLab",
+  "title": "Node.js, MongoDB and GitLab REST API",
   "addresses_concerns": [
-    "CON-conformidade"
+    "CON-compliance"
   ],
   "stakeholders": [
-    "STK-professor"
+    "STK-teacher"
   ],
   "models": [
     {

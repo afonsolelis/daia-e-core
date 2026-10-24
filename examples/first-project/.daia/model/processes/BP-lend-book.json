@@ -1,0 +1,26 @@
+{
+  "id": "BP-lend-book",
+  "kind": "BusinessProcess",
+  "name": "Lend a book",
+  "state": "to-be",
+  "trigger": "A student asks for a book at the desk",
+  "outcome": "The loan is recorded with a due date",
+  "performed_by": [
+    "PER-librarian"
+  ],
+  "supports": [
+    "BD-return"
+  ],
+  "activity": "IDF-A0",
+  "models": [
+    {
+      "kind": "dynamic",
+      "notation": "BPMN 2.0",
+      "path": "docs/lend-book.bpmn"
+    }
+  ],
+  "sprint": "SP1",
+  "provenance": {
+    "drafted_by": "ai-assisted"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "CON-teaching-load",
+  "kind": "Concern",
+  "statement": "How can the teacher decrease the manual effort to inspect the repositories of many teams in each sprint?",
+  "stakeholders": [
+    "STK-teacher"
+  ],
+  "category": "operational",
+  "sprint": "SP1",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

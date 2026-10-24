@@ -9,7 +9,7 @@ const { writeJson } = require('../util/fs-walk');
 function fingerprint(store, tc, check) {
   if (!check || typeof check.command !== 'string' || !check.command || !Array.isArray(check.args) ||
       !check.args.every(arg => typeof arg === 'string') || !Array.isArray(check.inputs) || !check.inputs.length) {
-    throw new Error(`Configure verification.${tc.id}: command, args e inputs (arquivos de implementacao/configuracao)`);
+    throw new Error(`Configure verification.${tc.id}: command, args and inputs (implementation or configuration files)`);
   }
   const files = [...new Set([tc.test_path, ...check.inputs])].sort().map(file => [file, digestFile(store.root, file)]);
   return crypto.createHash('sha256').update(JSON.stringify({ check, files, model: store.stateHash() })).digest('hex');
@@ -43,9 +43,9 @@ function evidenceProblems(store, sprint) {
       const record = JSON.parse(fs.readFileSync(evidencePath(store, tc.id), 'utf8'));
       if (record.fingerprint !== fingerprint(store, tc, store.config.verification?.[tc.id]) ||
           !record.stable || record.phase !== tc.phase || record.phase === 'error') {
-        throw new Error('evidencia ausente, divergente ou desatualizada');
+        throw new Error('the evidence is missing, different or out of date');
       }
-    } catch (error) { out.push({ id: tc.id, message: `Execute daia verify: ${error.message}` }); }
+    } catch (error) { out.push({ id: tc.id, message: `Run daia verify: ${error.message}` }); }
   }
   return out;
 }

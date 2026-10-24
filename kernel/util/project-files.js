@@ -3,15 +3,15 @@ const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
 function projectFile(root, relative) {
-  if (typeof relative !== 'string' || !relative || path.isAbsolute(relative)) throw new Error('Caminho relativo obrigatorio');
+  if (typeof relative !== 'string' || !relative || path.isAbsolute(relative)) throw new Error('A relative path is mandatory');
   const base = fs.realpathSync(root);
   const target = path.resolve(base, relative);
-  if (!target.startsWith(base + path.sep)) throw new Error(`Caminho fora do projeto: ${relative}`);
+  if (!target.startsWith(base + path.sep)) throw new Error(`The path is outside the project: ${relative}`);
   // Reject symlinks in every existing ancestor, including dangling links.
   let cursor = base;
   for (const part of path.relative(base, target).split(path.sep)) {
     cursor = path.join(cursor, part);
-    try { if (fs.lstatSync(cursor).isSymbolicLink()) throw new Error(`Link simbolico recusado: ${relative}`); }
+    try { if (fs.lstatSync(cursor).isSymbolicLink()) throw new Error(`Symbolic link rejected: ${relative}`); }
     catch (error) { if (error.code !== 'ENOENT') throw error; }
   }
   return target;

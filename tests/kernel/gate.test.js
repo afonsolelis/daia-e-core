@@ -9,7 +9,7 @@ const path = require('node:path');
 const kernel = require('../../kernel');
 const business = require('../fixtures/business');
 
-/** Cria um projeto DAIA-E temporario com os documentos dados. */
+/** Creates a temporary DAIA-E project with the given documents. */
 function scaffold(docs, config = {}, files = business.FILES) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'daia-test-'));
   const model = path.join(root, '.daia', 'model');
@@ -30,35 +30,35 @@ function scaffold(docs, config = {}, files = business.FILES) {
 }
 
 const P = { drafted_by: 'ai-assisted' };
-const STK = { id: 'STK-a', kind: 'Stakeholder', name: 'Parte A', sprint: 'SP1', provenance: P };
+const STK = { id: 'STK-a', kind: 'Stakeholder', name: 'Party A', sprint: 'SP1', provenance: P };
 const BD = {
-  id: 'BD-a', kind: 'BusinessDriver', statement: 'um direcionador de negocio valido',
-  stakeholders: ['STK-a'], hypothesis: 'a hipotese a confrontar na SP5', sprint: 'SP1', provenance: P,
+  id: 'BD-a', kind: 'BusinessDriver', statement: 'a valid business driver',
+  stakeholders: ['STK-a'], hypothesis: 'the hypothesis that SP5 tests', sprint: 'SP1', provenance: P,
 };
 
-test('SP1 bloqueia sem direcionador nem parte interessada', () => {
+test('SP1 blocks without a business driver and a stakeholder', () => {
   const root = scaffold([]);
   const report = kernel.openProject(root).gate.evaluate('SP1');
   assert.strictEqual(report.passed, false);
   assert.ok(report.blocking.some((f) => f.rule === 'SP1-FOUNDATION'));
 });
 
-test('SP1 passa com fundacao minima', () => {
+test('SP1 passes with the minimum foundation', () => {
   const root = scaffold(business.DOCS);
   const report = kernel.openProject(root).gate.evaluate('SP1');
   assert.strictEqual(report.passed, true, JSON.stringify(report.blocking));
 });
 
-test('referencia quebrada bloqueia em qualquer sprint', () => {
-  const root = scaffold([STK, { ...BD, stakeholders: ['STK-inexistente'] }]);
+test('a broken reference blocks in each sprint', () => {
+  const root = scaffold([STK, { ...BD, stakeholders: ['STK-missing'] }]);
   const report = kernel.openProject(root).gate.evaluate('SP1');
   assert.ok(report.blocking.some((f) => f.rule === 'REF-INTEGRITY'));
 });
 
-test('decisao sem alternativa bloqueia a SP3 (Art. IX)', () => {
+test('a decision without an alternative blocks SP3 (Art. IX)', () => {
   const ad = {
-    id: 'AD-a', kind: 'ArchitectureDecision', title: 'uma decisao',
-    decision: 'decidimos alguma coisa relevante', alternatives: [],
+    id: 'AD-a', kind: 'ArchitectureDecision', title: 'a decision',
+    decision: 'we decided a relevant thing', alternatives: [],
     traces_to: ['BD-a'], sprint: 'SP3', provenance: P,
   };
   const root = scaffold([STK, BD, ad]);
@@ -67,12 +67,12 @@ test('decisao sem alternativa bloqueia a SP3 (Art. IX)', () => {
   assert.ok(rules.includes('SCHEMA') || rules.includes('AD-ALTERNATIVE'));
 });
 
-test('cenario com limiar placeholder bloqueia (Art. V)', () => {
+test('a scenario with a placeholder threshold blocks (Art. V)', () => {
   const qs = {
     id: 'QS-a', kind: 'QualityScenario', characteristic: 'reliability',
-    source: 'origem', stimulus: 'estimulo', artifact: 'artefato',
-    environment: 'ambiente', response: 'resposta',
-    response_measure: { metric: 'tempo', operator: '<=', threshold: 'TBD' },
+    source: 'source', stimulus: 'stimulus', artifact: 'artifact',
+    environment: 'environment', response: 'response',
+    response_measure: { metric: 'time', operator: '<=', threshold: 'TBD' },
     traces_to: ['BD-a'], sprint: 'SP2', provenance: P,
   };
   const root = scaffold([STK, BD, qs]);
@@ -80,9 +80,9 @@ test('cenario com limiar placeholder bloqueia (Art. V)', () => {
   assert.ok(report.blocking.some((f) => f.rule === 'SCENARIO-MEASURABLE'));
 });
 
-test('preocupacao nao enderecada por view bloqueia a SP3 (Art. VII)', () => {
+test('a concern that no view addresses blocks SP3 (Art. VII)', () => {
   const con = {
-    id: 'CON-a', kind: 'Concern', statement: 'uma preocupacao nao enderecada',
+    id: 'CON-a', kind: 'Concern', statement: 'a concern that no view addresses',
     stakeholders: ['STK-a'], sprint: 'SP1', provenance: P,
   };
   const root = scaffold([STK, BD, con]);
@@ -90,36 +90,36 @@ test('preocupacao nao enderecada por view bloqueia a SP3 (Art. VII)', () => {
   assert.ok(report.blocking.some((f) => f.rule === 'CONCERN-ADDRESSED'));
 });
 
-test('SP3 exige modelagem estatica e dinamica (Art. VIII)', () => {
+test('SP3 must have static and dynamic models (Art. VIII)', () => {
   const root = scaffold([STK, BD]);
   const report = kernel.openProject(root).gate.evaluate('SP3');
   const messages = report.blocking.filter((f) => f.rule === 'STATIC-AND-DYNAMIC');
-  assert.strictEqual(messages.length, 2, 'esperado bloqueio para estatica e para dinamica');
+  assert.strictEqual(messages.length, 2, 'expected one block for the static model and one for the dynamic model');
 });
 
-test('catalogo de viewpoints e plugavel', () => {
+test('the viewpoint catalog is pluggable', () => {
   const root = scaffold([STK, BD], { viewpointCatalog: 'c4' });
   const project = kernel.openProject(root);
   assert.strictEqual(project.store.viewpoints.catalog, 'c4');
   assert.ok(project.store.viewpoints.index.has('container'));
 });
 
-test('catalogo inexistente falha com mensagem explicita', () => {
-  const root = scaffold([], { viewpointCatalog: 'nao-existe' });
-  assert.throws(() => kernel.openProject(root), /nao prescreve views/);
+test('a catalog that does not exist fails with an explicit message', () => {
+  const root = scaffold([], { viewpointCatalog: 'does-not-exist' });
+  assert.throws(() => kernel.openProject(root), /"does-not-exist"/);
 });
 
-test('a ordem das baselines e verificada (Art. III)', () => {
+test('the baseline order is verified (Art. III)', () => {
   const root = scaffold([STK, BD]);
   const project = kernel.openProject(root);
   const report = project.gate.evaluate('SP2', { baselines: new Map() });
   assert.ok(report.blocking.some((f) => f.rule === 'BASELINE-ORDER'));
 });
 
-test('o exemplo do tutorial do README passa no gate SP1 sem bloqueio nem alerta', () => {
-  const root = path.join(__dirname, '..', '..', 'examples', 'primeiro-projeto');
+test('the README tutorial example passes gate SP1 without blocks or warnings', () => {
+  const root = path.join(__dirname, '..', '..', 'examples', 'first-project');
   const report = kernel.openProject(root).gate.evaluate('SP1');
   const findings = report.findings.filter((f) => f.severity === 'BLOCK' || f.severity === 'WARN');
   assert.deepStrictEqual(findings, []);
-  assert.ok(!fs.existsSync(path.join(root, '.daia', 'baselines')), 'o exemplo nao traz baseline assinada');
+  assert.ok(!fs.existsSync(path.join(root, '.daia', 'baselines')), 'the example has no signed baseline');
 });

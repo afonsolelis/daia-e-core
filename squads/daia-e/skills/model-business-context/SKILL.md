@@ -1,24 +1,26 @@
 ---
 name: model-business-context
-description: Modele o contexto de negócio, stakeholders, concerns, fronteira e hipótese antes de formular requisitos ou escolher tecnologia. Use ao iniciar ou recuperar a arquitetura de um sistema.
+description: Model the business context, the stakeholders, the concerns, the boundary and the hypothesis before you write requirements or select a technology. Use when you start or recover the architecture of a system.
 ---
 
-# Modelar contexto de negócio
+# Model the business context
 
-Estabeleça por que o sistema existe, para quem e dentro de qual fronteira. Não converta soluções presumidas em necessidades.
+Find why the system exists, for whom, and in which boundary. Do not change solutions that you think are correct into stakeholder needs.
 
-## Resultado
+## Result
 
-Produza `BusinessDriver`, `Stakeholder`, `Concern` e a view `enterprise` em `.daia/model/`, rastreando cada afirmação à evidência fornecida. Registre ao menos uma hipótese que possa ser confrontada na SP5.
+Make the `BusinessDriver`, `Stakeholder` and `Concern` artifacts and the `enterprise` view in `.daia/model/`. Give each statement a trace to the evidence that you received. Record a minimum of one hypothesis that SP5 can examine.
 
-## Fluxo
+## Procedure
 
-Antes de produzir artefatos, consulte `daia next --json`, `.daia/guide.md` e os schemas locais em `.daia/schemas/`. Registre o resultado com `daia verify` na etapa aplicável.
+Before you make artifacts, read `daia next --json`, `.daia/guide.md` and the local schemas in `.daia/schemas/`. Record the result with `daia verify` in the applicable step.
 
-1. Confirme que o projeto foi inicializado com `daia init`.
-2. Identifique stakeholders por papel e elicite suas preocupações como perguntas ou tensões.
-3. Derive direcionadores verificáveis e registre a fronteira: implementado, simulado, externo e fora de escopo.
-4. Relacione a view enterprise às concerns e aos stakeholders.
-5. Rode `daia gate SP1`; não assine a baseline em nome do usuário.
+1. Make sure that `daia init` initialized the project.
+2. Identify the stakeholders by role.
+3. Elicit the concerns of each stakeholder as questions or tensions.
+4. Get business drivers that you can verify from the concerns.
+5. Record the boundary: implemented, simulated, external and out of scope.
+6. Relate the enterprise view to the concerns and to the stakeholders.
+7. Run `daia gate SP1`. Do not sign the baseline for the user.
 
-Pare quando a origem de uma afirmação não puder ser demonstrada ou quando uma escolha técnica estiver sendo antecipada.
+If you cannot show the origin of a statement, stop. If somebody makes a technical choice too early, stop.

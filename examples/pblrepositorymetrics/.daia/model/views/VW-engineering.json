@@ -2,13 +2,13 @@
   "id": "VW-engineering",
   "kind": "View",
   "viewpoint": "engineering",
-  "title": "Conectores, persistencia e distribuicao",
+  "title": "Connectors, persistence and distribution",
   "addresses_concerns": [
-    "CON-privacidade"
+    "CON-privacy"
   ],
   "stakeholders": [
-    "STK-aluno",
-    "STK-coordenacao"
+    "STK-student",
+    "STK-coordination"
   ],
   "models": [
     {

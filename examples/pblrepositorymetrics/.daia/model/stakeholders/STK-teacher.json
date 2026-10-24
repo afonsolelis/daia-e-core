@@ -1,0 +1,17 @@
+{
+  "id": "STK-teacher",
+  "kind": "Stakeholder",
+  "name": "Advisor teacher",
+  "role": "Supervises PjBL teams and makes pedagogical decisions",
+  "concerns": [
+    "CON-visibility",
+    "CON-teaching-load"
+  ],
+  "sprint": "SP1",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

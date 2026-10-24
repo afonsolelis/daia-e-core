@@ -1,29 +1,30 @@
-# Contrato de skill DAIA-E
+# DAIA-E skill contract
 
-Skills são capacidades pequenas e invocáveis. Agentes compõem skills; o kernel
-continua sendo a autoridade mecânica dos gates.
+Skills are small capabilities that agents can invoke. Agents use skills. The
+kernel stays the mechanical authority of the gates.
 
-## Estrutura
+## Structure
 
 ```text
-skills/<nome-kebab-case>/
+skills/<kebab-case-name>/
 ├── SKILL.md
-├── references/   # apenas quando houver detalhe carregado sob demanda
-├── scripts/      # apenas para automação determinística reutilizável
-└── assets/       # apenas para material copiado à saída
+├── references/   # only for detail that the agent loads on demand
+├── scripts/      # only for deterministic automation that skills use again
+└── assets/       # only for material that the skill copies to the output
 ```
 
-O `SKILL.md` usa o frontmatter portátil com `name` e `description`, além das
-seções `## Resultado` e `## Fluxo`. `sprint`, `agent` e `gate` ficam no
-`squad.json`, pois são metadados do método, não campos do padrão de skills. A
-descrição deve permitir descoberta automática e dizer quando a capacidade se aplica.
+The `SKILL.md` file uses the portable frontmatter with `name` and
+`description`. It also has the sections `## Result` and `## Procedure`. The
+fields `sprint`, `agent` and `gate` are in `squad.json`. These fields are
+method metadata, not fields of the skill standard. The description MUST let a
+runtime find the skill automatically. It MUST tell when the capability applies.
 
-## Separação de responsabilidades
+## Separation of responsibilities
 
-- Skill: procedimento reutilizável e resultado observável.
-- Agente: papel, autoridade, fronteiras e composição de skills.
-- Kernel: schemas, rastreabilidade, gates e baselines.
-- Runtime: skills em `.agents/skills/` (Codex) ou `.claude/skills/` (Claude); exportação manual em `.daia/export/skills/`.
+- Skill: a procedure that agents can use again, and a result that you can observe.
+- Agent: the role, the authority, the boundaries and the skills that the agent uses.
+- Kernel: the schemas, the traceability, the gates and the baselines.
+- Runtime: skills in `.agents/skills/` (Codex) or `.claude/skills/` (Claude); manual export in `.daia/export/skills/`.
 
-Edite somente a fonte em `squads/daia-e/`. Use `daia skills sync --to <runtime>`
-para regenerar projeções.
+Edit only the source in `squads/daia-e/`. To make the projections again, use
+`daia skills sync --to <runtime>`.

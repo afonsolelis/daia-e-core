@@ -1,0 +1,19 @@
+{
+  "id": "BD-supervision",
+  "kind": "BusinessDriver",
+  "statement": "Support the supervision of teachers in Project-Based Learning environments with process evidence from the repository",
+  "rationale": "In PjBL, the evaluation usually looks at the final artifact and loses the process that made it",
+  "stakeholders": [
+    "STK-teacher",
+    "STK-coordination"
+  ],
+  "idef0_node": "A-0",
+  "hypothesis": "The CEP correlation of repository events gives diagnostic reports that the teacher can use for pedagogical decisions",
+  "sprint": "SP1",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

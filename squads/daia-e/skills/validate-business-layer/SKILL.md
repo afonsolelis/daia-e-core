@@ -1,22 +1,30 @@
 ---
 name: validate-business-layer
-description: Valide a camada de negócio da SP1: personas, BPMN com raia por persona, IDEF0 coerente e direcionadores ancorados em processos. Use antes de apresentar a baseline SP1 ao humano.
+description: Validate the SP1 business layer. Examine the personas, the BPMN with one lane for each persona, the coherence of the IDEF0 model and the business drivers that the processes support. Use before you show the SP1 baseline to the human.
 ---
 
-# Valide a camada de negócio da SP1
+# Validate the SP1 business layer
 
-Você confere; não produz. Se o artefato estiver errado, devolva o achado ao agente produtor. Não o corrija. Base: BABOK v3 §10.35 e §10.43.
+You examine. You do not make artifacts. If an artifact is not correct, send the finding back to the agent that made it. Do not correct the artifact. Basis: BABOK v3 §10.35 and §10.43.
 
-## Resultado
+## Result
 
-Um parecer em `.daia/evidence/review-business-layer.md` com: veredito (`aprovado`, `reprovado` ou `aprovado com ressalvas`), os achados `BIZ-*` do gate e as perguntas que exigem decisão humana.
+A review report in `.daia/evidence/review-business-layer.md` with: the verdict (`accepted`, `rejected` or `accepted with reservations`), the `BIZ-*` findings of the gate, and the questions that need a human decision.
 
-## Fluxo
+## Procedure
 
-1. Rode `daia gate SP1 --json` e separe os achados com prefixo `BIZ-`.
-2. Confira mecanicamente: personas derivam de stakeholders e têm evidência; cada processo tem BPMN legível com início, atividades, fluxo, fim e uma raia por persona; IDEF0 tem raiz A0, numeração coerente, ICOM completo e 3 a 6 filhos por nível; todo direcionador é sustentado por processo.
-3. Confira por leitura o que o gate não interpreta: o processo modelado corresponde ao trabalho real relatado nas fontes? As fronteiras (`automation`) foram decididas pelo humano?
-4. Registre o parecer. Bloqueio do gate é reprovação; leitura crítica sem bloqueio vira ressalva.
-5. Encaminhe ao humano. O parecer não substitui a assinatura da baseline.
+1. Run `daia gate SP1 --json`. Separate the findings with the `BIZ-` prefix.
+2. Examine the mechanical points:
+   - Each persona comes from a stakeholder and has evidence.
+   - Each process has a BPMN diagram that a person can read.
+   - Each BPMN diagram has a start, activities, a flow, an end and one lane for each persona.
+   - The IDEF0 model has the root A0, coherent numbers, the full ICOM and 3 to 6 children at each level.
+   - A process supports each business driver.
+3. Read the model for the points that the gate does not interpret:
+   - Does the modelled process agree with the real work in the sources?
+   - Did the human decide the boundaries (`automation`)?
+4. Record the review report. If the gate blocks, the verdict is `rejected`.
+5. If a critical reading finds a gap and the gate does not block, record a reservation.
+6. Send the review report to the human. The review report does not replace the signature of the baseline.
 
-Pare se for preciso inventar fonte, evidência ou aprovação para fechar o parecer.
+If you must invent a source, evidence or an approval to complete the review report, stop.

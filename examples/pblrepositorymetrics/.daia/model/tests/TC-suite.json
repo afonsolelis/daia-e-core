@@ -1,15 +1,15 @@
 {
   "id": "TC-suite",
   "kind": "TestContract",
-  "title": "Suite de 61 testes unitarios aprovada",
+  "title": "Suite of 61 unit tests passes",
   "verifies": [
-    "QS-testes",
-    "RF-aquisicao",
-    "RF-correlacao",
-    "RF-relatorio"
+    "QS-tests",
+    "FR-acquisition",
+    "FR-correlation",
+    "FR-report"
   ],
   "test_path": "tests/unit/",
-  "test_name": "suite completa",
+  "test_name": "full suite",
   "phase": "green",
   "sprint": "SP3",
   "status": "accepted",

@@ -1,0 +1,16 @@
+{
+  "id": "CON-visibility",
+  "kind": "Concern",
+  "statement": "How can the teacher see the real work process of the team, and not only the final delivered artifact?",
+  "stakeholders": [
+    "STK-teacher"
+  ],
+  "category": "pedagogical",
+  "sprint": "SP1",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

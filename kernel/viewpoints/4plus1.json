@@ -3,7 +3,7 @@
   "name": "4+1 Architectural View Model (Kruchten)",
   "standard": "IEEE Software, 1995",
   "default": false,
-  "rationale": "Catálogo alternativo. A ISO 42010 admite qualquer conjunto de viewpoints desde que cada view responda a preocupações de partes interessadas identificadas.",
+  "rationale": "An alternative catalog. ISO 42010 accepts any set of viewpoints, if each view addresses the concerns of identified stakeholders.",
   "viewpoints": [
     { "id": "logical", "kind": "Viewpoint", "name": "Logical", "catalog": "4plus1", "frames_concerns": ["functional"], "model_kinds": ["static"], "opens_at": "SP2", "completes_at": "SP3" },
     { "id": "process", "kind": "Viewpoint", "name": "Process", "catalog": "4plus1", "frames_concerns": ["quality", "operational"], "model_kinds": ["dynamic"], "opens_at": "SP3", "completes_at": "SP3" },

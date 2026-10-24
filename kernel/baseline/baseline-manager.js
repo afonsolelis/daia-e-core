@@ -8,14 +8,13 @@ const { SchemaValidator } = require('../validator/schema-validator');
 const { getSprint } = require('../gate/sprints');
 
 /**
- * Gerencia o encerramento de baselines.
+ * Manages the closure of baselines.
  *
- * Art. II (NON-NEGOTIABLE): nenhuma baseline e encerrada sem decisao humana
- * registrada. A IA generativa assiste a producao de artefatos em todas as
- * sprints — inclusive na captacao dos direcionadores de negocio — mas a
- * assinatura e humana.
+ * Art. II (NON-NEGOTIABLE): a baseline does not close without a recorded human decision.
+ * Generative AI helps to produce artifacts in all sprints, also to elicit the business drivers.
+ * But only a human signs.
  *
- * Registro declaratorio local: nao autentica a identidade de quem invoca a API.
+ * This is a local declarative record. It does not authenticate the identity of the API caller.
  */
 class BaselineManager {
   constructor(store) {
@@ -42,7 +41,7 @@ class BaselineManager {
   }
 
   /**
-   * Encerra uma baseline com decisao humana registrada.
+   * Closes a baseline with a recorded human decision.
    *
    * @param {string} sprintId
    * @param {{signedBy: string, rationale: string, decision?: string, debt?: string[], gateReport?: object}} input
@@ -52,20 +51,20 @@ class BaselineManager {
 
     if (!input.signedBy || String(input.signedBy).trim().length < 2) {
       throw new Error(
-        'Assinatura exige identificacao humana (--by). ' +
-          'Art. II: a IA pode redigir e propor qualquer artefato, mas nao pode assinar por humano.'
+        'A signature must have a human identification (--by). ' +
+          'Art. II: AI can write and propose each artifact, but AI cannot sign for a human.'
       );
     }
     if (!input.rationale || String(input.rationale).trim().length < 10) {
       throw new Error(
-        'Assinatura exige justificativa (--rationale) com ao menos 10 caracteres. ' +
-          'Uma baseline aceita sem razao registrada nao e decisao, e formalidade.'
+        'A signature must have a rationale (--rationale) of 10 characters or more. ' +
+          'A baseline accepted without a recorded reason is a formality, not a decision.'
       );
     }
 
     const decision = input.decision || 'accepted';
     if (decision === 'accepted-with-debt' && (!input.debt || input.debt.length === 0)) {
-      throw new Error('A decisao "accepted-with-debt" exige ao menos um item de divida declarado (--debt).');
+      throw new Error('The decision "accepted-with-debt" must declare one debt item or more (--debt).');
     }
 
     const baseline = {
@@ -87,27 +86,27 @@ class BaselineManager {
     const errors = this.validator.validate(baseline, this.store.schemas.get('baseline'));
     if (errors.length > 0) {
       const detail = errors.map((e) => `${e.path}: ${e.message}`).join('; ');
-      throw new Error(`Baseline invalida: ${detail}`);
+      throw new Error(`Invalid baseline: ${detail}`);
     }
 
     writeJson(this.fileFor(sprint.id), baseline);
     return baseline;
   }
 
-  /** Verifica se a assinatura ainda cobre o estado atual do modelo. */
+  /** Verifies if the signature still covers the current state of the model. */
   verify(sprintId) {
     const baseline = this.get(sprintId);
-    if (!baseline) return { exists: false, valid: false, reason: 'baseline nao encerrada' };
+    if (!baseline) return { exists: false, valid: false, reason: 'the baseline is not closed' };
     if (this.validator.validate(baseline, this.store.schemas.get('baseline')).length ||
         !['accepted', 'accepted-with-debt'].includes(baseline.signature?.decision)) {
-      return { exists: true, valid: false, reason: 'baseline invalida ou rejeitada' };
+      return { exists: true, valid: false, reason: 'the baseline is invalid or rejected' };
     }
     const current = this.store.stateHash(baseline.sprint);
     if (baseline.state_hash !== current) {
       return {
         exists: true,
         valid: false,
-        reason: 'o modelo mudou desde a assinatura',
+        reason: 'the model changed after the signature',
         signed: baseline.state_hash,
         current,
       };

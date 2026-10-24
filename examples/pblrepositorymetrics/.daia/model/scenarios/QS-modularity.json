@@ -1,0 +1,31 @@
+{
+  "id": "QS-modularity",
+  "kind": "QualityScenario",
+  "characteristic": "maintainability",
+  "sub_characteristic": "modularity",
+  "source": "Maintenance developer",
+  "stimulus": "Adds a new CEP pattern derived from a diff analysis",
+  "artifact": "Catalog of CEP patterns",
+  "environment": "Development, system in operation",
+  "response": "The developer adds the pattern without a change to the correlation engine",
+  "response_measure": {
+    "metric": "modules changed to add a pattern",
+    "operator": "<=",
+    "threshold": 2,
+    "unit": "modules"
+  },
+  "traces_to": [
+    "NFR-maintainability"
+  ],
+  "utility_tree": {
+    "importance": "H",
+    "difficulty": "H"
+  },
+  "sprint": "SP2",
+  "status": "accepted",
+  "provenance": {
+    "drafted_by": "ai-assisted",
+    "model": "claude",
+    "reviewed_by": "Afonso Cesar Lelis Brandao"
+  }
+}

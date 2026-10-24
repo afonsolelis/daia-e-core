@@ -1,15 +1,14 @@
 'use strict';
 
 /**
- * DAIA-E kernel — Desenvolvimento Assistido por Inteligencia Artificial
- * Orientado por Especificacao.
+ * DAIA-E kernel — specification-driven development with AI assistance.
  *
- * O kernel nao chama modelo de linguagem. Ele carrega o modelo arquitetural,
- * valida contra o metamodelo da ISO/IEC/IEEE 42010:2022, avalia as regras de
- * correspondencia e registra baselines. Os agentes propoem; o kernel aceita
- * ou recusa.
+ * The kernel does not call a language model. It loads the architecture model,
+ * validates it against the ISO/IEC/IEEE 42010:2022 metamodel, evaluates the
+ * correspondence rules and records baselines. The agents propose. The kernel
+ * accepts or rejects.
  *
- * Zero dependencias externas: o kernel roda sem `npm install`.
+ * The kernel has no external dependencies. It runs without `npm install`.
  */
 
 const { ModelStore, KIND_BY_PREFIX, DEFAULT_CONFIG } = require('./store/model-store');
@@ -22,7 +21,7 @@ const { RULES, SEVERITY } = require('./rules/correspondence-rules');
 const { loadSkills } = require('./skill/skill-loader');
 const { install } = require('./skill/install');
 
-/** Carrega o projeto inteiro numa chamada. */
+/** Loads the full project in one call. */
 function openProject(rootDir) {
   const store = new ModelStore(rootDir).load();
   const baselines = new BaselineManager(store);
