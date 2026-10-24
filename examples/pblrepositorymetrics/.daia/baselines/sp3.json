@@ -1,19 +1,51 @@
 {
   "kind": "Baseline",
   "sprint": "SP3",
-  "title": "Arquitetural: especificacao tecnica, esqueleto, documentos de especificacao e testes em fase vermelha",
-  "state_hash": "sha256:8a48929207c70455078015e0791cb71b2cf0524a62fa93e8c9afffec870d357a",
+  "title": "Architecture: computational, engineering and technology views in that order, technical specification, skeleton and red-phase tests",
+  "state_hash": "sha256:d36e2d03a36963f481bca1dfb6a512ec499f3219238b14df562db91dead30441",
   "artifact_count": 37,
   "signature": {
     "signed_by": "Afonso Cesar Lelis Brandao",
-    "signed_at": "2026-09-09T22:14:45.428Z",
-    "decision": "accepted",
-    "rationale": "Baseline SP3 revisada e assumida pelo autor conforme o metodo DAIA-E."
+    "signed_at": "2026-10-24T01:10:30.171Z",
+    "decision": "accepted-with-debt",
+    "rationale": "Baseline SP3 reviewed again after the translation of the model to English STE. The author accepts the declared debt.",
+    "declared_debt": [
+      "BIZ-PERSONA/SP1: no persona is declared",
+      "BIZ-BPMN/SP1: no business process is declared",
+      "BIZ-IDEF0/SP1: no IDEF0 activity is declared",
+      "BIZ-DRIVER-PROCESS/BD-closed-loop: no business process supports the business driver",
+      "BIZ-DRIVER-PROCESS/BD-supervision: no business process supports the business driver",
+      "ELI-SOURCE/FR-acquisition: the requirement has no elicitation",
+      "ELI-SOURCE/FR-correlation: the requirement has no elicitation",
+      "ELI-SOURCE/FR-report: the requirement has no elicitation",
+      "ELI-SOURCE/NFR-maintainability: the requirement has no elicitation",
+      "ELI-SOURCE/NFR-reliability: the requirement has no elicitation",
+      "ELI-SOURCE/NFR-security: the requirement has no elicitation",
+      "ELI-FROM-BUSINESS/FR-acquisition: the functional requirement has no origin in BP-*, IDF-* or a stakeholder need derived from them",
+      "ELI-FROM-BUSINESS/FR-correlation: the functional requirement has no origin in BP-*, IDF-* or a stakeholder need derived from them",
+      "ELI-FROM-BUSINESS/FR-report: the functional requirement has no origin in BP-*, IDF-* or a stakeholder need derived from them",
+      "ARTIFACT-FILE/TC-complexity: The file does not exist or is not safe: tests/quality/complexity.test.js",
+      "ARTIFACT-FILE/TC-eval: The file does not exist or is not safe: tests/security/eval.test.js",
+      "ARTIFACT-FILE/TC-modularity: The file does not exist or is not safe: tests/quality/modularity.test.js",
+      "ARTIFACT-FILE/TC-secrets: The file does not exist or is not safe: tests/security/secrets.test.js",
+      "ARTIFACT-FILE/TC-suite: The file does not exist or is not safe: tests/unit/",
+      "ARTIFACT-FILE/VW-computational: The file does not exist or is not safe: docs/ciclo-entrega-funcionalidade.md",
+      "ARTIFACT-FILE/VW-computational: The file does not exist or is not safe: docs/ciclo-resposta-incidentes.md",
+      "ARTIFACT-FILE/VW-engineering: The file does not exist or is not safe: docs/es10-tech-spec.md",
+      "ARTIFACT-FILE/VW-enterprise: The file does not exist or is not safe: docs/idef0-a0.md",
+      "ARTIFACT-FILE/VW-information: The file does not exist or is not safe: docs/es11-baseline-spec.md",
+      "ARTIFACT-FILE/VW-technology: The file does not exist or is not safe: docs/tech-stack.md",
+      "TEST-EVIDENCE/TC-complexity: Run daia verify: ENOENT: no such file or directory, open '/home/afonsolelis/repos/daia-e/examples/pblrepositorymetrics/.daia/evidence/tests/TC-complexity.json'",
+      "TEST-EVIDENCE/TC-eval: Run daia verify: ENOENT: no such file or directory, open '/home/afonsolelis/repos/daia-e/examples/pblrepositorymetrics/.daia/evidence/tests/TC-eval.json'",
+      "TEST-EVIDENCE/TC-modularity: Run daia verify: ENOENT: no such file or directory, open '/home/afonsolelis/repos/daia-e/examples/pblrepositorymetrics/.daia/evidence/tests/TC-modularity.json'",
+      "TEST-EVIDENCE/TC-secrets: Run daia verify: ENOENT: no such file or directory, open '/home/afonsolelis/repos/daia-e/examples/pblrepositorymetrics/.daia/evidence/tests/TC-secrets.json'",
+      "TEST-EVIDENCE/TC-suite: Run daia verify: ENOENT: no such file or directory, open '/home/afonsolelis/repos/daia-e/examples/pblrepositorymetrics/.daia/evidence/tests/TC-suite.json'"
+    ]
   },
   "gate_report": {
-    "passed": true,
-    "blocking": 0,
+    "passed": false,
+    "blocking": 30,
     "warnings": 0,
-    "evaluated_at": "2026-09-09T22:14:45.428Z"
+    "evaluated_at": "2026-10-24T01:10:30.171Z"
   }
 }

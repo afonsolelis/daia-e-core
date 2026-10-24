@@ -1,19 +1,37 @@
 {
   "kind": "Baseline",
   "sprint": "SP1",
-  "title": "Modelo de negocio: decomposicao IDEF0, direcionadores, mapa de stakeholders e hipotese",
-  "state_hash": "sha256:e6c249b323aff237f5bfa2e449ac13b26dd302d9a55ca4316b7e49c75e677664",
+  "title": "Business model: personas, BPMN processes, IDEF0 decomposition, business drivers, stakeholder map and hypothesis",
+  "state_hash": "sha256:fe8274d4136f2de10ad700a1272823512d2faed759b21b380562974f56e805c2",
   "artifact_count": 10,
   "signature": {
     "signed_by": "Afonso Cesar Lelis Brandao",
-    "signed_at": "2026-09-09T22:14:45.336Z",
-    "decision": "accepted",
-    "rationale": "Baseline SP1 revisada e assumida pelo autor conforme o metodo DAIA-E."
+    "signed_at": "2026-10-24T01:10:30.094Z",
+    "decision": "accepted-with-debt",
+    "rationale": "Baseline SP1 reviewed again after the translation of the model to English STE. The author accepts the declared debt.",
+    "declared_debt": [
+      "BIZ-PERSONA/SP1: no persona is declared",
+      "BIZ-BPMN/SP1: no business process is declared",
+      "BIZ-IDEF0/SP1: no IDEF0 activity is declared",
+      "BIZ-DRIVER-PROCESS/BD-closed-loop: no business process supports the business driver",
+      "BIZ-DRIVER-PROCESS/BD-supervision: no business process supports the business driver",
+      "ARTIFACT-FILE/TC-complexity: The file does not exist or is not safe: tests/quality/complexity.test.js",
+      "ARTIFACT-FILE/TC-eval: The file does not exist or is not safe: tests/security/eval.test.js",
+      "ARTIFACT-FILE/TC-modularity: The file does not exist or is not safe: tests/quality/modularity.test.js",
+      "ARTIFACT-FILE/TC-secrets: The file does not exist or is not safe: tests/security/secrets.test.js",
+      "ARTIFACT-FILE/TC-suite: The file does not exist or is not safe: tests/unit/",
+      "ARTIFACT-FILE/VW-computational: The file does not exist or is not safe: docs/ciclo-entrega-funcionalidade.md",
+      "ARTIFACT-FILE/VW-computational: The file does not exist or is not safe: docs/ciclo-resposta-incidentes.md",
+      "ARTIFACT-FILE/VW-engineering: The file does not exist or is not safe: docs/es10-tech-spec.md",
+      "ARTIFACT-FILE/VW-enterprise: The file does not exist or is not safe: docs/idef0-a0.md",
+      "ARTIFACT-FILE/VW-information: The file does not exist or is not safe: docs/es11-baseline-spec.md",
+      "ARTIFACT-FILE/VW-technology: The file does not exist or is not safe: docs/tech-stack.md"
+    ]
   },
   "gate_report": {
-    "passed": true,
-    "blocking": 0,
+    "passed": false,
+    "blocking": 16,
     "warnings": 0,
-    "evaluated_at": "2026-09-09T22:14:45.336Z"
+    "evaluated_at": "2026-10-24T01:10:30.093Z"
   }
 }
